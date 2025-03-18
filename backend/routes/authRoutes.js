@@ -7,8 +7,8 @@ const router = express.Router();
 // Sign Up Route
 router.post('/signup', async (req, res) => {
     try {
-        const {username, email, password } = req.body;
-        if(!username || !email || !email){
+        const {username, email, password, firstName, lastName } = req.body;
+        if(!username || !email || !password || !firstName || !lastName){
             return res.status(400).json({message: "Invalid Fields"});
         }
         let user = await User.findOne({ email });
@@ -16,7 +16,7 @@ router.post('/signup', async (req, res) => {
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-        user = new User({ username, email, password: hashedPassword });
+        user = new User({ username, email, password: hashedPassword, firstName, lastName });
 
         await user.save();
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
@@ -38,7 +38,19 @@ router.post('/login', async (req, res) => {
         if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
 
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.status(201).json({message:"User Logged In.", token, user: { id: user._id, name: user.username, email: user.email } });
+        res.status(200).json(
+        {
+            message:"User Logged In.", 
+            token, 
+            user: 
+            { 
+                id: user._id, 
+                name: user.username, 
+                email: user.email, 
+                firstName: user.firstName, 
+                lastName: user.lastName 
+            } 
+        });
     } catch (error) {
         console.error("Login Error: ", error);
         res.status(500).json({ message: "Server error" });
