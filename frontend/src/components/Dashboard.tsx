@@ -36,13 +36,13 @@ const Dashboard: React.FC = () => {
   }, []);
 
   return (
-    <div className="p-20 min-h-screen flex flex-col items-center">
+    <div className="p-20 flex flex-col items-center">
       {/* countdowm */}
       <div className="bg-gray-200 shadow-lg rounded-xl p-6 text-center mb-8 w-3/4">
-        <h2 className="text-2xl font-semibold mb-2">
+        <h2 className="text-3xl font-semibold mb-2">
           The Foundation Exam is in...
         </h2>
-        <div className="flex justify-center items-center space-x-8 text-5xl font-bold">
+        <div className="flex justify-center items-center space-x-8 text-7xl font-bold">
           <div className="text-gray-900">
             {timeLeft.days}{" "}
             <span className="block text-base font-medium">DAYS</span>
@@ -65,7 +65,7 @@ const Dashboard: React.FC = () => {
       {/* guideline for UCF foundation exam */}
       {/* note: link didn't work properly locally */}
       <div className=" bg-gray-200 p-10 rounded-lg shadow-md w-3/4">
-        <h3 className="text-4xl text-center font-semibold mb-6 p-5">
+        <h3 className="text-5xl text-center font-semibold mb-6 p-5">
           Foundation Exam Guideline
         </h3>
         <ul className="list-disc list-inside text-2xl text-gray-800 space-y-4 p-5">

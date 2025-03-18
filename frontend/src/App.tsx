@@ -2,20 +2,25 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 
 import AuthPage from "./pages/AuthPage";
-import Dashboard from "./pages/DashboardPage";
+import DashBoardPage from "./pages/DashboardPage";
+import TopicPage from "./pages/TopicPage";
+import MockTestPage from "./pages/MockTestPage";
+import MyProgessPage from "./pages/MyProgressPage"
 
 function App() {
   return (
     <Router>
       <Routes>
-        {/* '/': go to  AuthPage*/}
         <Route path="/" element={<AuthPage />} />
-        
-        {/* '/dashboard/: go to dashboard */}
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard" element={<DashBoardPage />} />
+        <Route path="/topic-practice" element={<TopicPage />} />
+        <Route path="/mock-test" element={<MockTestPage />} />
+        <Route path="/my-progress" element={<MyProgessPage />} />
       </Routes>
     </Router>
   );
 }
 
 export default App;
+
+
