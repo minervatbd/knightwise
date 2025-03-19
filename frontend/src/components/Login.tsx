@@ -24,8 +24,17 @@ const Login: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
         password,
       });
 
+      console.log("Server response:", response.data);
+
       // store token
       localStorage.setItem("token", response.data.token);
+
+      // store user data on localStorage to display username in sidebar
+      if (response.data.user) {
+        localStorage.setItem("user_data", JSON.stringify(response.data.user));
+      } else {
+        console.error("User data not found in response!");
+      }
 
       // show the success message if login is successful
       // then, move to the dashboard page after 2 sec

@@ -1,8 +1,26 @@
 import { Link, useLocation } from "react-router-dom";
 import { LogOut, BookOpen, BarChart2, Lightbulb, GraduationCap } from "lucide-react"; // for icons
+import { useState, useEffect } from "react";
 
 const Sidebar = () => {
   const location = useLocation(); 
+  const [userName, setUserName] = useState<string | null>("Guest");
+
+  // get user_data on local storage to display username 
+  // NOTE : I wanted to get the `firstname` and `lastname` information, but after logging in, only `email` and `name` are stored in `localStorage`
+  useEffect(() => {
+    const userData = localStorage.getItem("user_data");
+
+    if (userData) {
+      try {
+        const user = JSON.parse(userData);
+        setUserName(user.name);
+      } catch (error) {
+        console.error("Error parsing user data:", error);
+        setUserName("Hello!");
+      }
+    }
+  }, []);
 
   const menuItems = [
     { name: "Dashboard", icon: <BookOpen size={24} />, path: "/dashboard" },
@@ -20,7 +38,7 @@ const Sidebar = () => {
 
   return (
     <div className="h-full w-72 bg-gray-100 p-6 shadow-lg flex flex-col">
-      <h1 className="text-2xl font-bold pt-10 mb-10 text-center">John Doe</h1>
+      <h1 className="text-2xl font-bold pt-10 mb-10 text-center"> {userName} </h1>
       <nav className="flex-1 overflow-y-auto">
         {menuItems.map((item) => (
           <Link
