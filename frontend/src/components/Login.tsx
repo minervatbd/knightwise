@@ -42,30 +42,37 @@ const Login: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
   return (
     <div className="flex flex-col items-center">
       <div className="bg-gray-100 p-12 rounded-xl shadow-lg w-full max-w-2xl min-h-[500px] flex flex-col items-center justify-center">
-        <h2 className="text-5xl font-bold text-center text-gray-800 mb-15">
-          Sign In
-        </h2>
-
+        <h2 className="text-5xl font-bold text-center text-gray-800 mb-15">Sign In</h2>
+  
         {/* Login form */}
         <form onSubmit={handleLogin} className="space-y-4 w-full max-w-lg">
+          
           {/* email */}
-          <input
-            type="email"
-            placeholder="Email"
-            className="w-full px-6 py-4 text-lg border border-gray-300 bg-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+          <div className="flex items-center space-x-6 w-full">
+            <label className="w-1/3 text-lg font-semibold text-gray-700">Email</label>
+            <input
+              type="email"
+              placeholder="Enter your email"
+              className="w-2/3 px-6 py-4 text-lg border border-gray-300 bg-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+  
           {/* password */}
-          <input
-            type="password"
-            placeholder="Password"
-            className="w-full px-6 py-4 text-lg border border-gray-300 bg-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+          <div className="flex items-center space-x-6 w-full">
+            <label className="w-1/3 text-lg font-semibold text-gray-700">Password</label>
+            <input
+              type="password"
+              placeholder="Enter your password"
+              className="w-2/3 px-6 py-4 text-lg border border-gray-300 bg-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+  
           {/* button */}
           <button
             type="submit"
@@ -74,7 +81,7 @@ const Login: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
             LOGIN
           </button>
         </form>
-
+  
         {/* display message */}
         {error && (
           <p className="text-red-500 text-lg text-center mt-2">{error}</p>
@@ -84,7 +91,7 @@ const Login: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
             {successMessage}
           </p>
         )}
-
+  
         {/* move to the signup */}
         <p className="text-center text-base text-gray-600 mt-4">
           Not registered?{" "}
@@ -95,6 +102,7 @@ const Login: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
       </div>
     </div>
   );
+  
 };
 
 export default Login;
