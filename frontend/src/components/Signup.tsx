@@ -31,6 +31,8 @@ const Signup: React.FC<{onToggle: () => void;}> = ({ onToggle }) => {
         username,
         email,
         password,
+        firstname,
+        lastname
       });
       
       // show the success message if login is successful
