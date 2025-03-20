@@ -4,6 +4,18 @@ void main() {
   runApp(const MyApp());
 }
 
+const scheme = ColorScheme(
+  brightness: Brightness.light, 
+  primary: Color.fromRGBO(0, 0, 0, 1), 
+  onPrimary: Color.fromRGBO(0, 0, 0, 1), 
+  secondary: Color.fromRGBO(255, 201, 4, 1), 
+  onSecondary: Color(0xFFB1B1B1), 
+  error: Color.fromARGB(255, 255, 0, 0),
+  onError: Color.fromARGB(255, 255, 98, 98),
+  surface: Color.fromRGBO(236, 236, 236, 1),
+  onSurface: Color.fromRGBO(255, 201, 4, 1)
+);
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -13,22 +25,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 255, 201, 4)),
+        colorScheme: scheme,
+        
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -37,15 +35,6 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   final String title;
 
@@ -58,31 +47,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _incrementCounter() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
       _counter++;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
       body: Center(
@@ -90,16 +63,21 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             // LOGO
             Container(
-              margin: const EdgeInsets.all(20),
+              margin: const EdgeInsets.all(50),
               child: Image.asset(
               'assets/homelogo.png'),
             ),
             // SIGN UP BUTTON
             Container(
               height: 50,
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
               child: ElevatedButton(
-                child: const Text('SIGN UP'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: scheme.secondary,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  textStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)
+                  ),
+                child: const Text('LOGIN'),
                 onPressed: () {
                   print("sign up screen shows now");
                 },
@@ -108,9 +86,14 @@ class _MyHomePageState extends State<MyHomePage> {
             Container(
               height: 50,
               margin: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+              padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
               child: ElevatedButton(
-                child: const Text('LOG IN'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: scheme.onSecondary,
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  textStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)
+                  ),
+                child: const Text('SIGN UP'),
                 onPressed: () {
                   print("log in screen shows now");
                 },
