@@ -8,6 +8,7 @@ void main() {
 final scheme = Styles.schemeMain;
 final loginButtonStyle = Styles.yellowButtonStyle;
 final signupButtonStyle = Styles.grayButtonStyle;
+const landingPagePadding = 50.0;
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -56,14 +57,14 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             // LOGO
             Container(
-              margin: const EdgeInsets.all(50),
+              margin: const EdgeInsets.all(landingPagePadding),
               child: Image.asset(
               'assets/homelogo.png'),
             ),
             // SIGN UP BUTTON
             Container(
               height: 50,
-              padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
+              padding: const EdgeInsets.fromLTRB(landingPagePadding, 0, landingPagePadding, 0),
               child: ElevatedButton(
                 style: loginButtonStyle,
                 child: const Text('LOGIN'),
@@ -74,8 +75,8 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Container(
               height: 50,
-              margin: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-              padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
+              margin: const EdgeInsets.fromLTRB(0, landingPagePadding/2, 0, 0),
+              padding: const EdgeInsets.fromLTRB(landingPagePadding, 0, landingPagePadding, 0),
               child: ElevatedButton(
                 style: signupButtonStyle,
                 child: const Text('SIGN UP'),
