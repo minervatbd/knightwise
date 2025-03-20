@@ -1,26 +1,35 @@
+// This code is based on Dr. Reinenker's code : LoggedInName.tsx
+
 import { Link, useLocation } from "react-router-dom";
 import { LogOut, BookOpen, BarChart2, Lightbulb, GraduationCap } from "lucide-react"; // for icons
-import { useState, useEffect } from "react";
 
 const Sidebar = () => {
-  const location = useLocation(); 
-  const [userName, setUserName] = useState<string | null>("Guest");
+  const location = useLocation();
 
-  // get user_data on local storage to display username 
+  // function: LoggedInName - get username or first/lastname 
   // NOTE : I wanted to get the `firstname` and `lastname` information, but after logging in, only `email` and `name` are stored in `localStorage`
-  useEffect(() => {
-    const userData = localStorage.getItem("user_data");
+  const LoggedInName = () => {
+    try {
+      const userData = localStorage.getItem("user_data");
 
-    if (userData) {
-      try {
+      if (userData) {
         const user = JSON.parse(userData);
-        setUserName(user.name);
-      } catch (error) {
-        console.error("Error parsing user data:", error);
-        setUserName("Hello!");
+        return user.firstName && user.lastName
+          ? `${user.firstName} ${user.lastName}`
+          : user.name || "Hello";
       }
+    } catch (error) {
+      console.error("Error parsing user data:", error);
     }
-  }, []);
+    return "Hello";
+  };
+
+  // fucntion: logout - logout
+  const doLogout = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.preventDefault();
+    localStorage.removeItem("user_data");
+    window.location.href = "/";
+  };
 
   const menuItems = [
     { name: "Dashboard", icon: <BookOpen size={24} />, path: "/dashboard" },
@@ -29,16 +38,9 @@ const Sidebar = () => {
     { name: "My Progress", icon: <BarChart2 size={24} />, path: "/my-progress" },
   ];
 
-  // function: logout 
-  const doLogout = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    event.preventDefault();
-    localStorage.removeItem("user_data"); 
-    window.location.href = "/"; 
-  };
-
   return (
     <div className="h-full w-72 bg-gray-100 p-6 shadow-lg flex flex-col">
-      <h1 className="text-2xl font-bold pt-10 mb-10 text-center"> {userName} </h1>
+      <h1 className="text-2xl font-bold pt-10 mb-10 text-center">{LoggedInName()}</h1>
       <nav className="flex-1 overflow-y-auto">
         {menuItems.map((item) => (
           <Link
