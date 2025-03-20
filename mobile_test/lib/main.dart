@@ -1,20 +1,13 @@
 import 'package:flutter/material.dart';
+import 'styles.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-const scheme = ColorScheme(
-  brightness: Brightness.light, 
-  primary: Color.fromRGBO(0, 0, 0, 1), 
-  onPrimary: Color.fromRGBO(0, 0, 0, 1), 
-  secondary: Color.fromRGBO(255, 201, 4, 1), 
-  onSecondary: Color(0xFFB1B1B1), 
-  error: Color.fromARGB(255, 255, 0, 0),
-  onError: Color.fromARGB(255, 255, 98, 98),
-  surface: Color.fromRGBO(236, 236, 236, 1),
-  onSurface: Color.fromRGBO(255, 201, 4, 1)
-);
+final scheme = Styles.schemeMain;
+final loginButtonStyle = Styles.yellowButtonStyle;
+final signupButtonStyle = Styles.grayButtonStyle;
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -72,11 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
               height: 50,
               padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: scheme.secondary,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                  textStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)
-                  ),
+                style: loginButtonStyle,
                 child: const Text('LOGIN'),
                 onPressed: () {
                   print("sign up screen shows now");
@@ -88,11 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
               margin: const EdgeInsets.fromLTRB(0, 20, 0, 0),
               padding: const EdgeInsets.fromLTRB(50, 0, 50, 0),
               child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: scheme.onSecondary,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                  textStyle: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)
-                  ),
+                style: signupButtonStyle,
                 child: const Text('SIGN UP'),
                 onPressed: () {
                   print("log in screen shows now");
