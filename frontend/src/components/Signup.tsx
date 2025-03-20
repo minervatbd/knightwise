@@ -6,8 +6,8 @@ import PasswordChecklist from "react-password-checklist";
 import { buildPath } from "./Path";
 
 const Signup: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
+  const [firstName, setFirstname] = useState("");
+  const [lastName, setLastname] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,7 +24,7 @@ const Signup: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
     setError("");
     setSuccessMessage("");
 
-    if (!nameRegex.test(firstname) || !nameRegex.test(lastname)) {
+    if (!nameRegex.test(firstName) || !nameRegex.test(lastName)) {
       setError("Name must be at least one letter");
       return;
     }
@@ -52,8 +52,8 @@ const Signup: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
         username,
         email,
         password,
-        firstname,
-        lastname,
+        firstName,
+        lastName,
       });
 
       setSuccessMessage(response.data.message);
@@ -72,7 +72,7 @@ const Signup: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
 
         {/* signup form */}
         <form onSubmit={handleSignup} className="space-y-4 w-full max-w-2xl">
-          {/* firstname */}
+          {/* firstName */}
           <div className="flex items-center space-x-6 w-full">
             <label className="w-2/5 text-lg font-semibold text-gray-700">
               First Name
@@ -81,13 +81,13 @@ const Signup: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
               type="text"
               placeholder="First Name"
               className="w-3/5 px-6 py-3 text-lg border border-gray-300 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
-              value={firstname}
+              value={firstName}
               onChange={(e) => setFirstname(e.target.value)}
               required
             />
           </div>
 
-          {/* lastname */}
+          {/* lastName */}
           <div className="flex items-center space-x-6 w-full">
             <label className="w-2/5 text-lg font-semibold text-gray-700">
               Last Name
@@ -96,7 +96,7 @@ const Signup: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
               type="text"
               placeholder="Last Name"
               className="w-3/5 px-6 py-3 text-lg border border-gray-300 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
-              value={lastname}
+              value={lastName}
               onChange={(e) => setLastname(e.target.value)}
               required
             />
