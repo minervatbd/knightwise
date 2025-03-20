@@ -6,16 +6,16 @@ import { LogOut, BookOpen, BarChart2, Lightbulb, GraduationCap } from "lucide-re
 const Sidebar = () => {
   const location = useLocation();
 
-  // function: LoggedInName - get username or first/lastname 
-  // NOTE : I wanted to get the `firstname` and `lastname` information, but after logging in, only `email` and `name` are stored in `localStorage`
+  // function: LoggedInName - get first/lastname 
+  // NOTE: please  change API : authRoutes.js - login , firstName-> firstname, lastName -> lastName
   const LoggedInName = () => {
     try {
       const userData = localStorage.getItem("user_data");
 
       if (userData) {
         const user = JSON.parse(userData);
-        return user.firstName && user.lastName
-          ? `${user.firstName} ${user.lastName}`
+        return user.firstname && user.lastname
+          ? `${user.firstname} ${user.lastname}`
           : user.name || "Hello";
       }
     } catch (error) {
