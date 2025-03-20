@@ -74,7 +74,6 @@ const processProgressData = (answers) => {
 router.get('/history', authMiddleware, async (req, res) => {
   try {
     const userId = req.user.id;
-    console.log("User ID is ", userId);
     
     // Pagination logic: default to page 1, limit to 10 results per page
     const page = parseInt(req.query.page) || 1;
@@ -91,7 +90,6 @@ router.get('/history', authMiddleware, async (req, res) => {
 
     // Count the total number of entries for pagination
     const totalEntries = await Answer.countDocuments({ user_id: new mongoose.Types.ObjectId(userId) });
-    console.log("totalEntries is ", totalEntries);
 
     res.status(200).json({
       history,
