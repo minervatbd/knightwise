@@ -7,8 +7,8 @@ const router = express.Router();
 // Sign Up Route
 router.post('/signup', async (req, res) => {
     try {
-        const {username, email, password, firstname, lastname } = req.body;
-        if(!username || !email || !password || !firstname || !lastname){
+        const {username, email, password, firstName, lastName } = req.body;
+        if(!username || !email || !password || !firstName || !lastName){
             return res.status(400).json({message: "Invalid Fields"});
         }
         let user = await User.findOne({ email });
@@ -16,7 +16,7 @@ router.post('/signup', async (req, res) => {
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-        user = new User({ username, email, password: hashedPassword, firstname, lastname });
+        user = new User({ username, email, password: hashedPassword, firstName, lastName });
 
         await user.save();
         const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
