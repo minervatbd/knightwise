@@ -5,7 +5,8 @@ import AuthPage from "./pages/AuthPage";
 import DashBoardPage from "./pages/DashboardPage";
 import TopicPage from "./pages/TopicPage";
 import MockTestPage from "./pages/MockTestPage";
-import MyProgessPage from "./pages/MyProgressPage"
+import MyProgessPage from "./pages/MyProgressPage";
+import ProblemViewPage from "./pages/ProblemViewPage";
 
 function App() {
   return (
@@ -16,11 +17,10 @@ function App() {
         <Route path="/topic-practice" element={<TopicPage />} />
         <Route path="/mock-test" element={<MockTestPage />} />
         <Route path="/my-progress" element={<MyProgessPage />} />
+        <Route path="/problem-view" element={<ProblemViewPage />} />
       </Routes>
     </Router>
   );
 }
 
 export default App;
-
-
