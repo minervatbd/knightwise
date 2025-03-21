@@ -3,15 +3,15 @@ import 'styles.dart';
 
 const scheme = Styles.schemeMain;
 
-
-
 abstract class AppBars {
+  // top bar containing a ucf logo and a button opening the dropdown menu
   static final topBar = AppBar(
     backgroundColor: Styles.schemeMain.primary,
     leading: Container(
         padding:EdgeInsets.all(8),
         child: Image.asset('assets/ucflogo.png'),
       ),
+    // sample text, change later
     title: Text("Top banner"),
     actions: <Widget>[
       Container(
@@ -33,7 +33,7 @@ abstract class AppBars {
       )
     ]
   );
-
+  // bottom bar containing four buttons
   static final bottomBar = BottomAppBar(
     color: Styles.schemeMain.primary,
     child: IconTheme(
@@ -48,6 +48,7 @@ abstract class AppBars {
                 color: scheme.secondary,
                 shape: CircleBorder(),
               ),
+              // dashboard button
               child: IconButton(
                 color: scheme.primary,
                 icon: const Icon(Icons.grid_view),
@@ -65,6 +66,7 @@ abstract class AppBars {
                 color: scheme.secondary,
                 shape: CircleBorder(),
               ),
+              // topic selection button
               child: IconButton(
                 color: scheme.primary,
                 icon: const Icon(Icons.chat_bubble_outline),
@@ -82,6 +84,7 @@ abstract class AppBars {
                 color: scheme.secondary,
                 shape: CircleBorder(),
               ),
+              // mock test button
               child: IconButton(
                 color: scheme.primary,
                 icon: const Icon(Icons.description_outlined),
@@ -99,6 +102,7 @@ abstract class AppBars {
                 color: scheme.secondary,
                 shape: CircleBorder(),
               ),
+              // my progress button
               child: IconButton(
                 color: scheme.primary,
                 icon: const Icon(Icons.bar_chart),
