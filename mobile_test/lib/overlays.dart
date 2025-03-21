@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'styles.dart';
+import 'icons.dart';
 
 const scheme = Styles.schemeMain;
 
@@ -23,7 +24,7 @@ abstract class AppBars {
           ),
           child: IconButton(
             color: scheme.primary,
-            icon: const Icon(Icons.menu),
+            icon: NavigationIcons.menu,
             tooltip: 'Show menu',
             onPressed: () {
               print("show menu");
@@ -51,7 +52,7 @@ abstract class AppBars {
               // dashboard button
               child: IconButton(
                 color: scheme.primary,
-                icon: const Icon(Icons.grid_view),
+                icon: NavigationIcons.dashboard,
                 tooltip: 'Button1',
                 onPressed: () {
                   print("Button1");
@@ -69,7 +70,7 @@ abstract class AppBars {
               // topic selection button
               child: IconButton(
                 color: scheme.primary,
-                icon: const Icon(Icons.chat_bubble_outline),
+                icon: NavigationIcons.topicSelection,
                 tooltip: 'Button2',
                 onPressed: () {
                   print("Button2");
@@ -87,7 +88,7 @@ abstract class AppBars {
               // mock test button
               child: IconButton(
                 color: scheme.primary,
-                icon: const Icon(Icons.description_outlined),
+                icon: NavigationIcons.mockTest,
                 tooltip: 'Button3',
                 onPressed: () {
                   print("Button3");
@@ -105,7 +106,7 @@ abstract class AppBars {
               // my progress button
               child: IconButton(
                 color: scheme.primary,
-                icon: const Icon(Icons.bar_chart),
+                icon: NavigationIcons.myProgress,
                 tooltip: 'Button4',
                 onPressed: () {
                   print("Button4");
