@@ -15,9 +15,10 @@ abstract class Styles {
   );
 
   // text style for login/signup buttons 
-  static const buttonTextStyle = TextStyle(
+  static final buttonTextStyle = TextStyle(
     fontSize: 24,
     fontWeight: FontWeight.bold,
+    color: schemeMain.primary,
   );
 
   // shape for login/signup buttons
