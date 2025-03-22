@@ -11,7 +11,7 @@ abstract class Styles {
     error: Color.fromARGB(255, 255, 0, 0),
     onError: Color.fromARGB(255, 255, 98, 98),
     surface: Color.fromRGBO(236, 236, 236, 1),
-    onSurface: Color.fromRGBO(255, 201, 4, 1)
+    onSurface: Color.fromRGBO(255, 201, 4, 1),
   );
 
   // text style for login/signup buttons 

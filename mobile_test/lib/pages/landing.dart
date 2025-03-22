@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'styles.dart';
+import '../styles.dart';
 
 const landingPagePadding = 50.0;
 final scheme = Styles.schemeMain;
