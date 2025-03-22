@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_test/overlays.dart';
+import 'package:mobile_test/pages/dashboard.dart';
 import '../styles.dart';
 
 final buttonStyle = Styles.yellowButtonStyle;
@@ -25,8 +26,12 @@ class _RegisterPageState extends State<RegisterPage> {
           child: ElevatedButton(
             style: buttonStyle,
             child: const Text('Create Account'),
+            // navigate to dashboard
             onPressed: () {
-              print("dashboard");
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const DashboardPage(title: 'Dashboard',)),
+              );
             },
           )
         ),

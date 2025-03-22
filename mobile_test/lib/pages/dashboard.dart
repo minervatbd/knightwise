@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_test/drawers.dart';
+import 'package:mobile_test/overlays.dart';
 import '../styles.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -14,9 +16,12 @@ class _DashboardPageState extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: null,
-      body: null,
-      bottomNavigationBar: null,
+      appBar: TopBarMenu(),
+      bottomNavigationBar: BottomBarMenu(),
+      drawer: TopBarDrawer(),
+      body: Center(
+        child: Text("Time until foundation exam: 2 minutes UH OH GET STUDYING")
+      ),
     );
   }
 }
