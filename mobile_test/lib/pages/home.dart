@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_test/drawers.dart';
+import 'package:mobile_test/icons.dart';
 import 'package:mobile_test/overlays.dart';
 import 'package:mobile_test/pages/dashboard.dart';
 import 'package:mobile_test/pages/mocktest.dart';
@@ -16,12 +17,18 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int currentPageIndex = 0;
+  NavigationDestinationLabelBehavior labelBehavior = NavigationDestinationLabelBehavior.alwaysHide;
+
+  void refresh(int newIndex) {
+    setState(() {
+      currentPageIndex = newIndex;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: TopBarMenu(),
-      bottomNavigationBar: BottomBarMenu(),
       drawer: TopBarDrawer(),
       body: <Widget>[
         DashboardPage(),
@@ -29,7 +36,7 @@ class _HomePageState extends State<HomePage> {
         MockTestPage(),
         ProgressPage(),
       ][currentPageIndex],
-      
+      bottomNavigationBar: BottomBarMenu(currentPageIndex: currentPageIndex, changeIndex: refresh)
     );
   }
 }

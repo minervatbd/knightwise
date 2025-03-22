@@ -56,15 +56,18 @@ class TopBarMenu extends StatelessWidget implements PreferredSizeWidget {
 class BottomBarMenu extends StatefulWidget {
   const BottomBarMenu({
     super.key,
+    this.currentPageIndex = 0,
+    required this.changeIndex
   });
+
+  final int currentPageIndex;
+  final ValueChanged<int> changeIndex;
 
   @override
   State<BottomBarMenu> createState() => _BottomBarMenuState();
 }
 
 class _BottomBarMenuState extends State<BottomBarMenu> {
-
-  int currentPageIndex = 0;
   NavigationDestinationLabelBehavior labelBehavior = NavigationDestinationLabelBehavior.alwaysHide;
 
   @override
@@ -72,10 +75,10 @@ class _BottomBarMenuState extends State<BottomBarMenu> {
     return NavigationBar(
       backgroundColor: Styles.schemeMain.primary,
       labelBehavior: labelBehavior,
-      selectedIndex: currentPageIndex,
+      selectedIndex: widget.currentPageIndex,
       onDestinationSelected: (int index) {
         setState(() {
-          currentPageIndex = index;
+          widget.changeIndex(index);
         });
       },
       destinations: [
