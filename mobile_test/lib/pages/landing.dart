@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_test/pages/login.dart';
 import '../styles.dart';
 
 const landingPagePadding = 50.0;
@@ -28,7 +29,7 @@ class LandingPage extends StatelessWidget {
               child: Image.asset(
               'assets/homelogo.png'),
             ),
-            // SIGN UP BUTTON
+            // Login BUTTON
             Container(
               height: 50,
               padding: const EdgeInsets.fromLTRB(landingPagePadding, 0, landingPagePadding, 0),
@@ -36,10 +37,14 @@ class LandingPage extends StatelessWidget {
                 style: loginButtonStyle,
                 child: const Text('LOGIN'),
                 onPressed: () {
-                  print("sign up screen shows now");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LoginPage(title: 'Login Page',)),
+                  );
                 },
               )
             ),
+            // signup button
             Container(
               height: 50,
               margin: const EdgeInsets.fromLTRB(0, landingPagePadding/2, 0, 0),
@@ -48,7 +53,7 @@ class LandingPage extends StatelessWidget {
                 style: signupButtonStyle,
                 child: const Text('SIGN UP'),
                 onPressed: () {
-                  print("log in screen shows now");
+                  print("SIGN UP screen shows now");
                 },
               )
             )

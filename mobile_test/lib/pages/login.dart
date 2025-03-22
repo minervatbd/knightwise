@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_test/overlays.dart';
 import '../styles.dart';
+
+final buttonStyle = Styles.yellowButtonStyle;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key, required this.title});
@@ -14,9 +17,20 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: null,
-      body: null,
-      bottomNavigationBar: null,
+      appBar: TopBarBlank(),
+      bottomNavigationBar: BottomBarBlank(),
+      body: Center(
+        child: Container(
+          height: 50,
+          child: ElevatedButton(
+            style: buttonStyle,
+            child: const Text('LOGIN'),
+            onPressed: () {
+              print("dashboard");
+            },
+          )
+        ),
+      ),
     );
   }
 }

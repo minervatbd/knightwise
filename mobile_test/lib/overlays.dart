@@ -145,3 +145,38 @@ class BottomBarMenu extends StatelessWidget {
     );
   }
 }
+
+// blank black top bar for login/register
+class TopBarBlank extends StatelessWidget implements PreferredSizeWidget {
+  const TopBarBlank({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      backgroundColor: Styles.schemeMain.primary,
+      );
+  }
+  
+  @override
+  Size get preferredSize => Size.fromHeight(topBarHeight);
+}
+
+// bottom bar with only ucf logo for login/register
+class BottomBarBlank extends StatelessWidget {
+  const BottomBarBlank({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomAppBar(
+      color: Styles.schemeMain.primary,
+      child: Container(
+        padding:EdgeInsets.all(8),
+        child: Image.asset('assets/horizontalucflogo.png'),
+      ),
+    );
+  }
+}

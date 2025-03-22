@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_test/overlays.dart';
 import '../styles.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -14,7 +15,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: null,
+      appBar: TopBarBlank(),
       body: null,
       bottomNavigationBar: null,
     );
