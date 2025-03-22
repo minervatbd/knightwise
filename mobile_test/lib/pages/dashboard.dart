@@ -20,7 +20,10 @@ class _DashboardPageState extends State<DashboardPage> {
       bottomNavigationBar: BottomBarMenu(),
       drawer: TopBarDrawer(),
       body: Center(
-        child: Text("Time until foundation exam: 2 minutes UH OH GET STUDYING")
+        child: Text(
+          "Time until foundation exam: 2 minutes UH OH GET STUDYING",
+          style: Styles.buttonTextStyle,
+        )
       ),
     );
   }
