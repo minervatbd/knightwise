@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import '../styles.dart';
 
 class TopicSelectPage extends StatefulWidget {
-  const TopicSelectPage({super.key, required this.title});
-
-  final String title;
+  const TopicSelectPage({super.key});
 
   @override
   State<TopicSelectPage> createState() => _TopicSelectPageState();
@@ -13,10 +11,8 @@ class TopicSelectPage extends StatefulWidget {
 class _TopicSelectPageState extends State<TopicSelectPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: null,
-      body: null,
-      bottomNavigationBar: null,
+    return Center(
+      child: null
     );
   }
 }

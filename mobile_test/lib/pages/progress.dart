@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import '../styles.dart';
 
 class ProgressPage extends StatefulWidget {
-  const ProgressPage({super.key, required this.title});
-
-  final String title;
+  const ProgressPage({super.key});
 
   @override
   State<ProgressPage> createState() => _ProgressPageState();
@@ -13,10 +11,8 @@ class ProgressPage extends StatefulWidget {
 class _ProgressPageState extends State<ProgressPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: null,
-      body: null,
-      bottomNavigationBar: null,
+    return Center(
+      child: null
     );
   }
 }

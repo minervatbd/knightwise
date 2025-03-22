@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import '../styles.dart';
 
 class MockTestResultsPage extends StatefulWidget {
-  const MockTestResultsPage({super.key, required this.title});
-
-  final String title;
+  const MockTestResultsPage({super.key});
 
   @override
   State<MockTestResultsPage> createState() => _MockTestResultsPageState();

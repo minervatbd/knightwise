@@ -10,9 +10,9 @@ final signupButtonStyle = Styles.grayButtonStyle;
 
 class LandingPage extends StatelessWidget {
 
-  const LandingPage({super.key, required this.title});
+  const LandingPage({super.key});
 
-  final String title;
+  final String title = "Landing Page";
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,7 @@ class LandingPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const LoginPage(title: 'Login Page',)),
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
                   );
                 },
               )
@@ -58,7 +58,7 @@ class LandingPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const RegisterPage(title: 'Register Page',)),
+                    MaterialPageRoute(builder: (context) => const RegisterPage()),
                   );
                 },
               )

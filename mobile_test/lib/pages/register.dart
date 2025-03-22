@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_test/overlays.dart';
-import 'package:mobile_test/pages/dashboard.dart';
+import 'package:mobile_test/pages/home.dart';
 import '../styles.dart';
 
 final buttonStyle = Styles.yellowButtonStyle;
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key, required this.title});
-
-  final String title;
+  const RegisterPage({super.key});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -30,7 +28,7 @@ class _RegisterPageState extends State<RegisterPage> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const DashboardPage(title: 'Dashboard',)),
+                MaterialPageRoute(builder: (context) => const HomePage()),
               );
             },
           )

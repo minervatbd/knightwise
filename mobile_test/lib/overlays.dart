@@ -53,95 +53,49 @@ class TopBarMenu extends StatelessWidget implements PreferredSizeWidget {
 }
 
 // bottom bar containing four buttons
-class BottomBarMenu extends StatelessWidget {
+class BottomBarMenu extends StatefulWidget {
   const BottomBarMenu({
     super.key,
   });
 
   @override
+  State<BottomBarMenu> createState() => _BottomBarMenuState();
+}
+
+class _BottomBarMenuState extends State<BottomBarMenu> {
+
+  int currentPageIndex = 0;
+  NavigationDestinationLabelBehavior labelBehavior = NavigationDestinationLabelBehavior.alwaysHide;
+
+  @override
   Widget build(BuildContext context) {
-    return BottomAppBar(
-      color: Styles.schemeMain.primary,
-      child: IconTheme(
-        data: IconThemeData(color: Styles.schemeMain.primary),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.all(5),
-              child: Ink(
-                decoration: ShapeDecoration(
-                  color: scheme.secondary,
-                  shape: CircleBorder(),
-                ),
-                // dashboard button
-                child: IconButton(
-                  color: scheme.primary,
-                  icon: NavigationIcons.dashboard,
-                  tooltip: 'Button1',
-                  onPressed: () {
-                    print("Button1");
-                  }
-                )
-              )
-            ),
-            Container(
-              padding: EdgeInsets.all(5),
-              child: Ink(
-                decoration: ShapeDecoration(
-                  color: scheme.secondary,
-                  shape: CircleBorder(),
-                ),
-                // topic selection button
-                child: IconButton(
-                  color: scheme.primary,
-                  icon: NavigationIcons.topicSelection,
-                  tooltip: 'Button2',
-                  onPressed: () {
-                    print("Button2");
-                  }
-                )
-              )
-            ),
-            Container(
-              padding: EdgeInsets.all(5),
-              child: Ink(
-                decoration: ShapeDecoration(
-                  color: scheme.secondary,
-                  shape: CircleBorder(),
-                ),
-                // mock test button
-                child: IconButton(
-                  color: scheme.primary,
-                  icon: NavigationIcons.mockTest,
-                  tooltip: 'Button3',
-                  onPressed: () {
-                    print("Button3");
-                  }
-                )
-              )
-            ),
-            Container(
-              padding: EdgeInsets.all(5),
-              child: Ink(
-                decoration: ShapeDecoration(
-                  color: scheme.secondary,
-                  shape: CircleBorder(),
-                ),
-                // my progress button
-                child: IconButton(
-                  color: scheme.primary,
-                  icon: NavigationIcons.myProgress,
-                  tooltip: 'Button4',
-                  onPressed: () {
-                    print("Button4");
-                  }
-                )
-              )
-            ),
-          ],
-        )
-      )
+    return NavigationBar(
+      backgroundColor: Styles.schemeMain.primary,
+      labelBehavior: labelBehavior,
+      selectedIndex: currentPageIndex,
+      onDestinationSelected: (int index) {
+        setState(() {
+          currentPageIndex = index;
+        });
+      },
+      destinations: [
+        NavigationDestination(
+          icon: NavigationIcons.dashboard,
+          label: "Dashboard" 
+        ),
+        NavigationDestination(
+          icon: NavigationIcons.topicSelection,
+          label: "Topic Selection" 
+        ),
+        NavigationDestination(
+          icon: NavigationIcons.mockTest,
+          label: "Mock Test" 
+        ),
+        NavigationDestination(
+          icon: NavigationIcons.myProgress,
+          label: "My Progress" 
+        ),
+      ],
     );
   }
 }
@@ -180,3 +134,85 @@ class BottomBarBlank extends StatelessWidget {
     );
   }
 }
+
+// moving this here for now
+final oldIconTheme = IconTheme(
+  data: IconThemeData(color: Styles.schemeMain.primary),
+  child: Row(
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    children: <Widget>[
+      Container(
+        padding: EdgeInsets.all(5),
+        child: Ink(
+          decoration: ShapeDecoration(
+            color: scheme.secondary,
+            shape: CircleBorder(),
+          ),
+          // dashboard button
+          child: IconButton(
+            color: scheme.primary,
+            icon: NavigationIcons.dashboard,
+            tooltip: 'Button1',
+            onPressed: () {
+              print("Button1");
+            }
+          )
+        )
+      ),
+      Container(
+        padding: EdgeInsets.all(5),
+        child: Ink(
+          decoration: ShapeDecoration(
+            color: scheme.secondary,
+            shape: CircleBorder(),
+          ),
+          // topic selection button
+          child: IconButton(
+            color: scheme.primary,
+            icon: NavigationIcons.topicSelection,
+            tooltip: 'Button2',
+            onPressed: () {
+              print("Button2");
+            }
+          )
+        )
+      ),
+      Container(
+        padding: EdgeInsets.all(5),
+        child: Ink(
+          decoration: ShapeDecoration(
+            color: scheme.secondary,
+            shape: CircleBorder(),
+          ),
+          // mock test button
+          child: IconButton(
+            color: scheme.primary,
+            icon: NavigationIcons.mockTest,
+            tooltip: 'Button3',
+            onPressed: () {
+              print("Button3");
+            }
+          )
+        )
+      ),
+      Container(
+        padding: EdgeInsets.all(5),
+        child: Ink(
+          decoration: ShapeDecoration(
+            color: scheme.secondary,
+            shape: CircleBorder(),
+          ),
+          // my progress button
+          child: IconButton(
+            color: scheme.primary,
+            icon: NavigationIcons.myProgress,
+            tooltip: 'Button4',
+            onPressed: () {
+              print("Button4");
+            }
+          )
+        )
+      ),
+    ],
+  )
+);

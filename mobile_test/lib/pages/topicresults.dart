@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import '../styles.dart';
 
 class TopicResultsPage extends StatefulWidget {
-  const TopicResultsPage({super.key, required this.title});
-
-  final String title;
+  const TopicResultsPage({super.key});
 
   @override
   State<TopicResultsPage> createState() => _TopicResultsPageState();

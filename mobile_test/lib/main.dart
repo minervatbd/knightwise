@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         colorScheme: scheme,
         
       ),
-      home: const LandingPage(title: 'Flutter Demo Home Page'),
+      home: const LandingPage(),
     );
   }
 }
