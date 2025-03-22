@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mobile_test/overlays.dart';
 import '../styles.dart';
 
+final buttonStyle = Styles.yellowButtonStyle;
+
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key, required this.title});
 
@@ -16,8 +18,19 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: TopBarBlank(),
-      body: null,
-      bottomNavigationBar: null,
+      bottomNavigationBar: BottomBarBlank(),
+      body: Center(
+        child: Container(
+          height: 50,
+          child: ElevatedButton(
+            style: buttonStyle,
+            child: const Text('Create Account'),
+            onPressed: () {
+              print("dashboard");
+            },
+          )
+        ),
+      ),
     );
   }
 }

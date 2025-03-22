@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_test/pages/login.dart';
+import 'package:mobile_test/pages/register.dart';
 import '../styles.dart';
 
 const landingPagePadding = 50.0;
@@ -36,6 +37,7 @@ class LandingPage extends StatelessWidget {
               child: ElevatedButton(
                 style: loginButtonStyle,
                 child: const Text('LOGIN'),
+                // opens login page
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -52,8 +54,12 @@ class LandingPage extends StatelessWidget {
               child: ElevatedButton(
                 style: signupButtonStyle,
                 child: const Text('SIGN UP'),
+                // opens register page
                 onPressed: () {
-                  print("SIGN UP screen shows now");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const RegisterPage(title: 'Register Page',)),
+                  );
                 },
               )
             )
