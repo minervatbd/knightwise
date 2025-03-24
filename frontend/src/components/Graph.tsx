@@ -88,6 +88,7 @@ const Graph: React.FC = () => {
         callbacks: {
           label: function (context: any) {
             const value = context.raw;
+            if (value === 0) return ""; // Don't show tooltip for 0 values
             return `Mastery Level: ${value}%`;
           },
         },
