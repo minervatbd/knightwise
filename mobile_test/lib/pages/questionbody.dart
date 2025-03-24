@@ -23,10 +23,16 @@ class QuestionBody extends StatefulWidget {
     super.key,
     required this.problem,
     required this.status,
+    this.currentPageIndex = 0,
+    required this.changeIndex,
+    required this.changeStatus,
   });
 
   final Problem problem;
   final QuestionBodyStatus status;
+  final int currentPageIndex;
+  final ValueChanged<int> changeIndex;
+  final ValueChanged<QuestionBodyStatus> changeStatus;
 
   @override
   State<QuestionBody> createState() => _QuestionBodyState();

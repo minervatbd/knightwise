@@ -10,23 +10,19 @@ class QuestionSequence extends StatefulWidget {
     required this.problemCount,
     required this.problemList,
     required this.statusList,
-    this.currentPageIndex = 0,
-    required this.changeIndex,
-    required this.changeStatus,
+    
   });
 
   final int problemCount;
   final List<Problem> problemList;
   final List<QuestionBodyStatus> statusList;
-  final int currentPageIndex;
-  final ValueChanged<int> changeIndex;
-  final ValueChanged<QuestionBodyStatus> changeStatus;
 
   @override
   State<QuestionSequence> createState() => _QuestionSequenceState();
 }
 
 class _QuestionSequenceState extends State<QuestionSequence> {
+  int currentPageIndex = 0;
   
   @override
   Widget build(BuildContext context) {
