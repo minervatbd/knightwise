@@ -13,11 +13,11 @@ const AuthPage = () => {
   return (
     <div className="min-h-screen w-screen flex flex-col">
       <Header />
-      <div className="flex flex-1">
-        <div className="w-1/2 flex flex-col items-center justify-center bg-gray-100">
+      <div className="flex flex-1 flex-col md:flex-row">
+      <div className="hidden md:flex w-full md:w-1/2 flex-col items-center justify-center bg-gray-100">
           <PageTitle />
         </div>
-        <div className="w-1/2 flex items-center justify-center p-10">
+        <div className="w-full md:w-1/2 flex items-center justify-center p-10">
           {isSignup ? (
             <Signup onToggle={() => setIsSignup(false)} />
           ) : (
