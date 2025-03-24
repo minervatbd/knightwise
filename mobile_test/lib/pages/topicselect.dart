@@ -19,7 +19,7 @@ List<Problem> generateDummyProblems(int count) {
       "section",
       "category",
       "subcategory",
-      sprintf("question%d", [count]),
+      sprintf("question%d", [x]),
       "answersCorrect",
       "answersWrong",
     ));
