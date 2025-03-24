@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_test/overlays.dart';
 import 'package:mobile_test/pages/login.dart';
 import 'package:mobile_test/pages/register.dart';
 import '../styles.dart';
@@ -17,10 +18,7 @@ class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(title),
-      ),
+      appBar: TopBarBlank(),
       body: Center(
         child: ListView(
           children: <Widget>[
