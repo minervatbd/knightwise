@@ -1,6 +1,6 @@
 // This code is based on Dr.Reinenker's code
 
-const app_name = 'dirediredocks.xyz';
+const app_name = 'www.dirediredocks.xyz';
 
 export function buildPath(route: string): string {  
     if (process.env.NODE_ENV === 'production') {

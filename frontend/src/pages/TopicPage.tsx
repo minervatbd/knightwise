@@ -1,3 +1,4 @@
+// this page displays the available topics
 import React from "react";
 import Layout from "../components/Layout";
 import TopicCard from "../components/TopicCard";

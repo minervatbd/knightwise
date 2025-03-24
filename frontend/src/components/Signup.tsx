@@ -101,20 +101,26 @@ const Signup: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
               required
             />
           </div>
-
+          
           {/* username */}
-          <div className="flex items-center space-x-6 w-full">
-            <label className="w-2/5 text-lg font-semibold text-gray-700">
-              Username
-            </label>
-            <input
-              type="text"
-              placeholder="Username"
-              className="w-3/5 px-6 py-3 text-lg border border-gray-300 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
+          <div className="flex flex-col w-full">
+            <div className="flex items-center space-x-6 w-full">
+              <label className="w-2/5 text-lg font-semibold text-gray-700">
+                Username
+              </label>
+              <input
+                type="text"
+                placeholder="Username"
+                className="w-3/5 px-6 py-3 text-lg border border-gray-300 bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+            </div>
+
+            <p className="text-sm text-gray-600 mt-1 ml-[40%]">
+              Username must be at least 5 characters
+            </p>
           </div>
 
           {/* email */}

@@ -6,7 +6,9 @@ import DashBoardPage from "./pages/DashboardPage";
 import TopicPage from "./pages/TopicPage";
 import MockTestPage from "./pages/MockTestPage";
 import MyProgessPage from "./pages/MyProgressPage";
-import ProblemViewPage from "./pages/ProblemViewPage";
+import TopicTestPage from "./pages/TopicTestPage"
+// import ProblemViewPage from "./pages/ProblemViewPage";
+
 
 function App() {
   return (
@@ -15,9 +17,10 @@ function App() {
         <Route path="/" element={<AuthPage />} />
         <Route path="/dashboard" element={<DashBoardPage />} />
         <Route path="/topic-practice" element={<TopicPage />} />
+        <Route path="/topic-practice/:topicName" element={<TopicTestPage />} />
         <Route path="/mock-test" element={<MockTestPage />} />
         <Route path="/my-progress" element={<MyProgessPage />} />
-        <Route path="/problem-view" element={<ProblemViewPage />} />
+        {/* <Route path="/problem-view" element={<ProblemViewPage />} /> */}
       </Routes>
     </Router>
   );
