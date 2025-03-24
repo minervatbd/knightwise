@@ -5,9 +5,11 @@ abstract class Styles {
   static const schemeMain = ColorScheme(
     brightness: Brightness.light, 
     primary: Color.fromRGBO(0, 0, 0, 1), 
-    onPrimary: Color.fromRGBO(0, 0, 0, 1), 
-    secondary: Color.fromRGBO(255, 201, 4, 1), 
-    onSecondary: Color(0xFFB1B1B1), 
+    onPrimary: Color.fromRGBO(255, 201, 4, 1),
+    secondary:  Color.fromRGBO(255, 201, 4, 1),
+    onSecondary: Color.fromRGBO(0, 0, 0, 1), 
+    tertiary: Color(0xFFB1B1B1),
+    onTertiary: Color.fromRGBO(0, 0, 0, 1),
     error: Color.fromARGB(255, 255, 0, 0),
     onError: Color.fromARGB(255, 255, 98, 98),
     surface: Color.fromRGBO(236, 236, 236, 1),
@@ -18,7 +20,7 @@ abstract class Styles {
   static final buttonTextStyle = TextStyle(
     fontSize: 24,
     fontWeight: FontWeight.bold,
-    color: schemeMain.primary,
+    color: schemeMain.onSecondary,
   );
 
   // shape for login/signup buttons
@@ -34,7 +36,7 @@ abstract class Styles {
   );
 
   static final grayButtonStyle = ElevatedButton.styleFrom(
-      backgroundColor: schemeMain.onSecondary,
+      backgroundColor: schemeMain.tertiary,
       shape: buttonShape,
       textStyle: buttonTextStyle
   );

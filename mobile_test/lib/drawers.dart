@@ -4,78 +4,75 @@ import 'icons.dart';
 
 const scheme = Styles.schemeMain;
 
-class TopBarDrawer extends StatelessWidget {
+class Destination {
+  const Destination(
+      this.label,
+      this.icon,
+      this.selectedIcon
+    );
+  
+  final String label;
+  final Widget icon;
+  final Widget selectedIcon;
+}
+
+const List<Destination> destinations = <Destination>[
+  Destination('Dashboard', NavigationIcons.dashboard, NavigationIcons.dashboardSelected),
+  Destination('Topic Practice', NavigationIcons.topicSelection, NavigationIcons.topicSelectionSelected),
+  Destination('Mock Test', NavigationIcons.mockTest, NavigationIcons.mockTestSelected),
+  Destination('My Progress', NavigationIcons.myProgress, NavigationIcons.myProgressSelected),
+];
+
+class TopBarDrawer extends StatefulWidget {
   const TopBarDrawer({
     super.key,
+    this.currentPageIndex = 0,
+    required this.changeIndex,
   });
 
+  final int currentPageIndex;
+  final ValueChanged<int> changeIndex;
+
+  @override
+  State<TopBarDrawer> createState() => _TopBarDrawerState();
+}
+
+class _TopBarDrawerState extends State<TopBarDrawer> {
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-        backgroundColor: Colors.white,
-        child: ListView(
-    padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
-    children: <Widget>[
-      // dashboard
-      DrawerHeader(
-        decoration: BoxDecoration(color: scheme.secondary),
-        child: Text('firstname lastname', style: TextStyle(color: scheme.primary, fontSize: 24)),
-      ),
-      ListTile(
-        leading: NavigationIcons.dashboard,
-        iconColor: scheme.primary,
-        textColor: scheme.primary,
-        tileColor: scheme.surface,
-        title: const Text('Dashboard'),
-        onTap: () {
-          print("dashboard");
-        }
-      ),
-      // topic practice
-      ListTile(
-        leading: NavigationIcons.topicSelection,
-        iconColor: scheme.primary,
-        textColor: scheme.primary,
-        tileColor: scheme.surface,
-        title: const Text('Topic Practice'),
-        onTap: () {
-          print("topic practice");
-        }
-      ),
-      // mock test
-      ListTile(
-        leading: NavigationIcons.mockTest,
-        iconColor: scheme.primary,
-        textColor: scheme.primary,
-        tileColor: scheme.surface,
-        title: const Text('Mock Test'),
-        onTap: () {
-          print("mock test");
-        }
-      ),
-      // my progress
-      ListTile(
-        leading: NavigationIcons.myProgress,
-        iconColor: scheme.primary,
-        textColor: scheme.primary,
-        tileColor: scheme.surface,
-        title: const Text('My Progress'),
-        onTap: () {
-          print("my progress");
-        }
-      ),
-      // log out
-      ListTile(
-        leading: NavigationIcons.logout,
-        iconColor: scheme.primary,
-        textColor: scheme.primary,
-        title: const Text('Logout'),
-        onTap: () {
-          print("logout");
-        }
-      )
-    ]
-        ) 
-      );
+    return NavigationDrawer(
+      backgroundColor: Colors.white,
+      onDestinationSelected: (int index) {
+        setState(() {
+          widget.changeIndex(index);
+        });
+      },
+      selectedIndex: widget.currentPageIndex,
+      children: <Widget>[
+        // dashboard
+        DrawerHeader(
+          decoration: BoxDecoration(color: scheme.secondary),
+          child: Text('firstname lastname', style: TextStyle(color: scheme.primary, fontSize: 24)),
+        ),
+        ...destinations.map((Destination destination) {
+          return NavigationDrawerDestination(
+            label: Text(destination.label, style: TextStyle(color: scheme.onSecondary)),
+            icon: destination.icon,
+            backgroundColor: scheme.surface,
+            selectedIcon: destination.selectedIcon,
+          );
+        }),
+        // log out
+        ListTile(
+          leading: NavigationIcons.logout,
+          iconColor: scheme.primary,
+          textColor: scheme.primary,
+          title: const Text('Logout'),
+          onTap: () {
+            print("logout");
+          }
+        )
+      ]
+    );
   }
 }

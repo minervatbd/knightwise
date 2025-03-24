@@ -12,7 +12,8 @@ class _ProgressPageState extends State<ProgressPage> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: null
+      child: Text("good job on the progress :)",
+        style: Styles.buttonTextStyle,)
     );
   }
 }

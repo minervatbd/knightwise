@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: TopBarMenu(),
-      drawer: TopBarDrawer(),
+      drawer: TopBarDrawer(currentPageIndex: currentPageIndex, changeIndex: refresh),
       body: <Widget>[
         DashboardPage(),
         TopicSelectPage(),

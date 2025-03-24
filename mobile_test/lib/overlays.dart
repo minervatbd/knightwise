@@ -84,18 +84,22 @@ class _BottomBarMenuState extends State<BottomBarMenu> {
       destinations: [
         NavigationDestination(
           icon: NavigationIcons.dashboard,
+          selectedIcon: NavigationIcons.dashboardSelected,
           label: "Dashboard" 
         ),
         NavigationDestination(
           icon: NavigationIcons.topicSelection,
+          selectedIcon: NavigationIcons.topicSelectionSelected,
           label: "Topic Selection" 
         ),
         NavigationDestination(
           icon: NavigationIcons.mockTest,
+          selectedIcon: NavigationIcons.mockTestSelected,
           label: "Mock Test" 
         ),
         NavigationDestination(
           icon: NavigationIcons.myProgress,
+          selectedIcon: NavigationIcons.myProgressSelected,
           label: "My Progress" 
         ),
       ],

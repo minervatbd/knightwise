@@ -12,7 +12,8 @@ class _TopicSelectPageState extends State<TopicSelectPage> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: null
+      child: Text("select topic dawg",
+        style: Styles.buttonTextStyle,)
     );
   }
 }

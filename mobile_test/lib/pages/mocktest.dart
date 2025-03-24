@@ -12,7 +12,8 @@ class _MockTestPageState extends State<MockTestPage> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: null
+      child: Text("Take mock test now now now",
+        style: Styles.buttonTextStyle,)
     );
   }
 }
