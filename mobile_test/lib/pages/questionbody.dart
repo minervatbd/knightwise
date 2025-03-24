@@ -57,3 +57,29 @@ class _QuestionBodyState extends State<QuestionBody> {
     );
   }
 }
+
+class QuestionBarMenu extends StatefulWidget {
+  const QuestionBarMenu({
+    super.key,
+    required this.problemCount,
+    this.currentPageIndex = 0,
+    required this.changeIndex,
+  });
+
+  final int problemCount;
+  final int currentPageIndex;
+  final ValueChanged<int> changeIndex;
+
+  @override
+  State<QuestionBarMenu> createState() => _QuestionBarMenuState();
+}
+
+class _QuestionBarMenuState extends State<QuestionBarMenu> {
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomAppBar(
+
+    );
+  }
+}
