@@ -23,6 +23,18 @@ class QuestionSequence extends StatefulWidget {
 
 class _QuestionSequenceState extends State<QuestionSequence> {
   int currentPageIndex = 0;
+
+  void refreshIndex(int newIndex) {
+    setState(() {
+      currentPageIndex = newIndex;
+    });
+  }
+
+  void refreshStatus(QuestionBodyStatus newStatus) {
+    setState(() {
+      widget.statusList[currentPageIndex] = newStatus;
+    });
+  }
   
   @override
   Widget build(BuildContext context) {

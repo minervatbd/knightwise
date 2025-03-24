@@ -43,7 +43,17 @@ class _QuestionBodyState extends State<QuestionBody> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: null,
+      child: ListView(
+        children: <Widget>[
+          Text(widget.problem.question),
+          ElevatedButton(
+            onPressed: () {
+              widget.changeStatus(QuestionBodyStatus(true));
+            },
+            child: Text("press to answer")
+          ),
+        ]
+      ),
     );
   }
 }
