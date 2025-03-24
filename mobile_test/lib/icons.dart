@@ -11,4 +11,6 @@ abstract class NavigationIcons {
   static const myProgress = Icon(Icons.bar_chart_outlined);
   static const myProgressSelected = Icon(Icons.bar_chart);
   static const logout = Icon(Icons.logout);
+  static const previous = Icon(Icons.arrow_back);
+  static const next = Icon(Icons.arrow_forward);
 } 

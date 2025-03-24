@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_test/icons.dart';
 import 'package:mobile_test/models.dart';
 
 // this class will compose a list that stores info abt each question's status
@@ -75,11 +76,58 @@ class QuestionBarMenu extends StatefulWidget {
 }
 
 class _QuestionBarMenuState extends State<QuestionBarMenu> {
+  bool previousEnabled = false;
+  bool nextEnabled = true;
+  bool submitEnabled = false;
+
+  void switchButtons () {
+    if (widget.currentPageIndex == 0) {
+      previousEnabled = false;
+    } else {
+      previousEnabled = true;
+    }
+    if (widget.currentPageIndex == widget.problemCount - 1) {
+      nextEnabled = false;
+      submitEnabled = true;
+    } else {
+      nextEnabled = true;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
-
+      child: Row(
+        children: [
+          // previous
+          IconButton.filled(
+            onPressed: previousEnabled?() {
+              setState(() {
+                widget.changeIndex(widget.currentPageIndex - 1);
+              });
+              switchButtons();
+            }: null,
+            icon: NavigationIcons.previous
+          ),
+          // submit quiz
+          ElevatedButton(
+            onPressed: submitEnabled?() {
+              Navigator.pop(context);
+            }: null,
+            child: Text("Submit")
+          ),
+          // next
+          IconButton.filled(
+            onPressed: nextEnabled?() {
+              setState(() {
+                widget.changeIndex(widget.currentPageIndex + 1);
+              });
+              switchButtons();
+            }: null,
+            icon: NavigationIcons.next
+          ),
+        ],
+      )
     );
   }
 }
