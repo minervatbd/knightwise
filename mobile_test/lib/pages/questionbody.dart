@@ -11,14 +11,6 @@ class QuestionBodyStatus {
   bool isSubmitted = false;
 }
 
-// returns a list filled with default statuses
-List<QuestionBodyStatus> generateStatusList(int count) {
-  return List<QuestionBodyStatus>.filled(
-    count,
-    QuestionBodyStatus(false)
-  );
-}
-
 class QuestionBody extends StatefulWidget {
   const QuestionBody({
     super.key,
