@@ -23,6 +23,7 @@ List<Problem> generateDummyProblems(int count) {
       "answersCorrect",
       "answersWrong",
     ));
+    x++;
   }
 
   return problemsOut;
