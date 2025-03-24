@@ -70,10 +70,85 @@ const processProgressData = (answers) => {
   return progress;
 };
 
+// GET Progress Data Route
+router.get("/messageData", authMiddleware, async (req, res) => {
+  try {
+    const userId = req.user._id;
+
+    // Fetch all answers from the user
+    const userAnswers = await Answer.find({ user_id: userId });
+
+    // Process history and mastery levels
+    const history = userAnswers.map(({ datetime, topic }) => ({
+      datetime,
+      topic,
+    }));
+
+    // Compute mastery levels
+    const mastery = {};
+    userAnswers.forEach(({ topic, isCorrect }) => {
+      if (!mastery[topic]) {
+        mastery[topic] = { correct: 0, total: 0 };
+      }
+      mastery[topic].total += 1;
+      if (isCorrect) {
+        mastery[topic].correct += 1;
+      }
+    });
+
+    // Convert mastery to percentage
+    const masteryLevels = {};
+    for (const topic in mastery) {
+      const { correct, total } = mastery[topic];
+      masteryLevels[topic] = Math.round((correct / total) * 100);
+    }
+
+    // Calculate streak
+    const today = new Date().toDateString();
+    console.log("today is ", today);
+    const uniqueDays = new Set();
+    userAnswers.forEach(({ datetime }) => {
+      console.log("datetime is ", datetime);
+      uniqueDays.add(new Date(datetime).toDateString());
+    });
+
+    // Determine consecutive streak
+    let streak = 0;
+    const sortedDates = [...uniqueDays]
+      .map(dateStr => new Date(dateStr)) // Convert strings to Date objects
+      .sort((a, b) => b - a) // Sort by date in descending order (most recent first)
+      .map(date => date.toDateString()); // Convert back to strings for the final output
+
+    console.log("sortedDates is ", sortedDates);
+    const now = new Date(today);
+
+    for (const dateStr of sortedDates) {
+      console.log("dateStr is ", dateStr);
+      const entryDate = new Date(dateStr);
+      const diff = Math.floor((now - entryDate) / (1000 * 60 * 60 * 24));
+      if (diff === streak) {
+        streak++;
+        console.log("streak incremented to ", streak);
+      } else {
+        break;
+      }
+    }
+
+    console.log("Mastery levels: ", masteryLevels);
+    console.log("Streak: ", streak);
+    console.log("History: ", history);
+    res.status(200).json({ history, mastery: masteryLevels, streak });
+  } catch (error) {
+    console.error("Error fetching progress:", error);
+    res.status(500).json({ message: "Server Error: Unable to fetch progress data" });
+  }
+});
+
 // History endpoint with pagination
 router.get('/history', authMiddleware, async (req, res) => {
   try {
     const userId = req.user.id;
+    console.log("User ID is ", userId);
     
     // Pagination logic: default to page 1, limit to 10 results per page
     const page = parseInt(req.query.page) || 1;
@@ -90,6 +165,7 @@ router.get('/history', authMiddleware, async (req, res) => {
 
     // Count the total number of entries for pagination
     const totalEntries = await Answer.countDocuments({ user_id: new mongoose.Types.ObjectId(userId) });
+    console.log("totalEntries is ", totalEntries);
 
     res.status(200).json({
       history,
