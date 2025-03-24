@@ -6,7 +6,7 @@ import { buildPath } from "./Path";
 
 // onToggle: move to register form
 const Login: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -17,10 +17,12 @@ const Login: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
     setError("");
     setSuccessMessage("");
 
+    console.log("Sending login data:", { username, password });
+
     try {
       // send request to server
       const response = await axios.post(buildPath("api/auth/login"), {
-        email,
+        username,
         password,
       });
 
@@ -51,27 +53,32 @@ const Login: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
   return (
     <div className="flex flex-col items-center">
       <div className="bg-gray-100 p-12 rounded-xl shadow-lg w-full max-w-2xl min-h-[500px] flex flex-col items-center justify-center">
-        <h2 className="text-5xl font-bold text-center text-gray-800 mb-15">Sign In</h2>
-  
+        <h2 className="text-5xl font-bold text-center text-gray-800 mb-15">
+          Sign In
+        </h2>
+
         {/* Login form */}
         <form onSubmit={handleLogin} className="space-y-4 w-full max-w-lg">
-          
-          {/* email */}
+          {/* username */}
           <div className="flex items-center space-x-6 w-full">
-            <label className="w-1/3 text-lg font-semibold text-gray-700">Email</label>
+            <label className="w-1/3 text-lg font-semibold text-gray-700">
+              Username
+            </label>
             <input
-              type="email"
-              placeholder="Enter your email"
+              type="text"
+              placeholder="Enter your username"
               className="w-2/3 px-6 py-4 text-lg border border-gray-300 bg-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               required
             />
           </div>
-  
+
           {/* password */}
           <div className="flex items-center space-x-6 w-full">
-            <label className="w-1/3 text-lg font-semibold text-gray-700">Password</label>
+            <label className="w-1/3 text-lg font-semibold text-gray-700">
+              Password
+            </label>
             <input
               type="password"
               placeholder="Enter your password"
@@ -81,7 +88,7 @@ const Login: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
               required
             />
           </div>
-  
+
           {/* button */}
           <button
             type="submit"
@@ -90,7 +97,7 @@ const Login: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
             LOGIN
           </button>
         </form>
-  
+
         {/* display message */}
         {error && (
           <p className="text-red-500 text-lg text-center mt-2">{error}</p>
@@ -100,18 +107,28 @@ const Login: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
             {successMessage}
           </p>
         )}
-  
+
         {/* move to the signup */}
         <p className="text-center text-base text-gray-600 mt-4">
           Not registered?{" "}
           <button onClick={onToggle} className="text-blue-500 hover:underline">
-            Create an account.
+            Create an account
+          </button>
+        </p>
+
+        {/* password reset */}
+        <p className="text-center text-base text-gray-600 mt-4">
+          Forgot password?{" "}
+          <button
+            onClick={() => navigate("/forgot-password")}
+            className="text-blue-500 hover:underline"
+          >
+            Reset it here
           </button>
         </p>
       </div>
     </div>
   );
-  
 };
 
 export default Login;
