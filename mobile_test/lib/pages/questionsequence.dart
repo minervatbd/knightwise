@@ -38,10 +38,23 @@ class _QuestionSequenceState extends State<QuestionSequence> {
   
   @override
   Widget build(BuildContext context) {
+    List<QuestionBody> questions = List<QuestionBody>.empty(growable: true);
+
+    for (int x = 0; x < widget.problemCount; x++) {
+      questions.add(
+        QuestionBody(
+          problem: widget.problemList[x],
+          status: widget.statusList[x],
+          changeIndex: refreshIndex,
+          changeStatus: refreshStatus,
+        )
+      );
+    }
+
     return Scaffold(
       appBar: TopBarBlank(),
-      body: null,
-      bottomNavigationBar: null,
+      body: questions[currentPageIndex],
+      bottomNavigationBar: QuestionBarMenu(problemCount: widget.problemCount, changeIndex: refreshIndex),
     );
   }
 }
