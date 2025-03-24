@@ -5,7 +5,7 @@ import 'package:mobile_test/models.dart';
 import 'package:mobile_test/pages/questionsequence.dart';
 import '../styles.dart';
 
-const int testProblemCount = 10;
+const int testProblemCount = 6;
 
 // generates a list of dummy problems for test purposes
 List<Problem> generateDummyProblems(int count) {
@@ -19,7 +19,7 @@ List<Problem> generateDummyProblems(int count) {
       "section",
       "category",
       "subcategory",
-      sprintf("question%d", [x]),
+      sprintf("question%d", [x+1]),
       "answersCorrect",
       "answersWrong",
     ));

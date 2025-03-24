@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_test/icons.dart';
 import 'package:mobile_test/models.dart';
+import '../styles.dart';
+
+const scheme = Styles.schemeMain;
 
 // this class will compose a list that stores info abt each question's status
 class QuestionBodyStatus {
@@ -38,8 +41,9 @@ class _QuestionBodyState extends State<QuestionBody> {
     return Center(
       child: ListView(
         children: <Widget>[
-          Text(widget.problem.question),
+          Text(widget.problem.question, style: Styles.buttonTextStyle),
           ElevatedButton(
+            style: Styles.yellowButtonStyle,
             onPressed: () {
               widget.changeStatus(QuestionBodyStatus(true));
             },
@@ -68,55 +72,70 @@ class QuestionBarMenu extends StatefulWidget {
 }
 
 class _QuestionBarMenuState extends State<QuestionBarMenu> {
-  bool previousEnabled = false;
-  bool nextEnabled = true;
-  bool submitEnabled = false;
+  bool _previousEnabled = false;
+  bool _nextEnabled = true;
+  bool _submitEnabled = false;
+
+  int index = 0;
 
   void switchButtons () {
-    if (widget.currentPageIndex == 0) {
-      previousEnabled = false;
+    if (index == widget.problemCount - 1) {
+      _nextEnabled = false;
+      _submitEnabled = true;
     } else {
-      previousEnabled = true;
+      _nextEnabled = true;
     }
-    if (widget.currentPageIndex == widget.problemCount - 1) {
-      nextEnabled = false;
-      submitEnabled = true;
+    if (index == 0) {
+      _previousEnabled = false;
     } else {
-      nextEnabled = true;
+      _previousEnabled = true;
     }
+  }
+
+  void handlePreviousButton () {
+    index--;
+
+    setState(() {
+      switchButtons();
+      widget.changeIndex(index);
+    });
+  }
+
+  void handleNextButton () {
+    index++;
+
+    setState(() {
+      switchButtons();
+      widget.changeIndex(index);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
+      color: scheme.primary,
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           // previous
-          IconButton.filled(
-            onPressed: previousEnabled?() {
-              setState(() {
-                widget.changeIndex(widget.currentPageIndex - 1);
-              });
-              switchButtons();
-            }: null,
-            icon: NavigationIcons.previous
+          ElevatedButton(
+            style: Styles.yellowButtonStyle,
+            onPressed: _previousEnabled ? handlePreviousButton : null,
+            child: NavigationIcons.previous
           ),
           // submit quiz
           ElevatedButton(
-            onPressed: submitEnabled?() {
+            style: Styles.yellowButtonStyle,
+            onPressed: _submitEnabled?() {
               Navigator.pop(context);
             }: null,
-            child: Text("Submit")
+            child: Text("End")
           ),
           // next
-          IconButton.filled(
-            onPressed: nextEnabled?() {
-              setState(() {
-                widget.changeIndex(widget.currentPageIndex + 1);
-              });
-              switchButtons();
-            }: null,
-            icon: NavigationIcons.next
+          ElevatedButton(
+            style: Styles.yellowButtonStyle,
+            onPressed: _nextEnabled ? handleNextButton : null,
+            child: NavigationIcons.next
           ),
         ],
       )
