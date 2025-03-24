@@ -1,24 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_test/models.dart';
 import 'package:mobile_test/overlays.dart';
+import 'package:mobile_test/pages/questionbody.dart';
 import '../styles.dart';
-
-// this class will compose a list that stores info abt each question's status
-class QuestionPageStatus {
-  QuestionPageStatus(
-    this.isSubmitted,
-  );
-
-  bool isSubmitted = false;
-}
-
-// returns a list filled with default statuses
-List<QuestionPageStatus> generateStatusList(int count) {
-  return List<QuestionPageStatus>.filled(
-    count,
-    QuestionPageStatus(false)
-  );
-}
 
 class QuestionSequence extends StatefulWidget {
   const QuestionSequence({
@@ -33,10 +17,10 @@ class QuestionSequence extends StatefulWidget {
 
   final int problemCount;
   final List<Problem> problemList;
-  final List<QuestionPageStatus> statusList;
+  final List<QuestionBodyStatus> statusList;
   final int currentPageIndex;
   final ValueChanged<int> changeIndex;
-  final ValueChanged<QuestionPageStatus> changeStatus;
+  final ValueChanged<QuestionBodyStatus> changeStatus;
 
   @override
   State<QuestionSequence> createState() => _QuestionSequenceState();
