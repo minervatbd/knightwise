@@ -3,11 +3,8 @@ import logo from "../assets/ucflogo.png";
 import { Menu } from "lucide-react";
 import { useLocation } from "react-router-dom";
 
-type HeaderProps = {
-  onMenuClick?: () => void;
-};
 
-const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
+const Header: React.FC<{ onMenuClick?: () => void }> = ({ onMenuClick }) => {
 
   // collapse sidebar on small screens 
   // but hide sidebar when logging in/signing up
