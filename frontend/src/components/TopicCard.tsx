@@ -34,6 +34,7 @@ const TopicCard: React.FC = () => {
   };
 
   return (
+    // Topic card arrangement change depending on screen size
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 px-4 py-6 justify-items-center w-full max-w-6xl mx-auto">
       {topics.map((topic) => (
         <button
