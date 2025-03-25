@@ -7,7 +7,9 @@ import TopicPage from "./pages/TopicPage";
 import MockTestPage from "./pages/MockTestPage";
 import MyProgessPage from "./pages/MyProgressPage";
 import TopicTestPage from "./pages/TopicTestPage"
-// import ProblemViewPage from "./pages/ProblemViewPage";
+import ForgotPassword from "./components/ForgetPassword";
+import ResetPassword from "./components/ResetPassword"; 
+import ProblemViewPage from "./pages/ProblemViewPage";
 
 
 function App() {
@@ -20,7 +22,9 @@ function App() {
         <Route path="/topic-practice/:topicName" element={<TopicTestPage />} />
         <Route path="/mock-test" element={<MockTestPage />} />
         <Route path="/my-progress" element={<MyProgessPage />} />
-        {/* <Route path="/problem-view" element={<ProblemViewPage />} /> */}
+        <Route path="/problem-view" element={<ProblemViewPage />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/" element={<ResetPassword />} />
       </Routes>
     </Router>
   );
