@@ -61,7 +61,6 @@ const TopicTestPage: React.FC = () => {
   const [showResult, setShowResult] = useState(false);
   const navigate = useNavigate();
 
-  // need an API that can retrieve questions based on a topic or section
   useEffect(() => {
     if (topicName?.toUpperCase() === "SORTING") {
       const withOptions = dummyProblems.map((p) => ({
@@ -74,8 +73,6 @@ const TopicTestPage: React.FC = () => {
     }
   }, [topicName]);
 
-  // Check whether the answer is correct or not
-  // update the score and the status
   const handleSubmit = () => {
     if (!selectedAnswer) return;
     const current = problems[currentIndex];
@@ -84,7 +81,6 @@ const TopicTestPage: React.FC = () => {
     setAnswered(true);
   };
 
-  // show the next question or display the result
   const handleNext = () => {
     setSelectedAnswer(null);
     setAnswered(false);
@@ -95,38 +91,40 @@ const TopicTestPage: React.FC = () => {
     }
   };
 
-  // if the question doesn't exist
   if (!problems.length) {
     return (
       <Layout>
-        <div className="text-center text-2xl mt-20 font-semibold text-gray-700">
+        <div className="text-center text-xl sm:text-2xl mt-20 font-semibold text-gray-700">
           Problem not found
         </div>
       </Layout>
     );
   }
 
-  // after finishing all the questions, display the number of correct answers
-  // then, choose whether to select another topic or take a mock test
   if (showResult) {
+    const percentage = (correctCount / problems.length) * 100;
     return (
       <Layout>
-        <div className="text-center mt-56">
-          <h1 className="text-6xl font-bold mb-4">Quiz Completed!</h1>
-          <p className="text-2xl font-medium mb-2">
+        <div className="flex flex-col justify-center items-center min-h-screen px-4 sm:px-8 py-8 text-center">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black mb-4 sm:mb-6">
+            Quiz Completed!
+          </h1>
+          <p className="text-lg sm:text-xl md:text-2xl mb-4 sm:mb-6">
             You got {correctCount} out of {problems.length} question correct!
           </p>
-          <p className="text-2xl mb-6">Great job!</p>
-          <div className="flex justify-center space-x-6">
+          <p className="text-lg sm:text-xl md:text-2xl mb-4 sm:mb-6 font-bold">
+            {percentage < 50 ? "Keep practicing!" : "Great job!"}
+          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
             <button
               onClick={() => navigate("/topic-practice")}
-              className="bg-yellow-400 hover:bg-yellow-500 text-black px-6 py-3 font-semibold rounded-full shadow"
+              className="bg-yellow-400 hover:bg-yellow-500 text-black px-6 py-3 text-sm sm:text-base font-semibold rounded-full shadow"
             >
               Go to different topic
             </button>
             <button
               onClick={() => navigate("/mock-test")}
-              className="bg-yellow-400 hover:bg-yellow-500 text-black px-6 py-3 font-semibold rounded-full shadow"
+              className="bg-yellow-400 hover:bg-yellow-500 text-black px-6 py-3 text-sm sm:text-base font-semibold rounded-full shadow"
             >
               Go to mock test
             </button>
@@ -138,34 +136,35 @@ const TopicTestPage: React.FC = () => {
 
   const current = problems[currentIndex];
 
-  // show question
   return (
     <Layout>
-      <div className="max-w-5xl mx-auto p-8 mt-20">
-        {/* top: subcategory, exam date */}
-        <div className="flex justify-between mb-6">
-          <h1 className="text-5xl font-bold text-gray-900 flex items-center gap-4">
-            <span>{current.subcategory}</span>
-            <span className="text-2xl text-gray-500 font-normal">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 md:px-8 py-8 sm:py-12 mt-10 sm:mt-16">
+        {/* Header: subcategory + date + number */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+          <h1 className="text-xl sm:text-3xl md:text-5xl font-bold text-gray-900">
+            {current.subcategory}
+            <span className="block text-sm sm:text-xl md:text-2xl text-gray-500 font-normal">
               (Exam Date: {current.exam_id})
             </span>
           </h1>
-          <p className="text-2xl font-medium">
+          <p className="text-sm sm:text-lg md:text-xl font-medium">
             Question {currentIndex + 1} of {problems.length}
           </p>
         </div>
 
-        {/* content: question, multiple chioce, and summit button */}
+        {/* Question */}
         <div className="mb-4">
-          <h2 className="text-2xl font-bold mb-2">
+          <h2 className="text-base sm:text-xl md:text-2xl font-bold mb-2">
             Q{currentIndex + 1}. {current.question}
           </h2>
         </div>
+
+        {/* Options */}
         <div className="space-y-3">
           {current.options.map((ans: string, idx: number) => (
             <label
               key={idx}
-              className={`block p-4 rounded-lg border transition cursor-pointer text-xl ${
+              className={`block p-3 sm:p-4 rounded-lg border transition cursor-pointer text-sm sm:text-lg md:text-xl ${
                 selectedAnswer === ans
                   ? "bg-yellow-100 border-yellow-500"
                   : "bg-white border-gray-300 hover:bg-gray-50"
@@ -183,27 +182,29 @@ const TopicTestPage: React.FC = () => {
             </label>
           ))}
         </div>
-        <div className="mt-6 flex space-x-4 text-xl">
+
+        {/* Buttons */}
+        <div className="mt-6 flex space-x-4">
           {!answered ? (
             <button
               onClick={handleSubmit}
-              className="bg-yellow-600 hover:bg-yellow-700 text-white px-6 py-3 rounded shadow"
+              className="bg-yellow-600 hover:bg-yellow-700 text-white px-6 py-3 rounded shadow text-sm sm:text-base md:text-lg"
             >
               Submit
             </button>
           ) : (
             <button
               onClick={handleNext}
-              className="bg-yellow-400 hover:bg-yellow-500 text-black px-6 py-3 rounded shadow"
+              className="bg-yellow-400 hover:bg-yellow-500 text-black px-6 py-3 rounded shadow text-sm sm:text-base md:text-lg"
             >
               {currentIndex + 1 === problems.length ? "Result" : "Next"}
             </button>
           )}
         </div>
 
-        {/* bottom: display correct answer */}
+        {/* Feedback */}
         {answered && (
-          <div className="mt-6 p-4 bg-gray-100 text-center rounded text-lg font-medium">
+          <div className="mt-6 p-4 bg-gray-100 text-center rounded text-sm sm:text-base md:text-lg font-medium">
             {selectedAnswer === current.answerCorrect ? (
               <p className="text-black">Correct answer!</p>
             ) : (
