@@ -56,20 +56,19 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="h-full w-72 bg-gray-100 p-6 shadow-lg flex flex-col">
-      
-      {/* display first and last name */}
-      <h1 className="text-2xl font-bold pt-10 mb-10 text-center">
+    <div className="h-full w-72 bg-gray-100 p-4 sm:p-6 shadow-lg flex flex-col">
+      {/* user name */}
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold pt-6 sm:pt-10 mb-6 sm:mb-10 text-center">
         {LoggedInName()}
       </h1>
 
-      {/* display navbar and link to select section */}
+      {/* menu*/}
       <nav className="flex-1 overflow-y-auto">
         {menuItems.map((item) => (
           <Link
             key={item.name}
             to={item.path}
-            className={`flex items-center gap-4 p-4 rounded-lg mb-3 text-xl transition-colors cursor-pointer ${
+            className={`flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg mb-2 sm:mb-3 text-base sm:text-lg md:text-xl transition-colors cursor-pointer ${
               (item.path === "/topic-practice" &&
                 location.pathname.includes("/topic")) ||
               location.pathname.startsWith(item.path)
@@ -83,13 +82,13 @@ const Sidebar = () => {
         ))}
       </nav>
 
-      {/* logout button */}
+      {/* logout*/}
       <button
-        className="flex items-center gap-4 p-4 mt-auto rounded-lg text-xl text-gray-700 bg-white shadow-md border border-gray-300 hover:bg-gray-200 transition-all"
+        className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 mt-auto rounded-lg text-base sm:text-lg md:text-xl text-gray-700 bg-white shadow-md border border-gray-300 hover:bg-gray-200 transition-all"
         onClick={doLogout}
       >
-        <LogOut size={24} className=" text-gray-700" />
-        <span className=" text-gray-700 font-semibold">Log out</span>
+        <LogOut size={24} className="text-gray-700" />
+        <span className="font-semibold">Log out</span>
       </button>
     </div>
   );
