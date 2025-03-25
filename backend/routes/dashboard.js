@@ -8,7 +8,7 @@ const router = express.Router();
 router.use(async (req, res, next) => {
   const authHeader = req.headers.authorization;
   if(!authHeader || !authHeader.startsWith("Bearer ")){
-    return res.status(403).json({ error: "Unauthorized: No Token Provided"});
+    return res.status(401).json({ error: "Unauthorized: No Token Provided"});
   }
   token = authHeader.split(" ")[1];
 
