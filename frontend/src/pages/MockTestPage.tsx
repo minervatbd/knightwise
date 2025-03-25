@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../components/Layout";
 import MockTestInfo from "../components/MockTestInfo";
-import MockTestRunner from "../components/MockTestProblem ";
-import MockTestResult from "../components/MockTestResult ";
+import MockTestRunner from "../components/MockTestProblem";
+import MockTestResult from "../components/MockTestResult";
 
 // since no api for question, I'm adding them manually
 const dummyProblems = [
@@ -173,9 +173,9 @@ const dummyProblems = [
   },
 ];
 
-// function:  select n random questions from a specific section
+// function: select questions randomly per section
 const getRandomFromSection = (section: string, n: number) => {
-  const filtered = dummyProblems.filter(p => p.section === section);
+  const filtered = dummyProblems.filter((p) => p.section === section);
   return filtered.sort(() => 0.5 - Math.random()).slice(0, n);
 };
 
@@ -184,7 +184,9 @@ const MockTestPage: React.FC = () => {
   const [questions, setQuestions] = useState<any[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
-  const [sectionScores, setSectionScores] = useState<Record<string, { correct: number; total: number }>>({});
+  const [sectionScores, setSectionScores] = useState<
+    Record<string, { correct: number; total: number }>
+  >({});
   const [showFeedback, setShowFeedback] = useState(false);
 
   // 3 random questions from each section
@@ -195,29 +197,32 @@ const MockTestPage: React.FC = () => {
         ...getRandomFromSection("B", 3),
         ...getRandomFromSection("C", 3),
         ...getRandomFromSection("D", 3),
-      ].map(p => ({
+      ].map((p) => ({
         ...p,
-        options: [p.answerCorrect, ...p.answersWrong].sort(() => 0.5 - Math.random()),
+        options: [p.answerCorrect, ...p.answersWrong].sort(
+          () => 0.5 - Math.random()
+        ),
       }));
-  
-      setQuestions(all); 
+
+      setQuestions(all);
       setSectionScores({});
       setCurrentIndex(0);
       setSelectedAnswer(null);
       setShowFeedback(false);
     }
   }, [step]);
-  
 
   const current = questions[currentIndex];
-  const isCorrect = selectedAnswer?.trim().toLowerCase() === current?.answerCorrect?.trim().toLowerCase();
+  const isCorrect =
+    selectedAnswer?.trim().toLowerCase() ===
+    current?.answerCorrect?.trim().toLowerCase();
 
   // Check whether the answer is correct or not
   // update the score and the status
   const handleSubmit = () => {
     if (!selectedAnswer || !current) return;
     const section = current.section;
-    setSectionScores(prev => ({
+    setSectionScores((prev) => ({
       ...prev,
       [section]: {
         correct: (prev[section]?.correct || 0) + (isCorrect ? 1 : 0),
@@ -234,7 +239,7 @@ const MockTestPage: React.FC = () => {
     } else {
       setSelectedAnswer(null);
       setShowFeedback(false);
-      setCurrentIndex(prev => prev + 1);
+      setCurrentIndex((prev) => prev + 1);
     }
   };
 
@@ -266,10 +271,7 @@ const MockTestPage: React.FC = () => {
       )}
       {/* display result */}
       {step === "result" && (
-        <MockTestResult
-          sectionScores={sectionScores}
-          onRetry={restartTest}
-        />
+        <MockTestResult sectionScores={sectionScores} onRetry={restartTest} />
       )}
     </Layout>
   );
