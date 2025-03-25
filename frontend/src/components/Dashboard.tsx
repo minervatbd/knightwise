@@ -93,7 +93,7 @@ const Dashboard: React.FC = () => {
             <strong>Registration:</strong>{" "}
             <a
               href="https://www.cs.ucf.edu/registration/new/message.php"
-              className="text-blue-700 underline font-semibold text-sm sm:text-base md:text-xl"
+              className="text-blue-700 underline font-semibold text-base sm:text-xl md:text-2xl"
             >
               Register here
             </a>
@@ -102,7 +102,7 @@ const Dashboard: React.FC = () => {
             <strong>Allowed Materials:</strong>{" "}
             <a
               href="https://www.cs.ucf.edu/wp-content/uploads/2019/08/FE-FormulaSheet.pdf"
-              className="text-blue-700 underline font-semibold text-sm sm:text-base md:text-xl"
+              className="text-blue-700 underline font-semibold text-base sm:text-xl md:text-2xl"
             >
               Formula Sheet
             </a>
@@ -122,7 +122,7 @@ const Dashboard: React.FC = () => {
             <strong>More Info:</strong>{" "}
             <a
               href="https://www.cs.ucf.edu/ucf_section/foundation-exam/"
-              className="text-blue-700 underline font-semibold text-sm sm:text-base md:text-xl"
+              className="text-blue-700 underline font-semibold text-base sm:text-xl md:text-2xl"
             >
               Official Site
             </a>
