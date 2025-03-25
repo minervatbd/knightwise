@@ -1,10 +1,10 @@
 // This code is based on Dr. Reinenker's code : Login.tsx
+
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { buildPath } from "./Path";
 
-// onToggle: move to register form
 const Login: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -17,57 +17,45 @@ const Login: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
     setError("");
     setSuccessMessage("");
 
-    console.log("Sending login data:", { username, password });
-
     try {
-      // send request to server
       const response = await axios.post(buildPath("api/auth/login"), {
         username,
         password,
       });
 
-      console.log("Server response:", response.data);
-
-      // store token
       localStorage.setItem("token", response.data.token);
 
-      // store user data on localStorage to display username in sidebar
       if (response.data.user) {
         localStorage.setItem("user_data", JSON.stringify(response.data.user));
-      } else {
-        console.error("User data not found in response!");
       }
 
-      // show the success message if login is successful
-      // then, move to the dashboard page after 2 sec
+      // move to dashboard if the user logs in
       setSuccessMessage(response.data.message);
       setTimeout(() => {
         navigate("/dashboard");
       }, 2000);
     } catch (err: any) {
-      // show error message if login fails
       setError(err.response?.data?.message);
     }
   };
 
   return (
     <div className="flex flex-col items-center">
-      <div className="bg-gray-100 p-12 rounded-xl shadow-lg w-full max-w-2xl min-h-[500px] flex flex-col items-center justify-center">
-        <h2 className="text-5xl font-bold text-center text-gray-800 mb-15">
+      <div className="bg-gray-100 p-8 sm:p-12 rounded-xl shadow-lg w-full max-w-2xl min-h-[500px] flex flex-col items-center justify-center">
+        <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-center text-gray-800 mb-10">
           Sign In
         </h2>
 
-        {/* Login form */}
         <form onSubmit={handleLogin} className="space-y-4 w-full max-w-lg">
           {/* username */}
           <div className="flex items-center space-x-6 w-full">
-            <label className="w-1/3 text-lg font-semibold text-gray-700">
+            <label className="w-1/3 text-base sm:text-lg font-semibold text-gray-700">
               Username
             </label>
             <input
               type="text"
               placeholder="Enter your username"
-              className="w-2/3 px-6 py-4 text-lg border border-gray-300 bg-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              className="w-2/3 px-6 py-4 text-sm sm:text-base md:text-lg border border-gray-300 bg-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
@@ -76,13 +64,13 @@ const Login: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
 
           {/* password */}
           <div className="flex items-center space-x-6 w-full">
-            <label className="w-1/3 text-lg font-semibold text-gray-700">
+            <label className="w-1/3 text-base sm:text-lg font-semibold text-gray-700">
               Password
             </label>
             <input
               type="password"
               placeholder="Enter your password"
-              className="w-2/3 px-6 py-4 text-lg border border-gray-300 bg-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              className="w-2/3 px-6 py-4 text-sm sm:text-base md:text-lg border border-gray-300 bg-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -92,15 +80,15 @@ const Login: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
           {/* button */}
           <button
             type="submit"
-            className="w-full bg-yellow-500 text-black font-bold py-4 text-xl rounded-xl shadow-lg hover:bg-yellow-600 transition"
+            className="w-full bg-yellow-500 text-sm sm:text-base md:text-xl font-bold py-4 rounded-xl shadow-lg hover:bg-yellow-600 transition"
           >
             LOGIN
           </button>
         </form>
 
-        {/* display message */}
+        {/* messages */}
         {error && (
-          <p className="text-red-500 text-lg text-center mt-2">{error}</p>
+          <p className="text-red-500 text-base text-center mt-2">{error}</p>
         )}
         {successMessage && (
           <p className="text-green-500 text-sm text-center mt-2">
@@ -108,8 +96,8 @@ const Login: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
           </p>
         )}
 
-        {/* move to the signup */}
-        <p className="text-center text-base text-gray-600 mt-4">
+        {/* move to signup */}
+        <p className="text-sm sm:text-base text-gray-600 mt-4 text-center">
           Not registered?{" "}
           <button onClick={onToggle} className="text-blue-500 hover:underline">
             Create an account
@@ -117,13 +105,13 @@ const Login: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
         </p>
 
         {/* password reset */}
-        <p className="text-center text-base text-gray-600 mt-4">
+        <p className="text-sm sm:text-base text-gray-600 mt-4 text-center">
           Forgot password?{" "}
           <button
             onClick={() => navigate("/forgot-password")}
             className="text-blue-500 hover:underline"
           >
-            Reset it here
+            Reset Password
           </button>
         </p>
       </div>
