@@ -8,7 +8,7 @@ interface TimeLeft {
 }
 const Dashboard: React.FC = () => {
   // set founcdation exam date
-  // set the date of the Summer 2025 semester to first weeek Saturday
+  // set the date of the Summer 2025 semester to first weeek Saturday: 2025/5/17
   const targetDate = new Date("2025-05-17T00:00:00").getTime();
 
   // function: calculate timeleft
@@ -36,39 +36,46 @@ const Dashboard: React.FC = () => {
   }, []);
 
   return (
-    <div className="p-20 flex flex-col items-center">
-      {/* countdowm */}
-      <div className="bg-gray-200 shadow-lg rounded-xl p-6 text-center mb-8 w-3/4">
-        <h2 className="text-3xl font-semibold mb-2">
+    <div className="p-4 sm:p-10 md:p-20 flex flex-col items-center">
+      {/* countdown */}
+      <div className="bg-gray-200 shadow-lg rounded-xl p-4 sm:p-6 text-center mb-8 w-full max-w-4xl">
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold mb-4">
           The Foundation Exam is in...
         </h2>
-        <div className="flex justify-center items-center space-x-8 text-7xl font-bold">
+        <div className="flex justify-center items-center flex-wrap gap-6 text-3xl sm:text-5xl md:text-6xl font-bold">
           <div className="text-gray-900">
-            {timeLeft.days}{" "}
-            <span className="block text-base font-medium">DAYS</span>
+            {timeLeft.days}
+            <span className="block text-sm sm:text-base md:text-lg font-medium">
+              DAYS
+            </span>
           </div>
           <div className="text-gray-900">
-            {timeLeft.hours}{" "}
-            <span className="block text-base font-medium">HOURS</span>
+            {timeLeft.hours}
+            <span className="block text-sm sm:text-base md:text-lg font-medium">
+              HOURS
+            </span>
           </div>
           <div className="text-gray-900">
-            {timeLeft.minutes}{" "}
-            <span className="block text-base font-medium">MINUTES</span>
+            {timeLeft.minutes}
+            <span className="block text-sm sm:text-base md:text-lg font-medium">
+              MINUTES
+            </span>
           </div>
           <div className="text-gray-900">
-            {timeLeft.seconds}{" "}
-            <span className="block text-base font-medium">SECONDS</span>
+            {timeLeft.seconds}
+            <span className="block text-sm sm:text-base md:text-lg font-medium">
+              SECONDS
+            </span>
           </div>
         </div>
       </div>
 
-      {/* guideline for UCF foundation exam */}
-      {/* note: link didn't work properly locally */}
-      <div className=" bg-gray-200 p-10 rounded-lg shadow-md w-3/4">
-        <h3 className="text-5xl text-center font-semibold mb-6 p-5">
+      {/* guideline */}
+      <div className="bg-gray-200 p-6 sm:p-10 rounded-lg shadow-md w-full max-w-4xl">
+        <h3 className="text-2xl sm:text-4xl md:text-5xl text-center font-semibold mb-6">
           Foundation Exam Guideline
         </h3>
-        <ul className="list-disc list-inside text-2xl text-gray-800 space-y-4 p-5">
+        <ul className="list-disc list-inside text-base sm:text-xl md:text-2xl text-gray-800 space-y-4">
           <li>
             <strong>Purpose:</strong> Required exam for 4000-level CS courses
           </li>
@@ -86,7 +93,7 @@ const Dashboard: React.FC = () => {
             <strong>Registration:</strong>{" "}
             <a
               href="https://www.cs.ucf.edu/registration/new/message.php"
-              className="text-blue-700 underline font-semibold text-xl"
+              className="text-blue-700 underline font-semibold text-sm sm:text-base md:text-xl"
             >
               Register here
             </a>
@@ -95,7 +102,7 @@ const Dashboard: React.FC = () => {
             <strong>Allowed Materials:</strong>{" "}
             <a
               href="https://www.cs.ucf.edu/wp-content/uploads/2019/08/FE-FormulaSheet.pdf"
-              className="text-blue-700 underline font-semibold text-xl"
+              className="text-blue-700 underline font-semibold text-sm sm:text-base md:text-xl"
             >
               Formula Sheet
             </a>
@@ -103,7 +110,7 @@ const Dashboard: React.FC = () => {
           <li>
             <strong>Exam Day Rules:</strong>
           </li>
-          <ul className="list-disc list-inside ml-8 text-2xl">
+          <ul className="list-disc list-inside ml-6 sm:ml-8 text-base sm:text-xl md:text-2xl">
             <li>Bring valid ID</li>
             <li>No electronic devices</li>
             <li>Time limit enforced</li>
@@ -115,7 +122,7 @@ const Dashboard: React.FC = () => {
             <strong>More Info:</strong>{" "}
             <a
               href="https://www.cs.ucf.edu/ucf_section/foundation-exam/"
-              className="text-blue-700 underline font-semibold text-xl"
+              className="text-blue-700 underline font-semibold text-sm sm:text-base md:text-xl"
             >
               Official Site
             </a>
