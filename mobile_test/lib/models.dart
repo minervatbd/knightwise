@@ -27,10 +27,16 @@ class Answer {
     this.user_id,
     this.problem_id,
     this.datetime,
+    this.isCorrect,
+    this.category,
+    this.topic,
   );
 
   final String id;
   final String user_id;
   final String problem_id;
   final DateTime datetime;
+  final bool isCorrect;
+  final String category;
+  final String topic;
 }
