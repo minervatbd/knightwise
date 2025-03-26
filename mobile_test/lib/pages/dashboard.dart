@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mobile_test/drawers.dart';
-import 'package:mobile_test/overlays.dart';
 import '../styles.dart';
 
 class DashboardPage extends StatefulWidget {

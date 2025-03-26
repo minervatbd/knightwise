@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../styles.dart';
 
 class MockTestResultsPage extends StatefulWidget {
   const MockTestResultsPage({super.key});
