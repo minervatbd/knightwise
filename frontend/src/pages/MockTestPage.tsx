@@ -4,180 +4,7 @@ import Layout from "../components/Layout";
 import MockTestInfo from "../components/MockTestInfo";
 import MockTestRunner from "../components/MockTestProblem";
 import MockTestResult from "../components/MockTestResult";
-
-// since no api for question, I'm adding them manually
-const dummyProblems = [
-  {
-    _id: "a1",
-    section: "A",
-    question: "A1?",
-    answerCorrect: "Yes",
-    answersWrong: ["No", "Maybe", "What?"],
-    exam_id: "Jan2025",
-    category: "DSN",
-    subcategory: "Stack",
-    points: 10,
-  },
-  {
-    _id: "a2",
-    section: "A",
-    question: "A1?",
-    answerCorrect: "Yes",
-    answersWrong: ["No", "Maybe", "What?"],
-    exam_id: "Jan2025",
-    category: "DSN",
-    subcategory: "Stack",
-    points: 10,
-  },
-  {
-    _id: "a3",
-    section: "A",
-    question: "A13?",
-    answerCorrect: "Yes",
-    answersWrong: ["No", "Maybe", "What?"],
-    exam_id: "Jan2025",
-    category: "DSN",
-    subcategory: "Stack",
-    points: 10,
-  },
-  {
-    _id: "a4",
-    section: "A",
-    question: "A12?",
-    answerCorrect: "Yes",
-    answersWrong: ["No", "Maybe", "What?"],
-    exam_id: "Jan2025",
-    category: "DSN",
-    subcategory: "Stack",
-    points: 10,
-  },
-  {
-    _id: "a4",
-    section: "A",
-    question: "A15?",
-    answerCorrect: "Yes",
-    answersWrong: ["No", "Maybe", "What?"],
-    exam_id: "Jan2025",
-    category: "DSN",
-    subcategory: "Stack",
-    points: 10,
-  },
-  {
-    _id: "b1",
-    section: "B",
-    question: "B1?",
-    answerCorrect: "Correct",
-    answersWrong: ["Wrong", "Nope", "Nah"],
-    exam_id: "Jan2025",
-    category: "DSN",
-    subcategory: "Stack",
-    points: 10,
-  },
-  {
-    _id: "b2",
-    section: "B",
-    question: "B1?",
-    answerCorrect: "Correct",
-    answersWrong: ["Wrong", "Nope", "Nah"],
-    exam_id: "Jan2025",
-    category: "DSN",
-    subcategory: "Stack",
-    points: 10,
-  },
-  {
-    _id: "b3",
-    section: "B",
-    question: "B1?",
-    answerCorrect: "Correct",
-    answersWrong: ["Wrong", "Nope", "Nah"],
-    exam_id: "Jan2025",
-    category: "DSN",
-    subcategory: "Stack",
-    points: 10,
-  },
-  {
-    _id: "c1",
-    section: "C",
-    question: "c121?",
-    answerCorrect: "Correct",
-    answersWrong: ["Wrong", "Nope", "Nah"],
-    exam_id: "Jan2025",
-    category: "DSN",
-    subcategory: "Stack",
-    points: 10,
-  },
-  {
-    _id: "c2",
-    section: "C",
-    question: "c1?",
-    answerCorrect: "Correct",
-    answersWrong: ["Wrong", "Nope", "Nah"],
-    exam_id: "Jan2025",
-    category: "DSN",
-    subcategory: "Stack",
-    points: 10,
-  },
-  {
-    _id: "c3",
-    section: "C",
-    question: "sc12?",
-    answerCorrect: "Correct",
-    answersWrong: ["Wrong", "Nope", "Nah"],
-    exam_id: "Jan2025",
-    category: "DSN",
-    subcategory: "Stack",
-    points: 10,
-  },
-  {
-    _id: "d1",
-    section: "D",
-    question: "d123?",
-    answerCorrect: "Correct",
-    answersWrong: ["Wrong", "Nope", "Nah"],
-    exam_id: "Jan2025",
-    category: "DSN",
-    subcategory: "Stack",
-    points: 10,
-  },
-  {
-    _id: "d2",
-    section: "D",
-    question: "2s123d?",
-    answerCorrect: "Correct",
-    answersWrong: ["Wrong", "Nope", "Nah"],
-    exam_id: "Jan2025",
-    category: "DSN",
-    subcategory: "Stack",
-    points: 10,
-  },
-  {
-    _id: "d3",
-    section: "D",
-    question: "d231?",
-    answerCorrect: "Correct",
-    answersWrong: ["Wrong", "Nope", "Nah"],
-    exam_id: "Jan2025",
-    category: "DSN",
-    subcategory: "Stack",
-    points: 10,
-  },
-  {
-    _id: "d4",
-    question: "d11?",
-    answerCorrect: "Correct",
-    answersWrong: ["Wrong", "Nope", "Nah"],
-    exam_id: "Jan2025",
-    category: "DSN",
-    subcategory: "Stack",
-    points: 10,
-  },
-];
-
-// function: select questions randomly per section
-const getRandomFromSection = (section: string, n: number) => {
-  const filtered = dummyProblems.filter((p) => p.section === section);
-  return filtered.sort(() => 0.5 - Math.random()).slice(0, n);
-};
+import axios from "axios";
 
 const MockTestPage: React.FC = () => {
   const [step, setStep] = useState<"info" | "test" | "result">("info");
@@ -189,38 +16,43 @@ const MockTestPage: React.FC = () => {
   >({});
   const [showFeedback, setShowFeedback] = useState(false);
 
-  // 3 random questions from each section
   useEffect(() => {
-    if (step === "test") {
-      const all = [
-        ...getRandomFromSection("A", 3),
-        ...getRandomFromSection("B", 3),
-        ...getRandomFromSection("C", 3),
-        ...getRandomFromSection("D", 3),
-      ].map((p) => ({
-        ...p,
-        options: [p.answerCorrect, ...p.answersWrong].sort(
-          () => 0.5 - Math.random()
-        ),
-      }));
+    const fetchMockTestProblems = async () => {
+      try {
+        const res = await axios.get("/api/test/mocktest");
+        const data = res.data;
 
-      setQuestions(all);
-      setSectionScores({});
-      setCurrentIndex(0);
-      setSelectedAnswer(null);
-      setShowFeedback(false);
+        const withOptions = data.problems.map((p: any) => ({
+          ...p,
+          options: [p.answerCorrect, ...p.answersWrong].sort(
+            () => Math.random() - 0.5
+          ),
+        }));
+
+        setQuestions(withOptions);
+        setSectionScores({});
+        setCurrentIndex(0);
+        setSelectedAnswer(null);
+        setShowFeedback(false);
+      } catch (err) {
+        console.error("Failed to load mock problems", err);
+      }
+    };
+
+    if (step === "test") {
+      fetchMockTestProblems();
     }
   }, [step]);
 
   const current = questions[currentIndex];
+
   const isCorrect =
     selectedAnswer?.trim().toLowerCase() ===
     current?.answerCorrect?.trim().toLowerCase();
 
-  // Check whether the answer is correct or not
-  // update the score and the status
   const handleSubmit = () => {
     if (!selectedAnswer || !current) return;
+
     const section = current.section;
     setSectionScores((prev) => ({
       ...prev,
@@ -232,7 +64,6 @@ const MockTestPage: React.FC = () => {
     setShowFeedback(true);
   };
 
-  // show the next question or display the result
   const handleNext = () => {
     if (currentIndex + 1 === questions.length) {
       setStep("result");
@@ -243,7 +74,6 @@ const MockTestPage: React.FC = () => {
     }
   };
 
-  // resets the entire test state
   const restartTest = () => {
     setStep("info");
     setQuestions([]);
@@ -253,9 +83,8 @@ const MockTestPage: React.FC = () => {
 
   return (
     <Layout>
-      {/* display info */}
       {step === "info" && <MockTestInfo onStart={() => setStep("test")} />}
-      {/* display question */}
+
       {step === "test" && current && (
         <MockTestRunner
           current={current}
@@ -269,7 +98,7 @@ const MockTestPage: React.FC = () => {
           isCorrect={isCorrect}
         />
       )}
-      {/* display result */}
+
       {step === "result" && (
         <MockTestResult sectionScores={sectionScores} onRetry={restartTest} />
       )}

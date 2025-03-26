@@ -2,54 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Layout from "../components/Layout";
-
-// since no api for question, I'm adding them manually
-const dummyProblems = [
-  {
-    _id: "1",
-    exam_id: "jan2025",
-    section: "A",
-    category: "DSN",
-    subcategory: "Sorting",
-    points: 10,
-    question: "test1-multiple",
-    answerCorrect: "test1",
-    answersWrong: ["test2", "test3", "test4"],
-  },
-  {
-    _id: "2",
-    exam_id: "jan2025",
-    section: "B",
-    category: "DSN",
-    subcategory: "Sorting",
-    points: 10,
-    question: "test2-subjective",
-    answerCorrect: "test1",
-    answersWrong: ["test2", "test3", "test4"],
-  },
-  {
-    _id: "3",
-    exam_id: "jan2025",
-    section: "C",
-    category: "DSN",
-    subcategory: "Sorting",
-    points: 10,
-    question: "test3-t/f",
-    answerCorrect: "test1",
-    answersWrong: ["test2", "test3", "test4"],
-  },
-  {
-    _id: "4",
-    exam_id: "jan2025",
-    section: "D",
-    category: "DSN",
-    subcategory: "Sorting",
-    points: 10,
-    question: "test4-code",
-    answerCorrect: "test1",
-    answersWrong: ["test2", "test3", "test4"],
-  },
-];
+import axios from "axios";
 
 const TopicTestPage: React.FC = () => {
   const { topicName } = useParams<{ topicName: string }>();
@@ -61,24 +14,62 @@ const TopicTestPage: React.FC = () => {
   const [showResult, setShowResult] = useState(false);
   const navigate = useNavigate();
 
+  // get question from DB
   useEffect(() => {
-    if (topicName?.toUpperCase() === "SORTING") {
-      const withOptions = dummyProblems.map((p) => ({
-        ...p,
-        options: [p.answerCorrect, ...p.answersWrong].sort(
-          () => 0.5 - Math.random()
-        ),
-      }));
-      setProblems(withOptions);
-    }
+    const fetchProblems = async () => {
+      try {
+        const res = await axios.get(`/api/test/topic/${topicName}`);
+        const data = res.data;
+
+        // shuffle problems
+        const shuffledProblems = data.sort(() => 0.5 - Math.random());
+
+        // shuffle choices
+        const withOptions = shuffledProblems.map((p: any) => ({
+          ...p,
+          options: [p.answerCorrect, ...p.answersWrong].sort(
+            () => 0.5 - Math.random()
+          ),
+        }));
+
+        setProblems(withOptions);
+      } catch (err) {
+        console.error("Failed to load topic problems", err);
+      }
+    };
+
+    if (topicName) fetchProblems();
   }, [topicName]);
 
-  const handleSubmit = () => {
+  // summit answer and send to server
+  const handleSubmit = async () => {
     if (!selectedAnswer) return;
     const current = problems[currentIndex];
-    if (selectedAnswer === current.answerCorrect)
-      setCorrectCount((prev) => prev + 1);
+    const isCorrect = selectedAnswer === current.answerCorrect;
+
+    if (isCorrect) setCorrectCount((prev) => prev + 1);
     setAnswered(true);
+
+    try {
+      const token = localStorage.getItem("token");
+
+      await axios.post(
+        "/api/test/submit",
+        {
+          problem_id: current._id,
+          isCorrect,
+          category: current.category,
+          topic: current.subcategory,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } catch (err) {
+      console.error("Failed to submit answer", err);
+    }
   };
 
   const handleNext = () => {
@@ -110,7 +101,7 @@ const TopicTestPage: React.FC = () => {
             Quiz Completed!
           </h1>
           <p className="text-lg sm:text-xl md:text-2xl mb-4 sm:mb-6">
-            You got {correctCount} out of {problems.length} question correct!
+            You got {correctCount} out of {problems.length} questions correct!
           </p>
           <p className="text-lg sm:text-xl md:text-2xl mb-4 sm:mb-6 font-bold">
             {percentage < 50 ? "Keep practicing!" : "Great job!"}
