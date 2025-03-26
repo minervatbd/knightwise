@@ -75,6 +75,12 @@ class _LoginPageState extends State<LoginPage> {
                     child: TextField(
                       controller: usernameController,
                       textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Styles.schemeMain.primary,
+                        fontFamily: 'Mulish',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                      ),
                       decoration: InputDecoration(
                         hintText: 'Username',
                         hintStyle: Styles.fieldTextStyle,
@@ -92,6 +98,12 @@ class _LoginPageState extends State<LoginPage> {
                     child: TextField(
                       controller: passwordController,
                       textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Styles.schemeMain.primary,
+                        fontFamily: 'Mulish',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                      ),
                       decoration: InputDecoration(
                         hintText: 'Password',
                         hintStyle: Styles.fieldTextStyle,
