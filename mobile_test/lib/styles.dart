@@ -32,6 +32,37 @@ abstract class Styles {
     color: Colors.black54,
   );
 
+  // large text style for time in dashboard
+  static const timeTextStyle = TextStyle(
+    fontSize: 40,
+    fontFamily: 'Mulish',
+    fontWeight: FontWeight.bold,
+    color: Colors.black,
+  );
+
+  // large text style for time labels in dashboard
+  static const timeLabelTextStyle = TextStyle(
+    fontSize: 20,
+    fontFamily: 'Mulish',
+    fontWeight: FontWeight.bold,
+    color: Colors.black,
+  );
+
+  //general lightweight text
+  static const generalTextStyle = TextStyle(
+    fontSize: 24,
+    fontFamily: 'Mulish',
+    color: Colors.black,
+  );
+
+  //text for hyperlinks
+  static const linkTextStyle = TextStyle(
+    fontSize: 24,
+    fontFamily: 'Mulish',
+    color: Colors.blueAccent,
+    fontStyle: FontStyle.italic,
+  );
+
   // shape for login/signup buttons
   static final buttonShape = RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(10)
