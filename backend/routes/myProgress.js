@@ -171,7 +171,7 @@ router.get('/history', authMiddleware, async (req, res) => {
       history,
       totalEntries,
       currentPage: page,
-      totalPages: Math.ceil(totalEntries / limit),
+      totalPages: Math.max(1, Math.ceil(totalEntries / limit)),
     });
   } catch (error) {
     console.error('Error fetching history:', error);
