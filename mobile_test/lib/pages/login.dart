@@ -149,7 +149,7 @@ class _LoginPageState extends State<LoginPage> {
                     shape: Styles.buttonShape,
                     height: 70,
                     minWidth: 350,
-                    child: const Text(
+                    child: Text(
                       'Sign In',
                       style: Styles.buttonTextStyle,
                     ),
@@ -179,7 +179,5 @@ class _LoginPageState extends State<LoginPage> {
 
       ),
     );
-  }
-}
   }
 }
