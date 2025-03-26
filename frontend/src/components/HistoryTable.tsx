@@ -65,7 +65,7 @@ const HistoryTable: React.FC = () => {
     <div className="m-1">
       <h2 className="text-2xl font-semibold text-center mb-4">Problem History</h2>
       {history.length === 0 ? (
-        <p className="text-center">No history yet!</p>
+        <p className="text-center">No history yet—but every expert starts somewhere!</p>
       ) : (
         <div className="overflow-hidden rounded-lg shadow-lg">
           <table className="min-w-full table-auto">
