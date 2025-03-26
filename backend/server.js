@@ -37,6 +37,7 @@ app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/dashboard', require('./routes/dashboard'));
 app.use('/api/progress', require('./routes/myProgress'));
 app.use('/api/problems', require('./routes/problems'));
+app.use('/api/test', require('./routes/test'));
 
 // Start the server
 //const PORT = process.env.PORT || 5000;
