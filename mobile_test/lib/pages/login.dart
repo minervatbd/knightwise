@@ -69,19 +69,24 @@ class _LoginPageState extends State<LoginPage> {
                   //username textbox
                   Container(
                     color: Colors.grey[300],
-                    padding: EdgeInsets.fromLTRB(0, 25, 0, 5),
+                    padding: EdgeInsets.fromLTRB(10, 25, 10, 0),
                     width: 336,
                     height: 65,
                     child: TextField(
                       controller: usernameController,
-                      textAlign: TextAlign.center,
+                      textAlign: TextAlign.start,
                       style: TextStyle(
                         color: Styles.schemeMain.primary,
                         fontFamily: 'Mulish',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 24,
                       ),
                       decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.only(
+                              left: 4.0,
+                              bottom: 4.0,
+                              top: 4.0
+                          ),
                         hintText: 'Username',
                         hintStyle: Styles.fieldTextStyle,
                         border: InputBorder.none,
@@ -92,19 +97,24 @@ class _LoginPageState extends State<LoginPage> {
                   //password textbox
                   Container(
                     color: Colors.grey[300],
-                    padding: EdgeInsets.fromLTRB(0, 25, 0, 5),
+                    padding: EdgeInsets.fromLTRB(10, 25, 10, 0),
                     width: 336,
                     height: 65,
                     child: TextField(
                       controller: passwordController,
-                      textAlign: TextAlign.center,
+                      textAlign: TextAlign.start,
                       style: TextStyle(
                         color: Styles.schemeMain.primary,
                         fontFamily: 'Mulish',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 24,
                       ),
                       decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.only(
+                            left: 4.0,
+                            bottom: 4.0,
+                            top: 4.0
+                        ),
                         hintText: 'Password',
                         hintStyle: Styles.fieldTextStyle,
                         border: InputBorder.none,
