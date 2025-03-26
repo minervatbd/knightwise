@@ -20,3 +20,17 @@ class Problem {
   final List<String> answersWrong;
 
 }
+
+class Answer {
+  const Answer(
+    this.id,
+    this.user_id,
+    this.problem_id,
+    this.datetime,
+  );
+
+  final String id;
+  final String user_id;
+  final String problem_id;
+  final DateTime datetime;
+}
