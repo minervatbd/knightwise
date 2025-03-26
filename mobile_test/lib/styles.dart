@@ -18,9 +18,18 @@ abstract class Styles {
 
   // text style for login/signup buttons 
   static final buttonTextStyle = TextStyle(
-    fontSize: 24,
+    fontSize: 30,
+    fontFamily: 'Mulish',
     fontWeight: FontWeight.bold,
     color: schemeMain.onSecondary,
+  );
+
+  // text style for text field hints
+  static final fieldTextStyle = TextStyle(
+    fontSize: 30,
+    fontFamily: 'Mulish',
+    fontWeight: FontWeight.bold,
+    color: Colors.black54,
   );
 
   // shape for login/signup buttons
