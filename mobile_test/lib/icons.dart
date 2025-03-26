@@ -13,4 +13,6 @@ abstract class NavigationIcons {
   static const logout = Icon(Icons.logout);
   static const previous = Icon(Icons.arrow_back);
   static const next = Icon(Icons.arrow_forward);
+  static const answer = Icon(Icons.circle_outlined);
+  static const answerSelected = Icon(Icons.circle);
 } 
