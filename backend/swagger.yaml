@@ -1,0 +1,332 @@
+swagger: "2.0"
+info:
+  title: KnightPrep
+  description: API documentation for Team 1's COP 4331 UCF Foundation Exam study tool application, KnightPrep
+  version: 1.0.0
+  contact:
+    email: da606808@ucf.edu
+    
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+paths:
+  /dashboard:
+    get:
+      tags:
+        - Authentication
+      summary: Access the dashboard (protected route).
+      operationId: getDashboard
+      description: Retrieves user-specific dashboard data. Requires authentication via a valid JSON Web Token.
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+        404:
+          description: URL Not Found
+        500:
+          description: Server Error
+  
+  /auth/login:
+    post:
+      tags:
+        - Users
+      summary: Login user.
+      operationId: doLogin
+      description: Allows a user with a valid account to log into the application. Generates a JSON Web Token.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: loginItem
+        description: Login credentials.
+        schema:
+          $ref: '#/definitions/Login'
+      responses:
+        200:
+          description: OK
+        400:
+          description: Bad Request
+        404:
+          description: URL Not Found
+        500:
+          description: Server Error
+  
+  /auth/signup:
+    post:
+      tags:
+      - Users
+      summary: Register user.
+      operationId: signupUser
+      description: Registers a new KnightPrep user. Requires email verification.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: signupItem
+        description: User registration details.
+        schema:
+          $ref: '#/definitions/SignUp'
+      responses:
+        201:
+          description: Created
+        400:
+          description: Bad Request
+        404:
+          description: URL Not Found
+        500:
+          description: Server Error
+          
+  /auth/sendotp:
+    post:
+      tags:
+      - Authentication
+      summary: Send user one-time password.
+      operationId: sendOtp
+      description: Sends a one-time password to the user's email for account verification during signup.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: sendOtpItem
+        description: OTP sending details.
+        schema:
+          $ref: '#/definitions/SendOTP'
+      responses:
+        200:
+          description: OK
+        400:
+          description: Bad Request
+        404:
+          description: URL Not Found
+        500:
+          description: Server Error
+  
+  /auth/verify:
+    post:
+      tags:
+      - Authentication
+      summary: Verify the one-time password.
+      operationId: doVerify
+      description: Validates the one-time password provided by the user during signup, ensuring it is correct and not expired.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: verifyItem
+        description: OTP verification details.
+        schema:
+          $ref: '#/definitions/Verify'
+      responses:
+        200:
+          description: OK
+        400:
+          description: Bad Request
+        404:
+          description: URL Not Found
+        500:
+          description: Server Error
+  
+  /auth/resetPassword:
+    post:
+      tags:
+      - Users
+      summary: Reset user password.
+      operationId: doResetPassword
+      description: Allows a user to reset their account password.
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: resetItem
+        description: Password reset details.
+        schema:
+          $ref: '#/definitions/ResetPassword'
+      responses:
+        200:
+          description: OK
+        403:
+          description: Forbidden
+        404:
+          description: URL Not Found
+        500:
+          description: Server Error
+          
+  /problems/{id}:
+    get:
+      tags:
+      - Problems
+      summary: Fetch problem by its ID.
+      operationId: getProblemById
+      description: Retrieves a practice problem by its ID.
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: string
+        description: The unique ID of the problem.
+      responses:
+        200:
+          description: OK
+        404:
+          description: URL Not Found
+        500:
+          description: Server Error
+  
+  /progress/graph:
+    get:
+      tags:
+      - Users
+      summary: Fetch user progress data for graph.
+      operationId: getGraphData
+      description: Retrieves user performance data for a radar chart visualization.
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404: 
+          description: URL Not Found
+        500:
+          description: Server Error
+  
+  /progress/history:
+    get:
+      tags:
+      - Users
+      summary: Fetch user problem history.
+      operationId: getHistory
+      description: Retrieves the history of problems solved by the user in a paginated format.
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: URL Not Found
+        500:
+          description: Server Error
+  
+  /progress/messageData:
+    get:
+      tags:
+      - Users
+      summary: Fetch user progress message data.
+      operationId: getMessage
+      description: Generates a message that recommends practice topics and records the user's streak.
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: OK
+        401:
+          description: Unauthorized
+        404:
+          description: URL Not Found
+        500:
+          description: Server Error
+          
+securityDefinitions:
+  BearerAuth:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: "Include the token in the Authorization header as 'Bearer your-token'"
+
+definitions:
+  Login:
+    type: object
+    required:
+    - username
+    - password
+    properties:
+      username:
+        type: string
+        example: "RickL"
+      password:
+        type: string
+        example: "COP4331"
+  SignUp:
+    type: object
+    required:
+    - username
+    - password
+    - email
+    - firstName
+    - lastName
+    properties:
+      username:
+        type: string
+        example: "RickL"
+      password:
+        type: string
+        example: "COP4331"
+      email:
+        type: string
+        example: "rickl4331@hotmail.com"
+      firstName:
+        type: string
+        example: "Rick"
+      lastName:
+        type: string
+        example: "Leinecker"
+  SendOTP:
+    type: object
+    required:
+    - email
+    - purpose
+    properties:
+      email:
+        type: string
+        example: "danlandsman@gmail.com"
+      purpose:
+        type: string
+        example: "reset"
+  Verify:
+    type: object
+    required:
+    - email
+    - otp
+    properties:
+      email:
+        type: string
+        example: "test123@yahoo.com"
+      otp:
+        type: integer
+        example: 856923
+  ResetPassword:
+    type: object
+    required:
+    - email
+    - password
+    properties:
+      email:
+        type: string
+        example: "johndoe64@aol.com"
+      password:
+        type: string
+        example: "newPass123!"
+
+host: www.dirediredocks.xyz
+basePath: /api
+schemes:
+  - http
