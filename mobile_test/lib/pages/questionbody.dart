@@ -13,6 +13,7 @@ class QuestionBodyStatus {
     this.answerOrder,
     this.isSubmitted,
     this.selectedIndex,
+    this.answer,
   );
 
   QuestionBodyStatus.empty() {
@@ -25,9 +26,8 @@ class QuestionBodyStatus {
   late List<int> answerOrder;
   late bool isSubmitted;
   late int selectedIndex;
+  late Answer answer;
 }
-
-
 
 class QuestionBody extends StatefulWidget {
   const QuestionBody({
@@ -55,12 +55,36 @@ class _QuestionBodyState extends State<QuestionBody> {
   Widget build(BuildContext context) {
     var correct = widget.problem.answerCorrect;
     var wrong = widget.problem.answersWrong;
+
+    bool _submitEnabled = (widget.status.selectedIndex != -1 && !widget.status.isSubmitted);
+
     List<String> answerList = <String>[correct, wrong[0], wrong[1], wrong[2]];
 
     List<bool> selectedList= [false, false, false, false];
     if (widget.status.selectedIndex != -1)
     {
       selectedList[widget.status.selectedIndex] = true;
+    }
+
+    void handleSubmitButton () {
+      setState(() {
+        if (widget.status.answerOrder[widget.status.selectedIndex] == 0) print("correct");
+        else print("wrong");
+
+        widget.status.answer = Answer(
+          "id",
+          "user_id",
+          widget.problem.id,
+          DateTime.now(),
+          (widget.status.selectedIndex == 0),
+          widget.problem.category,
+          widget.problem.subcategory,
+        );
+
+        widget.status.isSubmitted = true;
+
+        widget.changeStatus(widget.status);
+      });
     }
 
     return Center(
@@ -73,6 +97,8 @@ class _QuestionBodyState extends State<QuestionBody> {
             fillColor: scheme.secondary,
             onPressed: (int index) {
               setState(() {
+              // todo: dont update anything if the answer has been submitted already
+                _submitEnabled = true;
                 widget.status.selectedIndex = index;
                 widget.changeStatus(widget.status);
                 for (int i = 0; i < selectedList.length; i++) {
@@ -103,6 +129,11 @@ class _QuestionBodyState extends State<QuestionBody> {
                 ],
               ),
             ],
+          ),
+          ElevatedButton(
+            style: Styles.yellowButtonStyle,
+            onPressed: _submitEnabled? handleSubmitButton : null,
+            child: Text("Submit")
           ),
         ]
       ),

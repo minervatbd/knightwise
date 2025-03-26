@@ -54,7 +54,10 @@ class _QuestionSequenceState extends State<QuestionSequence> {
     return Scaffold(
       appBar: TopBarBlank(),
       body: questions[currentPageIndex],
-      bottomNavigationBar: QuestionBarMenu(problemCount: widget.problemCount, changeIndex: refreshIndex),
+      bottomNavigationBar: QuestionBarMenu(
+        problemCount: widget.problemCount,
+        changeIndex: refreshIndex,
+      ),
     );
   }
 }

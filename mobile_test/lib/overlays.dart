@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_test/models.dart';
+import 'package:mobile_test/pages/questionbody.dart';
 import 'styles.dart';
 import 'icons.dart';
 
@@ -243,14 +245,12 @@ class QuestionBarMenu extends StatefulWidget {
 class _QuestionBarMenuState extends State<QuestionBarMenu> {
   bool _previousEnabled = false;
   bool _nextEnabled = true;
-  bool _submitEnabled = false;
 
   int index = 0;
 
   void switchButtons () {
     if (index == widget.problemCount - 1) {
       _nextEnabled = false;
-      _submitEnabled = true;
     } else {
       _nextEnabled = true;
     }
@@ -291,14 +291,6 @@ class _QuestionBarMenuState extends State<QuestionBarMenu> {
             style: Styles.yellowButtonStyle,
             onPressed: _previousEnabled ? handlePreviousButton : null,
             child: NavigationIcons.previous
-          ),
-          // submit quiz
-          ElevatedButton(
-            style: Styles.yellowButtonStyle,
-            onPressed: _submitEnabled?() {
-              Navigator.pop(context);
-            }: null,
-            child: Text("End")
           ),
           // next
           ElevatedButton(
