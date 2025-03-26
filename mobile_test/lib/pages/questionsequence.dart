@@ -37,6 +37,7 @@ class _QuestionSequenceState extends State<QuestionSequence> {
   
   @override
   Widget build(BuildContext context) {
+    // build list of questionbodies first
     List<QuestionBody> questions = List<QuestionBody>.empty(growable: true);
 
     for (int x = 0; x < widget.problemCount; x++) {

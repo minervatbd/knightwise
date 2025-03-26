@@ -31,10 +31,11 @@ List<Problem> generateDummyProblems(int count) {
 
 // returns a list filled with default statuses
 List<QuestionBodyStatus> generateStatusList(int count) {
-  return List<QuestionBodyStatus>.filled(
-    count,
-    QuestionBodyStatus(false)
-  );
+  var statusOut = List<QuestionBodyStatus>.empty(growable: true);
+  for (int c = 0; c < count; c++) {
+    statusOut.add(QuestionBodyStatus.empty());
+  }
+  return statusOut;
 }
 
 class TopicSelectPage extends StatefulWidget {

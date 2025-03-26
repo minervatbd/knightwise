@@ -7,11 +7,24 @@ const scheme = Styles.schemeMain;
 // this class will compose a list that stores info abt each question's status
 class QuestionBodyStatus {
   QuestionBodyStatus(
+    this.answerOrder,
     this.isSubmitted,
+    this.selectedIndex,
   );
 
-  bool isSubmitted = false;
+  QuestionBodyStatus.empty() {
+    answerOrder = [0,1,2,3];
+    answerOrder.shuffle();
+    isSubmitted = false;
+    selectedIndex = -1;
+  }
+
+  late List<int> answerOrder;
+  late bool isSubmitted;
+  late int selectedIndex;
 }
+
+
 
 class QuestionBody extends StatefulWidget {
   const QuestionBody({
@@ -34,8 +47,6 @@ class QuestionBody extends StatefulWidget {
 }
 
 class _QuestionBodyState extends State<QuestionBody> {
-  // positions of the answers, the values index the answerlist
-  List<int> answerOrder = [0,1,2,3];
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +54,7 @@ class _QuestionBodyState extends State<QuestionBody> {
     var wrong = widget.problem.answersWrong;
     List<String> answerList = <String>[correct, wrong[0], wrong[1], wrong[2]];
 
-    answerOrder.shuffle();
+
 
     return Center(
       child: ListView(
@@ -52,31 +63,32 @@ class _QuestionBodyState extends State<QuestionBody> {
           ElevatedButton(
             style: Styles.yellowButtonStyle,
             onPressed: () {
-              widget.changeStatus(QuestionBodyStatus(true));
+              widget.changeStatus(widget.status);
             },
-            child: Text(answerList[answerOrder[0]])
+            child: Text(answerList[widget.status.answerOrder[0]])
           ),
           ElevatedButton(
             style: Styles.yellowButtonStyle,
             onPressed: () {
-              widget.changeStatus(QuestionBodyStatus(true));
+              widget.changeStatus(widget.status);
             },
-            child: Text(answerList[answerOrder[1]])
+            child: Text(answerList[widget.status.answerOrder[1]])
           ),
           ElevatedButton(
             style: Styles.yellowButtonStyle,
             onPressed: () {
-              widget.changeStatus(QuestionBodyStatus(true));
+              widget.changeStatus(widget.status);
             },
-            child: Text(answerList[answerOrder[2]])
+            child: Text(answerList[widget.status.answerOrder[2]])
           ),
           ElevatedButton(
             style: Styles.yellowButtonStyle,
             onPressed: () {
-              widget.changeStatus(QuestionBodyStatus(true));
+              widget.changeStatus(widget.status);
             },
-            child: Text(answerList[answerOrder[3]])
+            child: Text(answerList[widget.status.answerOrder[3]])
           ),
+          
         ]
       ),
     );
