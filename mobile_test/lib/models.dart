@@ -17,6 +17,6 @@ class Problem {
   final String subcategory;
   final String question;
   final String answerCorrect;
-  final String answersWrong;
+  final List<String> answersWrong;
 
 }

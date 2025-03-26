@@ -34,9 +34,17 @@ class QuestionBody extends StatefulWidget {
 }
 
 class _QuestionBodyState extends State<QuestionBody> {
+  // positions of the answers, the values index the answerlist
+  List<int> answerOrder = [0,1,2,3];
 
   @override
   Widget build(BuildContext context) {
+    var correct = widget.problem.answerCorrect;
+    var wrong = widget.problem.answersWrong;
+    List<String> answerList = <String>[correct, wrong[0], wrong[1], wrong[2]];
+
+    answerOrder.shuffle();
+
     return Center(
       child: ListView(
         children: <Widget>[
@@ -46,7 +54,28 @@ class _QuestionBodyState extends State<QuestionBody> {
             onPressed: () {
               widget.changeStatus(QuestionBodyStatus(true));
             },
-            child: Text("press to answer")
+            child: Text(answerList[answerOrder[0]])
+          ),
+          ElevatedButton(
+            style: Styles.yellowButtonStyle,
+            onPressed: () {
+              widget.changeStatus(QuestionBodyStatus(true));
+            },
+            child: Text(answerList[answerOrder[1]])
+          ),
+          ElevatedButton(
+            style: Styles.yellowButtonStyle,
+            onPressed: () {
+              widget.changeStatus(QuestionBodyStatus(true));
+            },
+            child: Text(answerList[answerOrder[2]])
+          ),
+          ElevatedButton(
+            style: Styles.yellowButtonStyle,
+            onPressed: () {
+              widget.changeStatus(QuestionBodyStatus(true));
+            },
+            child: Text(answerList[answerOrder[3]])
           ),
         ]
       ),
