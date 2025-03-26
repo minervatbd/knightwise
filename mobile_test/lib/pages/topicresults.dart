@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../styles.dart';
 
 class TopicResultsPage extends StatefulWidget {
   const TopicResultsPage({super.key});
