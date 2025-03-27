@@ -130,7 +130,7 @@ class _DashboardPageState extends State<DashboardPage> {
               //Purpose Bullet
               Row(spacing: 5, crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(bullet, style: Styles.generalTextStyle,),
-                Container(width: 352, padding: EdgeInsets.symmetric(horizontal: 5), child:
+                Container(width: 342, padding: EdgeInsets.symmetric(horizontal: 5), child:
                   Text('Purpose: Required exam for 4000-level CS courses', style: Styles.generalTextStyle,)
               )]),
               //Eligibility bullet
