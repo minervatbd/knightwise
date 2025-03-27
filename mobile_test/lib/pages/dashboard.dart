@@ -16,6 +16,9 @@ class _DashboardPageState extends State<DashboardPage> {
 
   @override
   Widget build(BuildContext context) {
+    double scrnWidth = MediaQuery.of(context).size.width;
+    double containerWidth = (scrnWidth- 65);
+
     return Center(
       child: ListView(
         children: <Widget>[
@@ -33,7 +36,7 @@ class _DashboardPageState extends State<DashboardPage> {
                 )],
             ),
             padding: EdgeInsets.symmetric(vertical: 10.0),
-            
+
             child: Column( spacing: 15.0, children: <Widget>[
               //header for timer
               RichText(
@@ -113,7 +116,7 @@ class _DashboardPageState extends State<DashboardPage> {
               ),
             ],),
           ),
-          //header for guideline
+          //header for guidelines
           Container(
             padding: EdgeInsets.fromLTRB(10, 35, 10, 0),
             child: Text(
@@ -124,37 +127,37 @@ class _DashboardPageState extends State<DashboardPage> {
           ),
           //container for all guideline bullets
           Container(
-            width: 412,
+            width: scrnWidth,
             padding: EdgeInsets.all(20.0),
             child: Column(spacing: 10, children: [
               //Purpose Bullet
               Row(spacing: 5, crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(bullet, style: Styles.generalTextStyle,),
-                Container(width: 342, padding: EdgeInsets.symmetric(horizontal: 5), child:
+                Container(width: containerWidth, padding: EdgeInsets.symmetric(horizontal: 5), child:
                   Text('Purpose: Required exam for 4000-level CS courses', style: Styles.generalTextStyle,)
               )]),
               //Eligibility bullet
               Row(spacing: 5, crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(bullet, style: Styles.generalTextStyle,),
-                Container(width: 342, padding: EdgeInsets.symmetric(horizontal: 5), child:
+                Container(width: containerWidth, padding: EdgeInsets.symmetric(horizontal: 5), child:
                   Text('Eligibility: Students who passed COP 3502 (C or higher)', style: Styles.generalTextStyle,)
               )]),
               //Attempts Bullet
               Row(spacing: 5, crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(bullet, style: Styles.generalTextStyle,),
-                Container(width: 342, padding: EdgeInsets.symmetric(horizontal: 5), child:
+                Container(width: containerWidth, padding: EdgeInsets.symmetric(horizontal: 5), child:
                   Text('Attempts: Max 3 attempts within 1 year', style: Styles.generalTextStyle,)
               )]),
               //Schedule Bullet
               Row(spacing: 5, crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(bullet, style: Styles.generalTextStyle,),
-                Container(width: 342, padding: EdgeInsets.symmetric(horizontal: 5), child:
+                Container(width: containerWidth, padding: EdgeInsets.symmetric(horizontal: 5), child:
                   Text('Schedule: First Saturday of each semester', style: Styles.generalTextStyle,)
               )]),
               //Registration Bullet
               Row(spacing: 5, crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(bullet, style: Styles.generalTextStyle,),
-                Container(width: 342, padding: EdgeInsets.symmetric(horizontal: 5), child:
+                Container(width: containerWidth, padding: EdgeInsets.symmetric(horizontal: 5), child:
                   RichText(text: TextSpan(children: [
                     TextSpan(
                       text: 'Registration: ',
@@ -171,7 +174,7 @@ class _DashboardPageState extends State<DashboardPage> {
               //Allowed Materials Bullet
               Row(spacing: 5, crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(bullet, style: Styles.generalTextStyle,),
-                Container(width: 342, padding: EdgeInsets.symmetric(horizontal: 5), child:
+                Container(width: containerWidth, padding: EdgeInsets.symmetric(horizontal: 5), child:
                   RichText(text: TextSpan(children: [
                     TextSpan(
                       text: 'Allowed Materials: ',
@@ -188,7 +191,7 @@ class _DashboardPageState extends State<DashboardPage> {
               //Exam Day rules bullets
               Row(spacing: 5, crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(bullet, style: Styles.generalTextStyle,),
-                Container(width: 342, padding: EdgeInsets.symmetric(horizontal: 5), child:
+                Container(width: containerWidth, padding: EdgeInsets.symmetric(horizontal: 5), child:
                   RichText( text: TextSpan(
                     style: Styles.generalTextStyle,
                     text: 'Exam Day Rules\n'
@@ -200,13 +203,13 @@ class _DashboardPageState extends State<DashboardPage> {
               //Passing criteria bullet
               Row(spacing: 5, crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(bullet, style: Styles.generalTextStyle,),
-                Container(width: 342, padding: EdgeInsets.symmetric(horizontal: 5), child:
+                Container(width: containerWidth, padding: EdgeInsets.symmetric(horizontal: 5), child:
                   Text('Passing Criteria: Typically 60% or higher', style: Styles.generalTextStyle,)
               )]),
               //More info bullet
               Row(spacing: 5, crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Text(bullet, style: Styles.generalTextStyle,),
-                Container(width: 342, padding: EdgeInsets.symmetric(horizontal: 5), child:
+                Container(width: containerWidth, padding: EdgeInsets.symmetric(horizontal: 5), child:
                 RichText(text: TextSpan(children: [
                   TextSpan(
                     text: 'More Info: ',
