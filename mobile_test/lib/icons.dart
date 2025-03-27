@@ -15,4 +15,6 @@ abstract class NavigationIcons {
   static const next = Icon(Icons.arrow_forward);
   static const answer = Icon(Icons.circle_outlined);
   static const answerSelected = Icon(Icons.circle);
+  static const correct = Icon(Icons.check_circle_outline_sharp);
+  static const wrong = Icon(Icons.do_not_disturb);
 } 

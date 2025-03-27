@@ -16,6 +16,9 @@ abstract class Styles {
     onSurface: Color.fromRGBO(255, 201, 4, 1),
   );
 
+  // specifically the color we give for correct answer feedback
+  static const correctColor = Colors.green;
+
   // text style for login/signup buttons 
   static final buttonTextStyle = TextStyle(
     fontSize: 30,
