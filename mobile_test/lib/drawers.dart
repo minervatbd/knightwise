@@ -56,8 +56,8 @@ class _TopBarDrawerState extends State<TopBarDrawer> {
         ),
         ...destinations.map((Destination destination) {
           return NavigationDrawerDestination(
-            label: Text(destination.label, style: TextStyle(color: scheme.onSecondary)),
-            icon: destination.icon,
+            label: Text(destination.label, style: TextStyle(color: scheme.primary)),
+            icon: destination.selectedIcon,
             backgroundColor: scheme.surface,
             selectedIcon: destination.selectedIcon,
           );
