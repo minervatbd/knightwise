@@ -57,6 +57,9 @@ class _QuestionSequenceState extends State<QuestionSequence> {
       bottomNavigationBar: QuestionBarMenu(
         problemCount: widget.problemCount,
         changeIndex: refreshIndex,
+        status: widget.statusList[currentPageIndex],
+        changeStatus: refreshStatus,
+        problem: widget.problemList[currentPageIndex],
       ),
     );
   }

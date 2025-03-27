@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_test/models.dart';
+import 'package:mobile_test/pages/questionbody.dart';
 import 'styles.dart';
 import 'icons.dart';
 
@@ -230,11 +232,17 @@ class QuestionBarMenu extends StatefulWidget {
     required this.problemCount,
     this.currentPageIndex = 0,
     required this.changeIndex,
+    required this.status,
+    required this.changeStatus,
+    required this.problem
   });
 
   final int problemCount;
   final int currentPageIndex;
   final ValueChanged<int> changeIndex;
+  final QuestionBodyStatus status;
+  final ValueChanged<QuestionBodyStatus> changeStatus;
+  final Problem problem;
 
   @override
   State<QuestionBarMenu> createState() => _QuestionBarMenuState();
@@ -279,6 +287,37 @@ class _QuestionBarMenuState extends State<QuestionBarMenu> {
 
   @override
   Widget build(BuildContext context) {
+  
+    bool _submitEnabled = (widget.status.selectedIndex != -1 && !widget.status.isSubmitted);
+
+    bool correctness() {
+      if (widget.status.selectedIndex != -1) {
+        return widget.status.answerOrder[widget.status.selectedIndex] == 0;
+      } else {
+        return false;
+      }
+    }
+    void handleSubmitButton () {
+      setState(() {
+        if (correctness()) print("correct");
+        else print("wrong");
+
+        widget.status.answer = Answer(
+          "id",
+          "user_id",
+          widget.problem.id,
+          DateTime.now(),
+          correctness(),
+          widget.problem.category,
+          widget.problem.subcategory,
+        );
+
+        widget.status.isSubmitted = true;
+
+        widget.changeStatus(widget.status);
+      });
+    }
+
     return BottomAppBar(
       color: scheme.primary,
       child: Row(
@@ -289,6 +328,11 @@ class _QuestionBarMenuState extends State<QuestionBarMenu> {
             style: Styles.yellowButtonStyle,
             onPressed: _previousEnabled ? handlePreviousButton : null,
             child: NavigationIcons.previous
+          ),
+          ElevatedButton(
+            style: Styles.yellowButtonStyle,
+            onPressed: _submitEnabled ? handleSubmitButton : null,
+            child: Text("Submit")
           ),
           // next
           ElevatedButton(

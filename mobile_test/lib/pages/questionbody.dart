@@ -150,11 +150,11 @@ class _QuestionBodyState extends State<QuestionBody> {
               ),
             ],
           ),
-          ElevatedButton(
-            style: Styles.yellowButtonStyle,
-            onPressed: _submitEnabled? handleSubmitButton : null,
-            child: Text("Submit")
-          ),
+          // ElevatedButton(
+          //   style: Styles.yellowButtonStyle,
+          //   onPressed: _submitEnabled? handleSubmitButton : null,
+          //   child: Text("Submit")
+          // ),
         ]
       ),
     );
