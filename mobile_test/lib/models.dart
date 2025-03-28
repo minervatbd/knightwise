@@ -19,6 +19,31 @@ class Problem {
   final String answerCorrect;
   final List<String> answersWrong;
 
+  factory Problem.fromJson(Map<String, dynamic> json) {
+    return switch (json) {
+      {
+        "_id": String id,
+        "exam_id": String exam_id,
+        "section": String section,
+        "category": String category,
+        "subcategory": String subcategory,
+        "question": String question,
+        "answerCorrect": String answerCorrect,
+        "answersWrong": List<String> answersWrong,
+      } => Problem(
+        id,
+        exam_id,
+        section,
+        category,
+        subcategory,
+        question,
+        answerCorrect,
+        answersWrong,
+      ),
+      _ => throw const FormatException('Failed to load problem.'),
+    };
+  }
+
 }
 
 class Answer {
