@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_test/icons.dart';
 import 'package:mobile_test/models.dart';
 import 'package:mobile_test/pages/questions/questionbody.dart';
+import 'package:mobile_test/pages/questions/questionresults.dart';
 import 'package:mobile_test/styles.dart';
 
 class QuestionBarMenu extends StatefulWidget {
@@ -12,7 +13,11 @@ class QuestionBarMenu extends StatefulWidget {
     required this.changeIndex,
     required this.status,
     required this.changeStatus,
-    required this.problem
+    required this.problem,
+    this.answerCount = 0,
+    required this.changeAnswerCount,
+    this.correctCount = 0,
+    required this.changeCorrectCount,
   });
 
   final int problemCount;
@@ -21,6 +26,10 @@ class QuestionBarMenu extends StatefulWidget {
   final QuestionBodyStatus status;
   final ValueChanged<QuestionBodyStatus> changeStatus;
   final Problem problem;
+  final int answerCount;
+  final ValueChanged<int> changeAnswerCount;
+  final int correctCount;
+  final ValueChanged<int> changeCorrectCount;
 
   @override
   State<QuestionBarMenu> createState() => _QuestionBarMenuState();
@@ -67,6 +76,7 @@ class _QuestionBarMenuState extends State<QuestionBarMenu> {
   Widget build(BuildContext context) {
   
     bool _submitEnabled = (widget.status.selectedIndex != -1 && !widget.status.isSubmitted);
+    bool isFinished = (widget.problemCount == widget.answerCount);
 
     bool correctness() {
       if (widget.status.selectedIndex != -1) {
@@ -75,8 +85,15 @@ class _QuestionBarMenuState extends State<QuestionBarMenu> {
         return false;
       }
     }
+
     void handleSubmitButton () {
       setState(() {
+        widget.changeAnswerCount(widget.answerCount + 1);
+
+        if (correctness()) {
+          widget.changeCorrectCount(widget.correctCount + 1);
+        }
+
         if (correctness()) print("correct");
         else print("wrong");
 
@@ -91,8 +108,28 @@ class _QuestionBarMenuState extends State<QuestionBarMenu> {
         widget.status.isSubmitted = true;
 
         widget.changeStatus(widget.status);
+
       });
     }
+
+    void handleFinishButton() {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => QuestionResultsPage(numberCorrect: widget.correctCount, numberTotal: widget.problemCount))
+      );
+    }
+
+    Widget submitButton = ElevatedButton(
+      style: Styles.yellowButtonStyle,
+      onPressed: _submitEnabled ? handleSubmitButton : null,
+      child: Text("Submit")
+    );
+
+    Widget finishButton = ElevatedButton(
+      style: Styles.yellowButtonStyle,
+      onPressed: handleFinishButton,
+      child: Text("Finish")
+    );
 
     return BottomAppBar(
       color: scheme.primary,
@@ -105,11 +142,7 @@ class _QuestionBarMenuState extends State<QuestionBarMenu> {
             onPressed: _previousEnabled ? handlePreviousButton : null,
             child: NavigationIcons.previous
           ),
-          ElevatedButton(
-            style: Styles.yellowButtonStyle,
-            onPressed: _submitEnabled ? handleSubmitButton : null,
-            child: Text("Submit")
-          ),
+          isFinished ? finishButton : submitButton,
           // next
           ElevatedButton(
             style: Styles.yellowButtonStyle,

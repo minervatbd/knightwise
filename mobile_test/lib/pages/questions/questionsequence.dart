@@ -3,6 +3,7 @@ import 'package:mobile_test/models.dart';
 import 'package:mobile_test/overlays.dart';
 import 'package:mobile_test/pages/questions/questionbar.dart';
 import 'package:mobile_test/pages/questions/questionbody.dart';
+import 'package:mobile_test/pages/questions/questionresults.dart';
 
 class QuestionSequence extends StatefulWidget {
   const QuestionSequence({
@@ -23,6 +24,8 @@ class QuestionSequence extends StatefulWidget {
 
 class _QuestionSequenceState extends State<QuestionSequence> {
   int currentPageIndex = 0;
+  int answerCount = 0;
+  int correctCount = 0;
 
   void refreshIndex(int newIndex) {
     setState(() {
@@ -35,9 +38,22 @@ class _QuestionSequenceState extends State<QuestionSequence> {
       widget.statusList[currentPageIndex] = newStatus;
     });
   }
+
+  void refreshAnswerCount(int newAnswerCount) {
+    setState(() {
+      answerCount = newAnswerCount;
+    });
+  }
+
+  void refreshCorrectCount(int newCorrectCount) {
+    setState(() {
+      correctCount = newCorrectCount;
+    });
+  }
   
   @override
   Widget build(BuildContext context) {
+
     // build list of questionbodies first
     List<QuestionBody> questions = List<QuestionBody>.empty(growable: true);
 
@@ -61,6 +77,10 @@ class _QuestionSequenceState extends State<QuestionSequence> {
         status: widget.statusList[currentPageIndex],
         changeStatus: refreshStatus,
         problem: widget.problemList[currentPageIndex],
+        answerCount: answerCount,
+        changeAnswerCount: refreshAnswerCount,
+        correctCount: correctCount,
+        changeCorrectCount: refreshCorrectCount,
       ),
     );
   }

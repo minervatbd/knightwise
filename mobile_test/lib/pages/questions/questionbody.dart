@@ -82,20 +82,6 @@ class _QuestionBodyState extends State<QuestionBody> {
       selectedList[widget.status.selectedIndex] = true;
     }
 
-    // generates 4 answer buttons
-    var answerButtonList = List<Widget>.empty(growable: true);
-
-    for (int i = 0; i < answerList.length; i++) {
-      answerButtonList.add(
-        Row(
-          children: [
-            selectedList[i] ? answerIcon : unselectedIcon,
-            Text(answerList[widget.status.answerOrder[i]]),
-          ],
-        )
-      );
-    }
-
     // the explanation element will be null unless the question has been answered
     var explanation = null;
 
@@ -119,6 +105,20 @@ class _QuestionBodyState extends State<QuestionBody> {
       );
     }
     
+    // generates 4 answer buttons
+    var answerButtonList = List<Widget>.empty(growable: true);
+
+    for (int i = 0; i < answerList.length; i++) {
+      answerButtonList.add(
+        Row(
+          children: [
+            selectedList[i] ? answerIcon : unselectedIcon,
+            Text(answerList[widget.status.answerOrder[i]]),
+          ],
+        )
+      );
+    }
+
     // this is vestigial since we moved the submit button to the bottom bar
     void handleSubmitButton () {
       setState(() {
