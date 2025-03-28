@@ -27,6 +27,7 @@ class _QuestionResultsPageState extends State<QuestionResultsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: TopBarBlank(),
       bottomNavigationBar: BottomBarBlank(),
       body: Center(
         child: ListView(
