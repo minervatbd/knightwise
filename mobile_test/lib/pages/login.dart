@@ -16,7 +16,7 @@ class _LoginPageState extends State<LoginPage> {
 
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
-  bool isPasswordVisible = false;
+  bool isPasswordVisible = true;
 
   @override
   void initState(){
