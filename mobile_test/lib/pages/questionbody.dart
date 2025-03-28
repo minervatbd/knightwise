@@ -56,6 +56,7 @@ class _QuestionBodyState extends State<QuestionBody> {
     // bools for changing the current state of the page
     bool _submitEnabled = (widget.status.selectedIndex != -1 && !widget.status.isSubmitted);
 
+    // if answer correct, tru, otherwise false
     bool correctness() {
       if (widget.status.selectedIndex != -1) {
         return widget.status.answerOrder[widget.status.selectedIndex] == 0;
@@ -64,26 +65,24 @@ class _QuestionBodyState extends State<QuestionBody> {
       }
     }
 
+    // default color/icon of selected answer before submission
     var answerColor = scheme.secondary;
     var answerIcon = selectedIcon;
-    if (correctness() && widget.status.isSubmitted) {
-      answerColor = Styles.correctColor;
-      answerIcon = NavigationIcons.correct;
-    } else if (!correctness() && widget.status.isSubmitted) {
-      answerColor = scheme.error;
-      answerIcon = NavigationIcons.wrong;
-    }
 
+    // just shortcuts for answerlist def
     var correctAnswer = widget.problem.answerCorrect;
     var wrongAnswers = widget.problem.answersWrong;
 
+    // this will be indexed using status.answerorder
     List<String> answerList = <String>[correctAnswer, wrongAnswers[0], wrongAnswers[1], wrongAnswers[2]];
 
+    // bool list of what answer is selected
     List<bool> selectedList= [false, false, false, false];
     if (widget.status.selectedIndex != -1) {
       selectedList[widget.status.selectedIndex] = true;
     }
 
+    // generates 4 answer buttons
     var answerButtonList = List<Widget>.empty(growable: true);
 
     for (int i = 0; i < answerList.length; i++) {
@@ -96,8 +95,31 @@ class _QuestionBodyState extends State<QuestionBody> {
         )
       );
     }
-    
 
+    // the explanation element will be null unless the question has been answered
+    var explanation = null;
+
+    // change certain elements upon a correct answer
+    if (correctness() && widget.status.isSubmitted) {
+      answerColor = Styles.correctColor;
+      answerIcon = NavigationIcons.correct;
+      explanation = Row(
+        children: [
+          Text("Great job!", style: Styles.generalTextStyle),
+        ],
+      );
+    // change them for incorrect answers
+    } else if (!correctness() && widget.status.isSubmitted) {
+      answerColor = scheme.error;
+      answerIcon = NavigationIcons.wrong;
+      explanation = Row(
+        children: [
+          Text("Correct answer: ${answerList[0]}", style: Styles.generalTextStyle),
+        ],
+      );
+    }
+    
+    // this is vestigial since we moved the submit button to the bottom bar
     void handleSubmitButton () {
       setState(() {
         if (correctness()) print("correct");
@@ -127,6 +149,7 @@ class _QuestionBodyState extends State<QuestionBody> {
             direction: Axis.vertical,
             color: scheme.onSecondary,
             fillColor: answerColor,
+            textStyle: Styles.generalTextStyle,
             onPressed: (int index) {
               setState(() {
                 if (!widget.status.isSubmitted) {
@@ -139,34 +162,11 @@ class _QuestionBodyState extends State<QuestionBody> {
               });
             },
             isSelected: selectedList,
-            children: <Widget>[
-              Row(children: [
-                  selectedList[0] ? answerIcon : unselectedIcon,
-                  Text(answerList[widget.status.answerOrder[0]]),
-                ],
-              ),
-              Row(children: [
-                  selectedList[1] ? answerIcon : unselectedIcon,
-                  Text(answerList[widget.status.answerOrder[1]]),
-                ],
-              ),
-              Row(children: [
-                  selectedList[2] ? answerIcon : unselectedIcon,
-                  Text(answerList[widget.status.answerOrder[2]]),
-                ],
-              ),
-              Row(children: [
-                  selectedList[3] ? answerIcon : unselectedIcon,
-                  Text(answerList[widget.status.answerOrder[3]]),
-                ],
-              ),
-            ],
+            children: answerButtonList,
           ),
-          // ElevatedButton(
-          //   style: Styles.yellowButtonStyle,
-          //   onPressed: _submitEnabled? handleSubmitButton : null,
-          //   child: Text("Submit")
-          // ),
+          Container(
+            child: explanation,
+          ),
         ]
       ),
     );
