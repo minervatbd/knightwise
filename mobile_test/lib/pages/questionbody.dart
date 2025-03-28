@@ -84,6 +84,18 @@ class _QuestionBodyState extends State<QuestionBody> {
       selectedList[widget.status.selectedIndex] = true;
     }
 
+    var answerButtonList = List<Widget>.empty(growable: true);
+
+    for (int i = 0; i < answerList.length; i++) {
+      answerButtonList.add(
+        Row(
+          children: [
+            selectedList[i] ? answerIcon : unselectedIcon,
+            Text(answerList[widget.status.answerOrder[i]]),
+          ],
+        )
+      );
+    }
     
 
     void handleSubmitButton () {
