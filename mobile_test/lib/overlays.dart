@@ -52,60 +52,6 @@ class TopBarMenu extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => Size.fromHeight(topBarHeight);
 }
 
-// bottom bar containing four buttons
-class BottomBarMenu extends StatefulWidget {
-  const BottomBarMenu({
-    super.key,
-    this.currentPageIndex = 0,
-    required this.changeIndex
-  });
-
-  final int currentPageIndex;
-  final ValueChanged<int> changeIndex;
-
-  @override
-  State<BottomBarMenu> createState() => _BottomBarMenuState();
-}
-
-class _BottomBarMenuState extends State<BottomBarMenu> {
-  NavigationDestinationLabelBehavior labelBehavior = NavigationDestinationLabelBehavior.alwaysHide;
-
-  @override
-  Widget build(BuildContext context) {
-    return NavigationBar(
-      backgroundColor: Styles.schemeMain.primary,
-      labelBehavior: labelBehavior,
-      selectedIndex: widget.currentPageIndex,
-      onDestinationSelected: (int index) {
-        setState(() {
-          widget.changeIndex(index);
-        });
-      },
-      destinations: [
-        NavigationDestination(
-          icon: NavigationIcons.dashboard,
-          selectedIcon: NavigationIcons.dashboardSelected,
-          label: "Dashboard" 
-        ),
-        NavigationDestination(
-          icon: NavigationIcons.topicSelection,
-          selectedIcon: NavigationIcons.topicSelectionSelected,
-          label: "Topic Selection" 
-        ),
-        NavigationDestination(
-          icon: NavigationIcons.mockTest,
-          selectedIcon: NavigationIcons.mockTestSelected,
-          label: "Mock Test" 
-        ),
-        NavigationDestination(
-          icon: NavigationIcons.myProgress,
-          selectedIcon: NavigationIcons.myProgressSelected,
-          label: "My Progress" 
-        ),
-      ],
-    );
-  }
-}
 
 // blank black top bar for login/register
 class TopBarBlank extends StatelessWidget implements PreferredSizeWidget {

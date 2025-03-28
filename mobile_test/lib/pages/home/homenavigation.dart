@@ -1,8 +1,64 @@
 import 'package:flutter/material.dart';
-import 'styles.dart';
-import 'icons.dart';
+import 'package:mobile_test/icons.dart';
+import 'package:mobile_test/styles.dart';
 
 const scheme = Styles.schemeMain;
+const double topBarHeight = 70;
+
+// bottom bar containing four buttons
+class BottomBarMenu extends StatefulWidget {
+  const BottomBarMenu({
+    super.key,
+    this.currentPageIndex = 0,
+    required this.changeIndex
+  });
+
+  final int currentPageIndex;
+  final ValueChanged<int> changeIndex;
+
+  @override
+  State<BottomBarMenu> createState() => _BottomBarMenuState();
+}
+
+class _BottomBarMenuState extends State<BottomBarMenu> {
+  NavigationDestinationLabelBehavior labelBehavior = NavigationDestinationLabelBehavior.alwaysHide;
+
+  @override
+  Widget build(BuildContext context) {
+    return NavigationBar(
+      backgroundColor: Styles.schemeMain.primary,
+      labelBehavior: labelBehavior,
+      selectedIndex: widget.currentPageIndex,
+      onDestinationSelected: (int index) {
+        setState(() {
+          widget.changeIndex(index);
+        });
+      },
+      destinations: [
+        NavigationDestination(
+          icon: NavigationIcons.dashboard,
+          selectedIcon: NavigationIcons.dashboardSelected,
+          label: "Dashboard" 
+        ),
+        NavigationDestination(
+          icon: NavigationIcons.topicSelection,
+          selectedIcon: NavigationIcons.topicSelectionSelected,
+          label: "Topic Selection" 
+        ),
+        NavigationDestination(
+          icon: NavigationIcons.mockTest,
+          selectedIcon: NavigationIcons.mockTestSelected,
+          label: "Mock Test" 
+        ),
+        NavigationDestination(
+          icon: NavigationIcons.myProgress,
+          selectedIcon: NavigationIcons.myProgressSelected,
+          label: "My Progress" 
+        ),
+      ],
+    );
+  }
+}
 
 class Destination {
   const Destination(

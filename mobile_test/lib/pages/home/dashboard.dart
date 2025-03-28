@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import '../styles.dart';
+import '../../styles.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});

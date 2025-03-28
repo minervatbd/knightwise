@@ -3,7 +3,7 @@ import 'package:mobile_test/pages/questions/questionbody.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:mobile_test/models.dart';
 import 'package:mobile_test/pages/questions/questionsequence.dart';
-import '../styles.dart';
+import '../../styles.dart';
 
 const int testProblemCount = 6;
 

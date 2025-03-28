@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_test/overlays.dart';
-import 'package:mobile_test/pages/home.dart';
+import 'package:mobile_test/pages/home/homepage.dart';
 import '../styles.dart';
 
 final buttonStyle = Styles.yellowButtonStyle;
