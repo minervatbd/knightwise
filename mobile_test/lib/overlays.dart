@@ -302,11 +302,9 @@ class _QuestionBarMenuState extends State<QuestionBarMenu> {
         if (correctness()) print("correct");
         else print("wrong");
 
-        widget.status.answer = Answer(
-          "id",
+        widget.status.answer = Answer.newAnswer(
           "user_id",
           widget.problem.id,
-          DateTime.now(),
           correctness(),
           widget.problem.category,
           widget.problem.subcategory,

@@ -22,7 +22,7 @@ class Problem {
 }
 
 class Answer {
-  const Answer(
+  Answer(
     this.id,
     this.user_id,
     this.problem_id,
@@ -32,11 +32,23 @@ class Answer {
     this.topic,
   );
 
-  final String id;
-  final String user_id;
-  final String problem_id;
-  final DateTime datetime;
-  final bool isCorrect;
-  final String category;
-  final String topic;
+  // answer constructor for a new answer object to be submitted to database
+  Answer.newAnswer(
+    this.user_id,
+    this.problem_id,
+    this.isCorrect,
+    this.category,
+    this.topic
+  ) {
+    id = "";
+    datetime = DateTime.now();
+  }
+
+  late String id;
+  String user_id;
+  String problem_id;
+  late DateTime datetime;
+  bool isCorrect;
+  String category;
+  String topic;
 }
