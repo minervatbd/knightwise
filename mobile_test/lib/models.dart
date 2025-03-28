@@ -1,3 +1,23 @@
+class User {
+  const User(
+    this.id,
+    this.username,
+    this.email,
+    this.password,
+    this.firstName,
+    this.lastName,
+    this.isVerified,
+  );
+
+  final String id;
+  final String username;
+  final String email;
+  final String password;
+  final String firstName;
+  final String lastName;
+  final bool isVerified;
+}
+
 class Problem {
   const Problem(
       this.id,
