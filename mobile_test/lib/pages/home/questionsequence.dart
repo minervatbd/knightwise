@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_test/models.dart';
 import 'package:mobile_test/overlays.dart';
-import 'package:mobile_test/pages/questionbody.dart';
+import 'package:mobile_test/pages/questions/questionbody.dart';
 
 class QuestionSequence extends StatefulWidget {
   const QuestionSequence({

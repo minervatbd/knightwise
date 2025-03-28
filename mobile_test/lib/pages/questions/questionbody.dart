@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_test/icons.dart';
 import 'package:mobile_test/models.dart';
-import '../styles.dart';
+import '../../styles.dart';
 
 const scheme = Styles.schemeMain;
 const unselectedIcon = NavigationIcons.answer;
