@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_test/overlays.dart';
 
 class TopicResultsPage extends StatefulWidget {
   const TopicResultsPage({super.key});
@@ -11,9 +12,10 @@ class _TopicResultsPageState extends State<TopicResultsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: null,
-      body: null,
-      bottomNavigationBar: null,
+      body: Center(
+        child: null,
+      ),
+      bottomNavigationBar: BottomBarBlank(),
     );
   }
 }
