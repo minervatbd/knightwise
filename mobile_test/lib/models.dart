@@ -76,4 +76,27 @@ class Answer {
   bool isCorrect;
   String category;
   String topic;
+
+  factory Answer.fromJson(Map<String, dynamic> json) {
+    return switch (json) {
+      {
+        "_id": String id,
+        "user_id": String user_id,
+        "problem_id": String problem_id,
+        "datetime": DateTime datetime,
+        "isCorrect": bool isCorrect,
+        "category": String category,
+        "topic": String topic,
+      } => Answer(
+        id,
+        user_id,
+        problem_id,
+        datetime,
+        isCorrect,
+        category,
+        topic,
+      ),
+      _ => throw const FormatException('Failed to load Answer.'),
+    };
+  }
 }
