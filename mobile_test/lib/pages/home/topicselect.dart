@@ -7,6 +7,7 @@ import 'package:mobile_test/pages/questions/questionsequence.dart';
 import '../../styles.dart';
 
 const int testProblemCount = 6;
+const int maxProblemCount = 10;
 
 // generates a list of dummy problems for test purposes
 List<Problem> generateDummyProblems(int count) {
@@ -73,8 +74,18 @@ class _TopicSelectPageState extends State<TopicSelectPage> {
   var _selectedTopic;
 
   void handleStartButton() async {
+    // get problems of a topic
     var problemList = await fetchProblems(_selectedTopic);
 
+    // shuffle them
+    problemList.shuffle();
+
+    // truncate if greater than maxproblemcount
+    if (problemList.length > maxProblemCount) {
+      problemList.length = maxProblemCount;
+    }
+
+    // open the question sequence
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => QuestionSequence(problemCount: problemList.length, problemList: problemList, statusList: generateStatusList(problemList.length))),
