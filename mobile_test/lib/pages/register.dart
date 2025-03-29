@@ -20,6 +20,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmpasswordController = TextEditingController();
+  final emailController = TextEditingController();
   bool isPasswordVisible = true;
   bool isConfirmPasswordVisible = true;
 
@@ -161,7 +162,35 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
 
-                  //password textbox
+                  // Email Textbox
+                  Container(
+                    color: Colors.grey[300],
+                    padding: EdgeInsets.fromLTRB(10, 25, 10, 0),
+                    width: 336,
+                    height: 65,
+                    child: TextField(
+                      controller: emailController,
+                      textAlign: TextAlign.start,
+                      style: TextStyle(
+                        color: Styles.schemeMain.primary,
+                        fontFamily: 'Mulish',
+                        fontWeight: FontWeight.w400,
+                        fontSize: 24,
+                      ),
+                      decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.only(
+                              left: 4.0,
+                              bottom: 4.0,
+                              top: 4.0
+                          ),
+                        hintText: 'Email',
+                        hintStyle: Styles.fieldTextStyle,
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+
+                  // Password textbox
                   Container(
                     color: Colors.grey[300],
                     padding: EdgeInsets.fromLTRB(10, 25, 10, 0),
@@ -244,6 +273,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       print('firstname: ${firstnameController.text}');
                       print('lastname: ${lastnameController.text}');
                       print('username: ${usernameController.text}');
+                      print('email: ${emailController.text}');
                       print('password: ${passwordController.text}');
                       print('confirm password: ${confirmpasswordController.text}');
             
