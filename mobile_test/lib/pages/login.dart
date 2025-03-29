@@ -159,24 +159,6 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ],
         ),
-
-        /*
-        child: Container(
-          height: 50,
-          child: ElevatedButton(
-            style: buttonStyle,
-            child: const Text('LOGIN'),
-            // navigate to dashboard
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const HomePage()),
-              );
-            },
-          )
-        ),
-        */
-
       ),
     );
   }
