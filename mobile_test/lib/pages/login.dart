@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_test/overlays.dart';
 import 'package:mobile_test/pages/home/homepage.dart';
 import '../styles.dart';
+import 'package:mobile_test/calls.dart';
 
 final buttonStyle = Styles.yellowButtonStyle;
 
@@ -19,13 +20,17 @@ class _LoginPageState extends State<LoginPage> {
   bool isPasswordVisible = true;
 
   @override
-  void initState(){
-    super.initState();
-
-    usernameController.addListener(() => setState(() {}));
-    passwordController.addListener(() => setState(() {}));
+  // void initState(){
+  //   super.initState();
+  //
+  //   usernameController.addListener(() => setState(() {}));
+  //   passwordController.addListener(() => setState(() {}));
+  // }
+  void dispose() {
+    usernameController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -134,15 +139,31 @@ class _LoginPageState extends State<LoginPage> {
 
                   //Sign in button
                   MaterialButton(
-                    onPressed: () {
-                      //temp solution; ideally would be passed as json for login endpoint or something like that
-                      print('username: ${usernameController.text}');
-                      print('password: ${passwordController.text}');
+                    // onPressed: () {
+                    //   //temp solution; ideally would be passed as json for login endpoint or something like that
+                    //   print('username: ${usernameController.text}');
+                    //   print('password: ${passwordController.text}');
+                    //
+                    //   Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(builder: (context) => const HomePage()),
+                    //   );
+                    // },
+                    onPressed: ()  {
+                      final username = usernameController.text.trim();
+                      final password = passwordController.text;
 
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const HomePage()),
-                      );
+                      if (username.isEmpty || password.isEmpty) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Please enter both username and password'),
+                            backgroundColor: Colors.red,
+                            behavior: SnackBarBehavior.floating,
+                            duration: Duration(seconds: 2),
+                          ),
+                        );
+                        return;
+                      }
                     },
                     elevation: 4,
                     color: Styles.schemeMain.secondary,
