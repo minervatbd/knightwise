@@ -46,7 +46,7 @@ abstract class Styles {
 
   // text style for text field hints
   static final fieldTextStyle = TextStyle(
-    fontSize: 30,
+    fontSize: 24,
     fontFamily: 'Mulish',
     fontWeight: FontWeight.bold,
     color: Colors.black54,
