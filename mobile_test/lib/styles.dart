@@ -27,6 +27,23 @@ abstract class Styles {
     color: schemeMain.onSecondary,
   );
 
+  // small text style for login/signup pages
+  static final smallTextStyle = TextStyle(
+    fontSize: 20,
+    fontFamily: 'Mulish',
+    fontWeight: FontWeight.normal,
+    color: Colors.black,
+  );
+
+  
+    // small text for hyperlinks for login/signup pages
+  static const linkSmallTextStyle = TextStyle(
+    fontSize: 20,
+    fontFamily: 'Mulish',
+    color: Colors.blueAccent,
+    fontStyle: FontStyle.italic,
+  );
+
   // text style for text field hints
   static final fieldTextStyle = TextStyle(
     fontSize: 30,
