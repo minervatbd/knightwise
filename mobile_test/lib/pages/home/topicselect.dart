@@ -38,6 +38,27 @@ List<QuestionBodyStatus> generateStatusList(int count) {
   return statusOut;
 }
 
+// topics with icon
+const List<Map<String, dynamic>> topics = [
+  {"title": "Algorithm Analysis", "icon": Icons.all_inclusive},
+  {"title": "AVL Trees", "icon": Icons.device_hub},
+  {"title": "Backtracking", "icon": Icons.chevron_left},
+  {"title": "Base Conversion", "icon": Icons.code},
+  {"title": "Binary Trees", "icon": Icons.device_hub},
+  {"title": "Bitwise Operators", "icon": Icons.code},
+  {"title": "Dynamic Memory", "icon": Icons.memory},
+  {"title": "Hash Tables", "icon": Icons.grid_on},
+  {"title": "Heaps", "icon": Icons.device_hub},
+  {"title": "Linked Lists", "icon": Icons.linear_scale},
+  {"title": "Queues", "icon": Icons.chevron_right},
+  {"title": "Recurrence Relations", "icon": Icons.repeat},
+  {"title": "Recursion", "icon": Icons.loop},
+  {"title": "Sorting", "icon": Icons.swap_vert},
+  {"title": "Stacks", "icon": Icons.layers},
+  {"title": "Summations", "icon": Icons.functions},
+  {"title": "Tries", "icon": Icons.device_hub},
+];
+
 class TopicSelectPage extends StatefulWidget {
   const TopicSelectPage({super.key});
 
@@ -46,15 +67,67 @@ class TopicSelectPage extends StatefulWidget {
 }
 
 class _TopicSelectPageState extends State<TopicSelectPage> {
+
+  String? _selectedTopic;
+
   @override
   Widget build(BuildContext context) {
     return Center(
       child: ListView(
         children: <Widget>[
           Text(
-            "select topic",
-            style: Styles.buttonTextStyle,
+            "Select Topic",
+            style: Styles.timeTextStyle,
+            textAlign: TextAlign.center,
           ),
+
+          // topic list view
+          ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: topics.length,
+            itemBuilder: (context, index) {
+              final topic = topics[index];
+              final title = topic["title"];
+              final icon = topic["icon"];
+              final isSelected = _selectedTopic == title;
+
+              // selected topic turns yellow
+              return ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _selectedTopic = title;
+                    });
+                  },
+                  style: isSelected
+                      ? Styles.yellowButtonStyle
+                      : Styles.yellowButtonStyle.copyWith(
+                    backgroundColor: WidgetStateProperty.all(Colors.white),
+                  ),
+
+                // button content
+                // show ellipsis if text is too long
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Icon(icon, size: 28),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Text(
+                          title,
+                          style: Styles.generalTextStyle,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
+                  ),
+              );
+            },
+          ),
+
+          const SizedBox(height: 20),
+
+          // start button
           ElevatedButton(
             onPressed: () {
               Navigator.push(
