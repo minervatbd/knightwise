@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_test/calls.dart';
 import 'package:mobile_test/pages/questions/questionbody.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:mobile_test/models.dart';
@@ -19,6 +20,7 @@ List<Problem> generateDummyProblems(int count) {
       "section",
       "category",
       "subcategory",
+      1,
       sprintf("question%d", [x+1]),
       "Correct",
       ["wrong1", "wrong2", "wrong3"],
@@ -68,10 +70,22 @@ class TopicSelectPage extends StatefulWidget {
 
 class _TopicSelectPageState extends State<TopicSelectPage> {
 
-  String? _selectedTopic;
+  var _selectedTopic;
+
+  void handleStartButton() async {
+    var problemList = await fetchProblems(_selectedTopic);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => QuestionSequence(problemCount: problemList.length, problemList: problemList, statusList: generateStatusList(problemList.length))),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
+
+    bool enableStart = (_selectedTopic != null);
+
     return Center(
       child: ListView(
         children: <Widget>[
@@ -129,12 +143,7 @@ class _TopicSelectPageState extends State<TopicSelectPage> {
 
           // start button
           ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => QuestionSequence(problemCount: testProblemCount, problemList: generateDummyProblems(testProblemCount), statusList: generateStatusList(testProblemCount))),
-              );
-            },
+            onPressed: enableStart ? handleStartButton : null,
             style: Styles.yellowButtonStyle,
             child: Text(
               "Start",

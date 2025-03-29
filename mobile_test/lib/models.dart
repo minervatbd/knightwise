@@ -48,6 +48,7 @@ class Problem {
       this.section,
       this.category,
       this.subcategory,
+      this.points,
       this.question,
       this.answerCorrect,
       this.answersWrong,
@@ -58,9 +59,10 @@ class Problem {
   final String section;
   final String category;
   final String subcategory;
+  final int points;
   final String question;
   final String answerCorrect;
-  final List<String> answersWrong;
+  final List<dynamic> answersWrong;
 
   factory Problem.fromJson(Map<String, dynamic> json) {
     return switch (json) {
@@ -70,15 +72,17 @@ class Problem {
         "section": String section,
         "category": String category,
         "subcategory": String subcategory,
+        "points": int points,
         "question": String question,
         "answerCorrect": String answerCorrect,
-        "answersWrong": List<String> answersWrong,
+        "answersWrong": List<dynamic> answersWrong,
       } => Problem(
         id,
         exam_id,
         section,
         category,
         subcategory,
+        points,
         question,
         answerCorrect,
         answersWrong,
