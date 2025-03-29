@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_test/calls.dart';
 import 'package:mobile_test/pages/questions/questionbody.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:mobile_test/models.dart';
@@ -19,6 +20,7 @@ List<Problem> generateDummyProblems(int count) {
       "section",
       "category",
       "subcategory",
+      0,
       sprintf("question%d", [x+1]),
       "Correct",
       ["wrong1", "wrong2", "wrong3"],
@@ -46,6 +48,16 @@ class MockTestPage extends StatefulWidget {
 }
 
 class _MockTestPageState extends State<MockTestPage> {
+
+  void handleStartButton() async {
+    var problemList = await fetchMockTest();
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => QuestionSequence(problemCount: problemList.length, problemList: problemList, statusList: generateStatusList(problemList.length))),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -94,12 +106,7 @@ class _MockTestPageState extends State<MockTestPage> {
         
           // Start Button
           ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => QuestionSequence(problemCount: testProblemCount, problemList: generateDummyProblems(testProblemCount), statusList: generateStatusList(testProblemCount))),
-              );
-            },
+            onPressed: handleStartButton,
             style: Styles.yellowButtonStyle,
             child: Text(
               "Start",

@@ -24,3 +24,24 @@ Future<List<Problem>> fetchProblems(String topic) async {
     throw Exception('Failed to load problems!');
   }
 }
+
+// returns list of mocktest problems
+Future<List<Problem>> fetchMockTest() async {
+  final response = await http.get(
+    Uri.parse("${uri}test/mocktest")
+  );
+
+  if (response.statusCode == 200) {
+    // decode the json response
+    var p = jsonDecode(response.body)["problems"];
+    // build a list of problem objects
+    var problems = List<Problem>.empty(growable: true);
+    for (int i = 0; i < p.length; i++) {
+      // throw each problem json into the factory to add to the problemlist
+      problems.add(Problem.fromJson(p[i]));
+    }
+    return problems;
+  } else {
+    throw Exception('Failed to load problems!');
+  }
+}
