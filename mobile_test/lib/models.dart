@@ -16,6 +16,29 @@ class User {
   final String firstName;
   final String lastName;
   final bool isVerified;
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return switch (json) {
+      {
+        "_id": String id,
+        "username": String username,
+        "email": String email,
+        "password": String password,
+        "firstName": String firstName,
+        "lastName": String lastName,
+        "isVerified": bool isVerified,
+      } => User(
+        id,
+        username,
+        email,
+        password,
+        firstName,
+        lastName,
+        isVerified,
+      ),
+      _ => throw const FormatException('Failed to load user.'),
+    };
+  }
 }
 
 class Problem {
