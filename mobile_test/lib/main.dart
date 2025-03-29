@@ -1,7 +1,16 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_tex/flutter_tex.dart';
 import 'pages/landing.dart';
 
-void main() {
+void main() async {
+  TeXRederingServer.renderingEngine = const TeXViewRenderingEngine.mathjax();
+
+  if (!kIsWeb) {
+    await TeXRederingServer.run();
+    await TeXRederingServer.initController();
+  }
+
   runApp(const MyApp());
 }
 

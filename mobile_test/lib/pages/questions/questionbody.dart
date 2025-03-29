@@ -145,7 +145,14 @@ class _QuestionBodyState extends State<QuestionBody> {
     return Center(
       child: ListView(
         children: <Widget>[
-          Text(widget.problem.question, style: Styles.buttonTextStyle),
+          Text(widget.problem.category, style: Styles.buttonTextStyle),
+          TeXView(
+            child: TeXViewColumn(
+            children: [TeXViewDocument(
+              widget.problem.question
+            )]
+            )
+          ),
           ToggleButtons(
             direction: Axis.vertical,
             color: scheme.onSecondary,
