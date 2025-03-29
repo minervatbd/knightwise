@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Layout from "../components/Layout";
 import axios from "axios";
+import parse from "html-react-parser";
+import DOMPurify from "dompurify";
 
 const TopicTestPage: React.FC = () => {
   const { topicName } = useParams<{ topicName: string }>();
@@ -148,10 +150,9 @@ const TopicTestPage: React.FC = () => {
           <h2 className="text-base sm:text-xl md:text-2xl font-bold mb-2">
             Q{currentIndex + 1}.
           </h2>
-          <div
-            className="text-base sm:text-lg md:text-xl font-medium mb-4"
-            dangerouslySetInnerHTML={{ __html: current.question }}
-          />
+          <div className="text-base sm:text-lg md:text-xl font-medium mb-4">
+            {parse(DOMPurify.sanitize(current.question))}
+          </div>
         </div>
 
         {/* Options */}

@@ -1,4 +1,7 @@
 import React from "react";
+import parse from "html-react-parser";
+import DOMPurify from "dompurify";
+
 
 type Props = {
   current: any; // current question
@@ -45,10 +48,9 @@ const MockTestProblem: React.FC<Props> = ({
       Question {currentIndex + 1} of {total}
     </h2>
 
-    <div
-      className="text-base sm:text-lg md:text-xl font-medium mb-4"
-      dangerouslySetInnerHTML={{ __html: current.question }}
-    />
+    <div className="text-base sm:text-lg md:text-xl font-medium mb-4">
+      {parse(DOMPurify.sanitize(current.question))}
+    </div>
 
     {/* multiple choice */}
     <div className="space-y-3">
