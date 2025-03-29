@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../components/Layout";
 import MockTestInfo from "../components/MockTestInfo";
-import MockTestRunner from "../components/MockTestProblem";
+import MockTestProblem from "../components/MockTestProblem";
 import MockTestResult from "../components/MockTestResult";
 import axios from "axios";
 
@@ -86,7 +86,7 @@ const MockTestPage: React.FC = () => {
       {step === "info" && <MockTestInfo onStart={() => setStep("test")} />}
 
       {step === "test" && current && (
-        <MockTestRunner
+        <MockTestProblem
           current={current}
           currentIndex={currentIndex}
           total={questions.length}

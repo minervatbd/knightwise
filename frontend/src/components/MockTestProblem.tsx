@@ -8,7 +8,7 @@ type Props = {
   setSelectedAnswer: (val: string) => void; // click radio button
   handleSubmit: () => void; // click submit
   handleNext: () => void; // click next
-  showFeedback: boolean; // check if the last question or not 
+  showFeedback: boolean; // check if the last question or not
   isCorrect: boolean; // check correct answer
 };
 
@@ -41,9 +41,14 @@ const MockTestProblem: React.FC<Props> = ({
     </h1>
 
     {/* question */}
-    <h2 className="text-base sm:text-xl md:text-2xl font-bold mb-4 mt-6">
-      Q{currentIndex + 1}. {current.question}
+    <h2 className="text-lg font-semibold mb-2">
+      Question {currentIndex + 1} of {total}
     </h2>
+
+    <div
+      className="text-base sm:text-lg md:text-xl font-medium mb-4"
+      dangerouslySetInnerHTML={{ __html: current.question }}
+    />
 
     {/* multiple choice */}
     <div className="space-y-3">
@@ -80,7 +85,11 @@ const MockTestProblem: React.FC<Props> = ({
             : "bg-yellow-600 hover:bg-yellow-700 text-white"
         }`}
       >
-        {showFeedback ? (currentIndex + 1 === total ? "Result" : "Next") : "Submit"}
+        {showFeedback
+          ? currentIndex + 1 === total
+            ? "Result"
+            : "Next"
+          : "Submit"}
       </button>
     </div>
 

@@ -146,8 +146,12 @@ const TopicTestPage: React.FC = () => {
         {/* Question */}
         <div className="mb-4">
           <h2 className="text-base sm:text-xl md:text-2xl font-bold mb-2">
-            Q{currentIndex + 1}. {current.question}
+            Q{currentIndex + 1}.
           </h2>
+          <div
+            className="text-base sm:text-lg md:text-xl font-medium mb-4"
+            dangerouslySetInnerHTML={{ __html: current.question }}
+          />
         </div>
 
         {/* Options */}
