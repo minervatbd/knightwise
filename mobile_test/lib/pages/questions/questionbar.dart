@@ -5,6 +5,8 @@ import 'package:mobile_test/pages/questions/questionbody.dart';
 import 'package:mobile_test/pages/questions/questionresults.dart';
 import 'package:mobile_test/styles.dart';
 
+const topBarHeight = 50.0;
+
 class QuestionBarMenu extends StatefulWidget {
   const QuestionBarMenu({
     super.key,
@@ -151,6 +153,35 @@ class _QuestionBarMenuState extends State<QuestionBarMenu> {
           ),
         ],
       )
+    );
+  }
+}
+
+class QuestionBarTop extends StatefulWidget implements PreferredSizeWidget {
+  const QuestionBarTop({
+    super.key,
+    required this.problemCount,
+    this.currentPageIndex = 0,
+    required this.changeIndex,
+  });
+
+  final int problemCount;
+  final int currentPageIndex;
+  final ValueChanged<int> changeIndex;
+
+  @override
+  State<QuestionBarTop> createState() => _QuestionBarTopState();
+  
+  @override
+  Size get preferredSize => Size.fromHeight(topBarHeight);
+}
+
+class _QuestionBarTopState extends State<QuestionBarTop> {
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      backgroundColor: scheme.primary,
+      title: Text("Question ${widget.currentPageIndex + 1}/${widget.problemCount}"),
     );
   }
 }

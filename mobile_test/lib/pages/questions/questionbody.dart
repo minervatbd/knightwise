@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tex/flutter_tex.dart';
 import 'package:mobile_test/icons.dart';
 import 'package:mobile_test/models.dart';
 import '../../styles.dart';
