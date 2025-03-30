@@ -18,7 +18,7 @@ class LoginPage extends StatefulWidget {
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
-// 
+
 class _LoginPageState extends State<LoginPage> {
 
   final usernameController = TextEditingController();
@@ -31,6 +31,7 @@ class _LoginPageState extends State<LoginPage> {
   bool isPasswordVisible = true;
   bool isResetPasswordVisible = true;
   bool isConfirmPasswordVisible = true;
+  bool isVerified = false;
 
   @override
   void initState() {
@@ -56,11 +57,13 @@ class _LoginPageState extends State<LoginPage> {
 
 
   Future openDialog() => showDialog(
+
     context: context,
     builder: (context) => StatefulBuilder(builder: (context, setState) => AlertDialog(
 
       title: Text('Reset Password', style: Styles.timeTextStyle, textAlign: TextAlign.center,),
       content: Column(mainAxisAlignment: MainAxisAlignment.start, spacing: 30, children: [
+        //email textbox
         Container(
           color: Colors.grey[300],
           padding: EdgeInsets.fromLTRB(10, 25, 10, 0),
@@ -87,6 +90,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
         ),
+        //send code to email button
         MaterialButton(
           onPressed: () async {
             try {
@@ -107,6 +111,7 @@ class _LoginPageState extends State<LoginPage> {
             style: Styles.buttonTextStyle,
           ),
         ),
+        //otp code textbox
         Container(
           color: Colors.grey[300],
           padding: EdgeInsets.fromLTRB(10, 25, 10, 0),
@@ -133,11 +138,16 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
         ),
+        //check otp code and verify email button
         MaterialButton(
           onPressed: () async {
             try {
               Verify verification = await verifyEmail(emailController.text, otpController.text);
               message = verification.message;
+              if(message == 'Verify') {
+                isVerified = true;
+              }
+
               setState(() {});
             }catch (e){
               print(e);
@@ -153,10 +163,7 @@ class _LoginPageState extends State<LoginPage> {
             style: Styles.buttonTextStyle,
           ),
         ),
-        Container(
-          padding: EdgeInsets.all(10),
-          child: Text(message, textAlign: TextAlign.center, style: Styles.generalTextStyle,),
-        ),
+        //submit and open change password dialog
         MaterialButton(
           onPressed: () async {
 
@@ -177,15 +184,17 @@ class _LoginPageState extends State<LoginPage> {
               return;
             }
 
-            if(message != 'Verify') {
+            if(!isVerified) {
               message = 'Email not Verified';
               return;
             }
 
             Navigator.of(context).pop(otpController.text);
-            Navigator.of(context).pop(emailController.text);
+            //Navigator.of(context).pop(emailController.text);
             otpController.clear();
-            openPasswordDialog();
+            emailController.clear();
+            message = '';
+            openPasswordDialog(email);
           },
           elevation: 4,
           color: Styles.schemeMain.secondary,
@@ -193,28 +202,20 @@ class _LoginPageState extends State<LoginPage> {
           height: 60,
           minWidth: 265,
           child: const Text(
-            'Reset Password',
+            'Done',
             style: Styles.buttonTextStyle,
           ),
         ),
+        //display message updating user on input
+        Container(
+          padding: EdgeInsets.all(10),
+          child: Text(message, textAlign: TextAlign.center, style: Styles.generalTextStyle,),
+        ),
       ]),
-      /*
-      actions: [
-        TextButton(
-          onPressed: () => {
-            Navigator.of(context).pop(otpController.text),
-            Navigator.of(context).pop(emailController.text),
-            otpController.clear(),
-            openPasswordDialog(),
-          },
-          child: Text('Reset Password', style: Styles.buttonTextStyle,),)
-      ],
-
-       */
     ),
   ));
 
-  Future openPasswordDialog() => showDialog(
+  Future openPasswordDialog(String email) => showDialog(
     context: context,
     builder: (context) => StatefulBuilder(builder: (context, setState) => AlertDialog(
 
@@ -333,6 +334,12 @@ class _LoginPageState extends State<LoginPage> {
               message = passwordReset.message;
 
               setState(() {});
+
+              Navigator.of(context).pop(passwordResetController.text);
+              //Navigator.of(context).pop(passwordConfirmController.text);
+              passwordResetController.clear();
+              passwordConfirmController.clear();
+
             }catch (e){
               print(e);
             }
@@ -343,7 +350,7 @@ class _LoginPageState extends State<LoginPage> {
           height: 60,
           minWidth: 265,
           child: const Text(
-            'Send Code',
+            'Reset Password',
             style: Styles.buttonTextStyle,
           ),
         ),
