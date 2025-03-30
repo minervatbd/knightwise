@@ -4,6 +4,68 @@ import 'package:mobile_test/models.dart';
 
 String uri = "http://www.dirediredocks.xyz/api/";
 
+Future<Login> createLogin(String username, String password) async {
+  final response = await http.post(
+    Uri.parse('${uri}auth/login'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{'username': username, 'password': password}),
+  );
+
+  if (response.statusCode == 200) {
+    // If the server did return a 201 CREATED response,
+    // then parse the JSON.
+    return Login.fromJson(jsonDecode(response.body));
+  } else {
+    // If the server did not return a 201 CREATED response,
+    // then throw an exception.
+    throw Exception('Failed to create album.');
+  }
+}
+
+Future<Verify> verifyEmail(String email, String otp) async {
+  final response = await http.post(
+    Uri.parse('${uri}auth/verify'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{'email': email, 'otp': otp}),
+  );
+
+  if (response.statusCode == 200) {
+    // If the server did return a 201 CREATED response,
+    // then parse the JSON.
+    return Verify.fromJson(jsonDecode(response.body));
+  } else {
+    // If the server did not return a 201 CREATED response,
+    // then throw an exception.
+    throw Exception('Failed to create album.');
+  }
+}
+
+Future<SendOtp> sendEmailCode(String email, String reason) async {
+  final response = await http.post(
+    Uri.parse('${uri}auth/sendotp'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, String>{'email': email, 'purpose': reason}),
+  );
+
+  if (response.statusCode == 200) {
+    // If the server did return a 201 CREATED response,
+    // then parse the JSON.
+    return SendOtp.fromJson(jsonDecode(response.body));
+  } else if (response.statusCode >= 400 && response.statusCode < 500) {
+    return SendOtp.fromJson(jsonDecode(response.body));
+  }else {
+    // If the server did not return a 201 CREATED response,
+    // then throw an exception.
+    throw Exception('Failed to fetch album');
+  }
+}
+
 // returns list of problems of topic
 Future<List<Problem>> fetchProblems(String topic) async {
   final response = await http.get(
