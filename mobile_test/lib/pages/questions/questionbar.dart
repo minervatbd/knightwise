@@ -91,8 +91,10 @@ class _QuestionBarMenuState extends State<QuestionBarMenu> {
 
     void handleSubmitButton () async {
       setState(() {
+        CurrentUser currUser = CurrentUser();
+
         widget.status.answer = Answer.newAnswer(
-          "user_id",
+          currUser.id,
           widget.problem.id,
           correctness(),
           widget.problem.category,
@@ -108,8 +110,8 @@ class _QuestionBarMenuState extends State<QuestionBarMenu> {
           widget.changeCorrectCount(widget.correctCount + 1);
         }
 
-        if (correctness()) print("correct");
-        else print("wrong");
+        //if (correctness()) print("correct");
+        //else print("wrong");
 
         widget.status.isSubmitted = true;
 
