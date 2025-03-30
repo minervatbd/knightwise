@@ -148,7 +148,6 @@ void postAnswer(Answer answer) async {
   if (response.statusCode != 201) {
     throw Exception("Failed: ${response.statusCode} - ${response.body}");
   }
-  else {print("nice!");}
 }
 
 // Sends new user data to server
