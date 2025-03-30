@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:mobile_test/models.dart';
 
@@ -132,17 +133,20 @@ Future<List<Problem>> fetchMockTest() async {
 
 // submits an answer object to the database
 void postAnswer(Answer answer) async {
-  var token = ""; //TODO
+  CurrentUser currUser = CurrentUser();
+  var token = currUser.token;
+
   final response = await http.post(
     Uri.parse("${uri}test/submit"),
     body: jsonEncode(Answer.toJson(answer)),
     headers: {
-      "Authorization": "Bearer ${token}",
+      'Content-Type': 'application/json; charset=UTF-8',
+      HttpHeaders.authorizationHeader: "Bearer $token",
     }
   );
 
-  if (response.statusCode != 200) {
-    throw Exception('Failed to submit answer!');
+  if (response.statusCode != 201) {
+    throw Exception("Failed: ${response.statusCode} - ${response.body}");
   }
 }
 
