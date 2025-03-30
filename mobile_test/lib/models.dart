@@ -13,6 +13,23 @@ class CurrentUser{
   CurrentUser._internal();
 }
 
+class ResetPassword{
+  final String message;
+
+  ResetPassword({
+    required this.message,
+  });
+
+  factory ResetPassword.fromJson(Map<String, dynamic> json) {
+    return switch (json) {
+      {
+        "message": String message,
+      } => ResetPassword(message: message),
+      _ => throw const FormatException('Failed to load problem.'),
+    };
+  }
+}
+
 class SendOtp{
   final String message;
 
