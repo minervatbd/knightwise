@@ -123,3 +123,37 @@ void postAnswer(Answer answer) async {
     throw Exception('Failed to submit answer!');
   }
 }
+
+// Sends new user data to server
+Future <void> postData({
+  required String firstName,
+  required String lastName,
+  required String userName,
+  required String password,
+  required String email,
+})async{
+  try{
+    var response = await http.post(
+      Uri.parse("${uri}auth/signup"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode({
+      "username": userName,
+      "password": password,
+      "email": email,
+      "firstName": firstName,
+      "lastName": lastName,
+      }),
+    );
+    // 200 -- success
+    if (response.statusCode == 200) {
+      print("Successfully added user.");
+    } 
+    else {
+      print("Failed: ${response.statusCode} - ${response.body}");
+    }
+  } catch (e){
+    print("Error: $e");
+  }
+}
