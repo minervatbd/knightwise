@@ -22,7 +22,7 @@ class BottomBarMenu extends StatefulWidget {
   State<BottomBarMenu> createState() => _BottomBarMenuState();
 }
 
-// logout
+// logout function
 void logoutUser(BuildContext context) {
   // clear user data
   CurrentUser().clear();
