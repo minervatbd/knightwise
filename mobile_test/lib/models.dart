@@ -1,3 +1,18 @@
+class CurrentUser{
+  static final CurrentUser _currentUser = CurrentUser._internal();
+
+  late String token;
+  late String firstName;
+  late String lastName;
+  late String id;
+
+  factory CurrentUser(){
+    return _currentUser;
+  }
+
+  CurrentUser._internal();
+}
+
 class SendOtp{
   final String message;
 
