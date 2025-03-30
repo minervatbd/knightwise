@@ -12,7 +12,7 @@ class CurrentUser{
 
   CurrentUser._internal();
 
-  // when user logout
+  // user logout
   void clear() {
     token = '';
     firstName = '';
