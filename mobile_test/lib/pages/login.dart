@@ -1,10 +1,8 @@
 import 'dart:convert';
-
 import 'register.dart';
 import 'package:flutter/material.dart';
-import 'package:knight_prep/calls.dart';
-import 'package:knight_prep/models.dart';
-import 'package:knight_prep/services.dart';
+import 'package:mobile_test/calls.dart';
+import 'package:mobile_test/models.dart';
 import '../overlays.dart';
 import '../pages/home/homepage.dart';
 import '../styles.dart';
