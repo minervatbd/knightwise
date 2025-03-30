@@ -2,12 +2,86 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../../styles.dart';
+import 'dart:async';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({super.key});
 
   @override
   State<DashboardPage> createState() => _DashboardPageState();
+}
+
+// countdown timer widget
+class CountdownTimer extends StatefulWidget {
+  @override
+  CountdownTimerState createState() => CountdownTimerState();
+}
+
+class CountdownTimerState extends State<CountdownTimer> {
+
+  // set date : the first saturday of the summer semester
+  late Timer _timer;
+  late Duration _remaining;
+  final DateTime _targetDate = DateTime(2025, 5, 17);
+
+  // update time every one seconds
+  @override
+  void initState() {
+    super.initState();
+    _updateTime();
+
+    _timer = Timer.periodic(Duration(seconds: 1), (_) => _updateTime());
+  }
+
+  void _updateTime() {
+    final now = DateTime.now();
+    final diff = _targetDate.difference(now);
+
+    setState(() {
+      _remaining = diff.isNegative ? Duration.zero : diff;
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final days = _remaining.inDays;
+    final hours = _remaining.inHours % 24;
+    final minutes = _remaining.inMinutes % 60;
+    final seconds = _remaining.inSeconds % 60;
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        _timeBox(days, 'DAYS'),
+        _spacer(),
+        _timeBox(hours, 'HOURS'),
+        _spacer(),
+        _timeBox(minutes, 'MINUTES'),
+        _spacer(),
+        _timeBox(seconds, 'SECONDS'),
+      ],
+    );
+  }
+
+  Widget _timeBox(int time, String label) {
+    return RichText(
+      textAlign: TextAlign.center,
+      text: TextSpan(
+        children: [
+          TextSpan(text: '$time\n', style: Styles.timeTextStyle),
+          TextSpan(text: label, style: Styles.timeLabelTextStyle),
+        ],
+      ),
+    );
+  }
+
+  Widget _spacer() => SizedBox(width: 15);
 }
 
 class _DashboardPageState extends State<DashboardPage> {
@@ -46,74 +120,8 @@ class _DashboardPageState extends State<DashboardPage> {
                   style: Styles.timeLabelTextStyle,
                 ),
               ),
-              //timer and labels
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                spacing: 15.0,
-                children: <Widget>[
-                  RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: '68\n',
-                          style: Styles.timeTextStyle,
-                        ),
-                        TextSpan(
-                          text: 'DAYS',
-                          style: Styles.timeLabelTextStyle,
-                        )
-                      ],
-                    ),
-                  ),
-                  RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: '17\n',
-                          style: Styles.timeTextStyle,
-                        ),
-                        TextSpan(
-                          text: 'HOURS',
-                          style: Styles.timeLabelTextStyle,
-                        )
-                      ],
-                    ),
-                  ),
-                  RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: '04\n',
-                          style: Styles.timeTextStyle,
-                        ),
-                        TextSpan(
-                          text: 'MINUTES',
-                          style: Styles.timeLabelTextStyle,
-                        )
-                      ],
-                    ),
-                  ),
-                  RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: '57\n',
-                          style: Styles.timeTextStyle,
-                        ),
-                        TextSpan(
-                          text: 'SECONDS',
-                          style: Styles.timeLabelTextStyle,
-                        )
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+              //timer
+              CountdownTimer(),
             ],),
           ),
           //header for guidelines
