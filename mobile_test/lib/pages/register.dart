@@ -1,10 +1,12 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_test/overlays.dart';
 import 'package:mobile_test/pages/home/homepage.dart';
 import 'package:mobile_test/pages/login.dart';
+import 'package:http/http.dart' as http;
+import 'package:mobile_test/calls.dart';
 import '../styles.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
-
 
 final buttonStyle = Styles.yellowButtonStyle;
 
@@ -23,8 +25,10 @@ class _RegisterPageState extends State<RegisterPage> {
   final passwordController = TextEditingController();
   final confirmpasswordController = TextEditingController();
   final emailController = TextEditingController();
+  final otpController = TextEditingController();
   bool isPasswordVisible = true;
   bool isConfirmPasswordVisible = true;
+  String otpCode = '';
 
   @override
   void initState(){
@@ -33,11 +37,55 @@ class _RegisterPageState extends State<RegisterPage> {
     firstnameController.addListener(() => setState(() {}));
     lastnameController.addListener(() => setState(() {}));
     usernameController.addListener(() => setState(() {}));
+    emailController.addListener(() => setState(() {}));
     passwordController.addListener(() => setState(() {}));
     confirmpasswordController.addListener(() => setState(() {}));
+    otpController.addListener(() => setState(() {}));
   }
 
+  void submit(){
+    Navigator.of(context).pop(otpController.text);
+    otpController.clear();
+  }
 
+  @override
+  void dispose() {
+    otpController.dispose();
+    super.dispose();
+  }
+
+  // OpenDialog function
+  Future <String?> openDialogue() => showDialog<String>(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: Text(
+        'Please check your email for a code.',
+        style: TextStyle(color: Colors.black),
+        ),
+      content: TextField(
+        autofocus: true,
+        decoration:InputDecoration(
+          hintText: 'Enter your code',
+          hintStyle: TextStyle(color: Colors.black),
+          ),
+        controller: otpController,
+        style: TextStyle(color: Colors.black),
+        onSubmitted: (_) => submit(),
+      ),
+      actions:[
+        TextButton(
+          onPressed: submit,
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Styles.schemeMain.secondary), 
+            shape: MaterialStateProperty.all(Styles.buttonShape),
+          ),
+          child: Text('SUBMIT'),
+          ),
+      ],),
+  ).whenComplete((){
+    otpController.clear();
+  });
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,10 +93,9 @@ class _RegisterPageState extends State<RegisterPage> {
       bottomNavigationBar: BottomBarBlank(),
       body: Center(
         child: ListView(
-         
           children: <Widget>[
 
-          //LOGIN stripe
+          //SIGNUP stripe
             Material(
               elevation: 4,
               child: Container(
@@ -237,7 +284,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     lowercaseCharCount: 1,
                     numericCharCount: 1,
                     specialCharCount: 1,
-                    width: 336,
+                    width: 300,
                     height: 150,
                     onSuccess: () {
                       print("Password is valid");
@@ -246,8 +293,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       print("Password is not valid");
                     },
                   ),
-
-
+                  
                   // Confirm Password textbox
                   Container(
                     color: Colors.grey[300],
@@ -288,7 +334,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
                   //Create Account button
                   MaterialButton(
-                    onPressed: () {
+                    onPressed: () async{
+                      // Remove and finalize variables
                       final firstname = firstnameController.text.trim();
                       final lastname = lastnameController.text.trim();
                       final username = usernameController.text.trim();
@@ -331,14 +378,29 @@ class _RegisterPageState extends State<RegisterPage> {
                         return;
                       }
 
-                      //temp solution; ideally would be passed as json for login endpoint or something like that
-                      print('firstname: ${firstnameController.text}');
-                      print('lastname: ${lastnameController.text}');
-                      print('username: ${usernameController.text}');
-                      print('email: ${emailController.text}');
-                      print('password: ${passwordController.text}');
-                      print('confirm password: ${confirmpasswordController.text}');
-            
+                      // Open OTP dialog and wait for user input
+                      try{
+                        var code = await sendEmailCode(emailController.text, 'signup');
+                        print('code: ${code.message}');
+                      }
+                      catch(e)
+                      {
+                        print('Error sending email code: $e');
+                      }
+                      
+                      final otpCode = await openDialogue();
+                      if(otpCode == null || otpCode.isEmpty) return;
+                      var verification = await verifyEmail(emailController.text, otpCode) ;
+                      setState(() => this.otpCode = otpCode);
+
+                      // Send new user data
+                      await postData(
+                        firstName: firstnameController.text,
+                        lastName: lastnameController.text,
+                        userName: usernameController.text,
+                        email: emailController.text,
+                        password: passwordController.text,
+                      );
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const LoginPage()),
@@ -370,11 +432,18 @@ class _RegisterPageState extends State<RegisterPage> {
                     style: Styles.smallTextStyle,
                   ),
 
-                  // FIXME - Make text go to Login page.
+                  // Goes to Login page.
                   TextSpan
                   ( 
                     text: 'Login here.',
                     style: Styles.linkSmallTextStyle,
+                    recognizer: TapGestureRecognizer()
+                    ..onTap = (){
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const LoginPage()),
+                      );
+                    },
                   ),
                 
                 ])),
