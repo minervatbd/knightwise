@@ -1,43 +1,79 @@
-class User {
-  const User(
-    this.id,
-    this.username,
-    this.email,
-    this.password,
-    this.firstName,
-    this.lastName,
-    this.isVerified,
-  );
+class SendOtp{
+  final String message;
 
+  SendOtp({
+    required this.message,
+  });
+
+  factory SendOtp.fromJson(Map<String, dynamic> json) {
+    return SendOtp(
+      message: json['message'],
+    );
+  }
+}
+
+class Verify{
+  final String message;
+
+  Verify({
+    required this.message,
+  });
+
+  factory Verify.fromJson(Map<String, dynamic> json) {
+    return Verify(
+      message: json['message'],
+    );
+  }
+}
+
+class User {
   final String id;
-  final String username;
+  final String name;
   final String email;
-  final String password;
+
+  //final String password;
   final String firstName;
   final String lastName;
-  final bool isVerified;
+  //final bool isVerified;
+
+  User({
+    required this.id,
+    required this.name,
+    required this.email,
+    //required this.password,
+    required this.firstName,
+    required this.lastName,
+    //this.isVerified,
+  });
 
   factory User.fromJson(Map<String, dynamic> json) {
-    return switch (json) {
-      {
-        "_id": String id,
-        "username": String username,
-        "email": String email,
-        "password": String password,
-        "firstName": String firstName,
-        "lastName": String lastName,
-        "isVerified": bool isVerified,
-      } => User(
-        id,
-        username,
-        email,
-        password,
-        firstName,
-        lastName,
-        isVerified,
-      ),
-      _ => throw const FormatException('Failed to load user.'),
-    };
+    return User(
+      id: json['id'],
+      name: json['name'],
+      email: json['email'],
+      firstName: json['firstName'],
+      lastName: json['lastName'],
+    );
+  }
+}
+
+class Login {
+  final String message;
+  final String token;
+  final User user;
+
+  const Login({
+    required this.message,
+    required this.token,
+    required this.user,
+  });
+
+  factory Login.fromJson(Map<String, dynamic> json) {
+    return Login(
+        message: json['message'],
+        token: json['token'],
+        user: User.fromJson(json['user'])
+    );
   }
 }
 
