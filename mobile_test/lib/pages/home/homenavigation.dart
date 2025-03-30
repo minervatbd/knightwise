@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_test/icons.dart';
+import 'package:mobile_test/models.dart';
 import 'package:mobile_test/styles.dart';
 
 const scheme = Styles.schemeMain;
@@ -94,6 +95,9 @@ class TopBarDrawer extends StatefulWidget {
 }
 
 class _TopBarDrawerState extends State<TopBarDrawer> {
+
+  CurrentUser currUser = CurrentUser();
+  
   @override
   Widget build(BuildContext context) {
     return NavigationDrawer(
@@ -108,7 +112,7 @@ class _TopBarDrawerState extends State<TopBarDrawer> {
         // dashboard
         DrawerHeader(
           decoration: BoxDecoration(color: scheme.secondary),
-          child: Text('firstname lastname', style: TextStyle(color: scheme.primary, fontSize: 24)),
+          child: Text('${currUser.firstName} ${currUser.lastName}', style: TextStyle(color: scheme.primary, fontSize: 24)),
         ),
         ...destinations.map((Destination destination) {
           return NavigationDrawerDestination(
