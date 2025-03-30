@@ -11,6 +11,14 @@ class CurrentUser{
   }
 
   CurrentUser._internal();
+
+  // when user logout
+  void clear() {
+    token = '';
+    firstName = '';
+    lastName = '';
+    id = '';
+  }
 }
 
 class ResetPassword{

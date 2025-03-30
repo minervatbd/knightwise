@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mobile_test/icons.dart';
 import 'package:mobile_test/models.dart';
 import 'package:mobile_test/styles.dart';
+import 'package:mobile_test/pages/login.dart';
 
 const scheme = Styles.schemeMain;
 const double topBarHeight = 70;
@@ -19,6 +20,18 @@ class BottomBarMenu extends StatefulWidget {
 
   @override
   State<BottomBarMenu> createState() => _BottomBarMenuState();
+}
+
+// logout
+void logoutUser(BuildContext context) {
+  // clear user data
+  CurrentUser().clear();
+
+  // move to login page
+  Navigator.of(context).pushAndRemoveUntil(
+    MaterialPageRoute(builder: (context) => const LoginPage()),
+        (route) => false,
+  );
 }
 
 class _BottomBarMenuState extends State<BottomBarMenu> {
@@ -128,9 +141,7 @@ class _TopBarDrawerState extends State<TopBarDrawer> {
           iconColor: scheme.primary,
           textColor: scheme.primary,
           title: const Text('Logout'),
-          onTap: () {
-            print("logout");
-          }
+          onTap: () => logoutUser(context),
         )
       ]
     );
