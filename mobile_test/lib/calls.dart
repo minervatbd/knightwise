@@ -45,3 +45,19 @@ Future<List<Problem>> fetchMockTest() async {
     throw Exception('Failed to load problems!');
   }
 }
+
+// submits an answer object to the database
+void postAnswer(Answer answer) async {
+  var token = ""; //TODO
+  final response = await http.post(
+    Uri.parse("${uri}test/submit"),
+    body: jsonEncode(Answer.toJson(answer)),
+    headers: {
+      "Authorization": "Bearer ${token}",
+    }
+  );
+
+  if (response.statusCode != 200) {
+    throw Exception('Failed to submit answer!');
+  }
+}

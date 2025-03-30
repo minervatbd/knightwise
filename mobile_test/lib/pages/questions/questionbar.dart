@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mobile_test/calls.dart';
 import 'package:mobile_test/icons.dart';
 import 'package:mobile_test/models.dart';
 import 'package:mobile_test/pages/questions/questionbody.dart';
@@ -88,8 +89,19 @@ class _QuestionBarMenuState extends State<QuestionBarMenu> {
       }
     }
 
-    void handleSubmitButton () {
+    void handleSubmitButton () async {
       setState(() {
+        widget.status.answer = Answer.newAnswer(
+          "user_id",
+          widget.problem.id,
+          correctness(),
+          widget.problem.category,
+          widget.problem.subcategory,
+        );
+
+        // submit answer to database, probably need to account for the failure to submit
+        postAnswer(widget.status.answer);
+
         widget.changeAnswerCount(widget.answerCount + 1);
 
         if (correctness()) {
@@ -98,14 +110,6 @@ class _QuestionBarMenuState extends State<QuestionBarMenu> {
 
         if (correctness()) print("correct");
         else print("wrong");
-
-        widget.status.answer = Answer.newAnswer(
-          "user_id",
-          widget.problem.id,
-          correctness(),
-          widget.problem.category,
-          widget.problem.subcategory,
-        );
 
         widget.status.isSubmitted = true;
 

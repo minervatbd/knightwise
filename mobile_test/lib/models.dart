@@ -146,4 +146,14 @@ class Answer {
       _ => throw const FormatException('Failed to load Answer.'),
     };
   }
+
+  static Map<String, dynamic> toJson(Answer answer) =>
+    {
+      "user_id": answer.user_id,
+      "problem_id": answer.problem_id,
+      "datetime": answer.datetime.toIso8601String(),
+      "isCorrect": answer.isCorrect,
+      "category": answer.category,
+      "topic": answer.topic,
+    };
 }
