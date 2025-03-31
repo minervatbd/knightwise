@@ -477,7 +477,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       } catch (e) {
                         print('Registration error: $e');
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Unexpected error occurred'), backgroundColor: Colors.red),
+                          SnackBar(content: Text('Wrong OPT, Please verify your email again'), backgroundColor: Colors.red),
                         );
                       }
                     },
@@ -515,6 +515,13 @@ class _RegisterPageState extends State<RegisterPage> {
                         recognizer:
                             TapGestureRecognizer()
                               ..onTap = () {
+                                firstnameController.clear();
+                                lastnameController.clear();
+                                usernameController.clear();
+                                emailController.clear();
+                                passwordController.clear();
+                                confirmpasswordController.clear();
+
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(

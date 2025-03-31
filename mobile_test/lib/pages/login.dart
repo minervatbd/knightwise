@@ -57,164 +57,191 @@ class _LoginPageState extends State<LoginPage> {
    */
 
   Future openDialog() => showDialog(
-
     context: context,
-    builder: (context) => StatefulBuilder(builder: (context, setState) => AlertDialog(
-
-      title: Text('Reset Password', style: Styles.timeTextStyle, textAlign: TextAlign.center,),
-      content: Column(mainAxisAlignment: MainAxisAlignment.start, spacing: 30, children: [
-        //email textbox
-        Container(
-          color: Colors.grey[300],
-          padding: EdgeInsets.fromLTRB(10, 25, 10, 0),
-          width: 300,
-          height: 65,
-          child: TextField(
-            controller: emailController,
-            textAlign: TextAlign.start,
-            style: TextStyle(
-              color: Styles.schemeMain.primary,
-              fontFamily: 'Mulish',
-              fontWeight: FontWeight.w400,
-              fontSize: 24,
-            ),
-            decoration: InputDecoration(
-              contentPadding: const EdgeInsets.only(
-                  left: 4.0,
-                  bottom: 4.0,
-                  top: 4.0
+    builder: (context) => StatefulBuilder(
+      builder: (context, setState) => AlertDialog(
+        title: Text(
+          'Reset Password',
+          style: Styles.timeTextStyle,
+          textAlign: TextAlign.center,
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Email textbox
+            Container(
+              color: Colors.grey[300],
+              padding: EdgeInsets.fromLTRB(10, 25, 10, 0),
+              width: 300,
+              height: 65,
+              child: TextField(
+                controller: emailController,
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                  color: Styles.schemeMain.primary,
+                  fontFamily: 'Mulish',
+                  fontWeight: FontWeight.w400,
+                  fontSize: 24,
+                ),
+                decoration: InputDecoration(
+                  hintText: 'Email',
+                  hintStyle: Styles.fieldTextStyle,
+                  border: InputBorder.none,
+                ),
               ),
-              hintText: 'Email',
-              hintStyle: Styles.fieldTextStyle,
-              border: InputBorder.none,
             ),
-          ),
-        ),
-        //send code to email button
-        MaterialButton(
-          onPressed: () async {
-            try {
-              SendOtp sentCode = await sendEmailCode(emailController.text, "reset");
-              message = sentCode.message;
-              setState(() {});
-            }catch (e){
-              print(e);
-            }
-          },
-          elevation: 4,
-          color: Styles.schemeMain.secondary,
-          shape: Styles.buttonShape,
-          height: 60,
-          minWidth: 265,
-          child: const Text(
-            'Send Code',
-            style: Styles.buttonTextStyle,
-          ),
-        ),
-        //otp code textbox
-        Container(
-          color: Colors.grey[300],
-          padding: EdgeInsets.fromLTRB(10, 25, 10, 0),
-          width: 300,
-          height: 65,
-          child: TextField(
-            controller: otpController,
-            textAlign: TextAlign.start,
-            style: TextStyle(
-              color: Styles.schemeMain.primary,
-              fontFamily: 'Mulish',
-              fontWeight: FontWeight.w400,
-              fontSize: 24,
-            ),
-            decoration: InputDecoration(
-              contentPadding: const EdgeInsets.only(
-                  left: 4.0,
-                  bottom: 4.0,
-                  top: 4.0
+
+            SizedBox(height: 20),
+
+            // Send code button
+            MaterialButton(
+              onPressed: () async {
+                try {
+                  SendOtp sentCode = await sendEmailCode(emailController.text, "reset");
+                  message = sentCode.message;
+                } catch (e) {
+                  message = 'Failed to send code: ${e.toString()}';
+                }
+                setState(() {});
+              },
+              elevation: 4,
+              color: Styles.schemeMain.secondary,
+              shape: Styles.buttonShape,
+              height: 60,
+              minWidth: 265,
+              child: const Text(
+                'Send Code',
+                style: Styles.buttonTextStyle,
               ),
-              hintText: 'Verification Code',
-              hintStyle: Styles.fieldTextStyle,
-              border: InputBorder.none,
             ),
-          ),
+
+            SizedBox(height: 20),
+
+            // OTP textbox
+            Container(
+              color: Colors.grey[300],
+              padding: EdgeInsets.fromLTRB(10, 25, 10, 0),
+              width: 300,
+              height: 65,
+              child: TextField(
+                controller: otpController,
+                textAlign: TextAlign.start,
+                style: TextStyle(
+                  color: Styles.schemeMain.primary,
+                  fontFamily: 'Mulish',
+                  fontWeight: FontWeight.w400,
+                  fontSize: 24,
+                ),
+                decoration: InputDecoration(
+                  hintText: 'Verification Code',
+                  hintStyle: Styles.fieldTextStyle,
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+
+            SizedBox(height: 20),
+
+            // Verify email button
+            MaterialButton(
+              onPressed: () async {
+                try {
+                  Verify verification = await verifyEmail(
+                    emailController.text,
+                    otpController.text,
+                  );
+                  if (verification.message == 'Verify') {
+                    isVerified = true;
+                    emailV = emailController.text;
+                    message = 'Email verified successfully';
+                  } else {
+                    message = verification.message;
+                  }
+                } catch (e) {
+                  if (e.toString().contains('Wrong OTP')) {
+                    message = 'The OTP is incorrect. Please try again.';
+                  } else if (e.toString().contains('Expired')) {
+                    message = 'The OTP has expired. Please request a new one.';
+                  } else {
+                    message = 'OTP error. Please try verifying your email again.';
+                  }
+                }
+                setState(() {});
+              },
+              elevation: 4,
+              color: Styles.schemeMain.secondary,
+              shape: Styles.buttonShape,
+              height: 60,
+              minWidth: 265,
+              child: const Text(
+                'Verify Email',
+                style: Styles.buttonTextStyle,
+              ),
+            ),
+
+            SizedBox(height: 20),
+
+            // Done button
+            MaterialButton(
+              onPressed: () async {
+                final email = emailController.text.trim();
+                final otp = otpController.text.trim();
+
+                if (email.isEmpty || otp.isEmpty) {
+                  message = 'Please fill out all fields';
+                  setState(() {});
+                  return;
+                }
+
+                final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                if (!emailRegex.hasMatch(email)) {
+                  message = 'Invalid email format';
+                  setState(() {});
+                  return;
+                }
+
+                if (!isVerified) {
+                  message = 'Email not verified';
+                  setState(() {});
+                  return;
+                }
+
+                Navigator.of(context).pop(otpController.text);
+                otpController.clear();
+                emailController.clear();
+                message = '';
+                openPasswordDialog(emailV);
+              },
+              elevation: 4,
+              color: Styles.schemeMain.secondary,
+              shape: Styles.buttonShape,
+              height: 60,
+              minWidth: 265,
+              child: const Text(
+                'Done',
+                style: Styles.buttonTextStyle,
+              ),
+            ),
+
+            SizedBox(height: 20),
+
+            // Message
+            Container(
+              padding: EdgeInsets.all(10),
+              child: Text(
+                message,
+                textAlign: TextAlign.center,
+                style: Styles.generalTextStyle.copyWith(
+                  color: message.toLowerCase().contains('success') ? Colors.green : Colors.black,
+                ),
+              ),
+            ),
+          ],
         ),
-        //check otp code and verify email button
-        MaterialButton(
-          onPressed: () async {
-            try {
-              Verify verification = await verifyEmail(emailController.text, otpController.text);
-              message = verification.message;
-              if(message == 'Verify') {
-                isVerified = true;
-                emailV = emailController.text;
-              }
-
-              setState(() {});
-            }catch (e){
-              print(e);
-            }
-          },
-          elevation: 4,
-          color: Styles.schemeMain.secondary,
-          shape: Styles.buttonShape,
-          height: 60,
-          minWidth: 265,
-          child: const Text(
-            'Verify Email',
-            style: Styles.buttonTextStyle,
-          ),
-        ),
-        //submit and open change password dialog
-        MaterialButton(
-          onPressed: () async {
-
-            final email = emailController.text.trim();
-            final otp = otpController.text.trim();
-
-            if (email.isEmpty || otp.isEmpty) {
-              message = 'Please fill out all fields';
-              setState(() {});
-              return;
-            }
-
-            // check email verification
-            final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-            if (!emailRegex.hasMatch(email)) {
-              message = 'Invalid email format';
-              setState(() {});
-              return;
-            }
-
-            if(!isVerified) {
-              message = 'Email not Verified';
-              return;
-            }
-
-            Navigator.of(context).pop(otpController.text);
-            //Navigator.of(context).pop(emailController.text);
-            otpController.clear();
-            emailController.clear();
-            message = '';
-            openPasswordDialog(emailV);
-          },
-          elevation: 4,
-          color: Styles.schemeMain.secondary,
-          shape: Styles.buttonShape,
-          height: 60,
-          minWidth: 265,
-          child: const Text(
-            'Done',
-            style: Styles.buttonTextStyle,
-          ),
-        ),
-        //display message updating user on input
-        Container(
-          padding: EdgeInsets.all(10),
-          child: Text(message, textAlign: TextAlign.center, style: Styles.generalTextStyle,),
-        ),
-      ]),
+      ),
     ),
-  ));
+  );
+
 
   Future openPasswordDialog(String email) => showDialog(
     context: context,
@@ -542,6 +569,9 @@ class _LoginPageState extends State<LoginPage> {
                             style: Styles.linkSmallTextStyle,
                             recognizer: TapGestureRecognizer()
                               ..onTap = (){
+                                usernameController.clear();
+                                passwordController.clear();
+
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(builder: (context) => const RegisterPage()),
