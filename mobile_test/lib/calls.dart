@@ -7,7 +7,7 @@ String uri = "http://www.dirediredocks.xyz/api/";
 
 Future<ResetPassword> resetPassword(String email, String password) async {
   final response = await http.post(
-    Uri.parse('${uri}auth/login'),
+    Uri.parse('${uri}auth/resetPassword'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
