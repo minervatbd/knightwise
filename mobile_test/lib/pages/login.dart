@@ -7,6 +7,8 @@ import '../overlays.dart';
 import '../pages/home/homepage.dart';
 import '../styles.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
+import 'package:flutter/gestures.dart';
+
 
 import 'package:http/http.dart' as http;
 
@@ -501,7 +503,16 @@ class _LoginPageState extends State<LoginPage> {
                             MaterialPageRoute(builder: (context) => const HomePage()),
                           );
                       }on Exception catch (e){
-                        print('$e');
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              e.toString().replaceFirst('Exception: ', ''),
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                            backgroundColor: Colors.red,
+                            duration: const Duration(seconds: 3),
+                          ),
+                        );
                       }
                     },
                     elevation: 4,

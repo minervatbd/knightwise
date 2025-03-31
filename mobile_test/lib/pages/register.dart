@@ -1,12 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_test/overlays.dart';
-import 'package:mobile_test/pages/home/homepage.dart';
 import 'package:mobile_test/pages/login.dart';
 import 'package:http/http.dart' as http;
 import 'package:mobile_test/calls.dart';
 import '../styles.dart';
 import 'package:flutter_pw_validator/flutter_pw_validator.dart';
+import 'dart:convert';
 
 final buttonStyle = Styles.yellowButtonStyle;
 
@@ -18,7 +18,6 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-
   final firstnameController = TextEditingController();
   final lastnameController = TextEditingController();
   final usernameController = TextEditingController();
@@ -28,12 +27,16 @@ class _RegisterPageState extends State<RegisterPage> {
   final otpController = TextEditingController();
   bool isPasswordVisible = true;
   bool isConfirmPasswordVisible = true;
+
+  // email verification
+  bool isVerified = false;
+  String verifiedEmail = '';
+
   String otpCode = '';
 
   @override
-  void initState(){
+  void initState() {
     super.initState();
-
     firstnameController.addListener(() => setState(() {}));
     lastnameController.addListener(() => setState(() {}));
     usernameController.addListener(() => setState(() {}));
@@ -43,7 +46,7 @@ class _RegisterPageState extends State<RegisterPage> {
     otpController.addListener(() => setState(() {}));
   }
 
-  void submit(){
+  void submit() {
     Navigator.of(context).pop(otpController.text);
     otpController.clear();
   }
@@ -55,37 +58,41 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   // OpenDialog function
-  Future <String?> openDialogue() => showDialog<String>(
+  Future<String?> openDialogue() => showDialog<String>(
     context: context,
-    builder: (context) => AlertDialog(
-      title: Text(
-        'Please check your email for a code.',
-        style: TextStyle(color: Colors.black),
+    builder:
+        (context) => AlertDialog(
+          title: Text(
+            'Please check your email for a code.',
+            style: TextStyle(color: Colors.black),
+          ),
+          content: TextField(
+            autofocus: true,
+            decoration: InputDecoration(
+              hintText: 'Enter your code',
+              hintStyle: TextStyle(color: Colors.black),
+            ),
+            controller: otpController,
+            style: TextStyle(color: Colors.black),
+            onSubmitted: (_) => submit(),
+          ),
+          actions: [
+            TextButton(
+              onPressed: submit,
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(
+                  Styles.schemeMain.secondary,
+                ),
+                shape: MaterialStateProperty.all(Styles.buttonShape),
+              ),
+              child: Text('SUBMIT'),
+            ),
+          ],
         ),
-      content: TextField(
-        autofocus: true,
-        decoration:InputDecoration(
-          hintText: 'Enter your code',
-          hintStyle: TextStyle(color: Colors.black),
-          ),
-        controller: otpController,
-        style: TextStyle(color: Colors.black),
-        onSubmitted: (_) => submit(),
-      ),
-      actions:[
-        TextButton(
-          onPressed: submit,
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Styles.schemeMain.secondary), 
-            shape: MaterialStateProperty.all(Styles.buttonShape),
-          ),
-          child: Text('SUBMIT'),
-          ),
-      ],),
-  ).whenComplete((){
+  ).whenComplete(() {
     otpController.clear();
   });
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,8 +101,7 @@ class _RegisterPageState extends State<RegisterPage> {
       body: Center(
         child: ListView(
           children: <Widget>[
-
-          //SIGNUP stripe
+            //SIGNUP stripe
             Material(
               elevation: 4,
               child: Container(
@@ -116,9 +122,7 @@ class _RegisterPageState extends State<RegisterPage> {
               ),
             ),
 
-            Container(
-              height:45
-            ),
+            Container(height: 45),
 
             //textboxes and button
             Form(
@@ -126,7 +130,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 spacing: 40,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-            
                   //First name textbox
                   Container(
                     color: Colors.grey[300],
@@ -143,11 +146,11 @@ class _RegisterPageState extends State<RegisterPage> {
                         fontSize: 24,
                       ),
                       decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.only(
-                              left: 4.0,
-                              bottom: 4.0,
-                              top: 4.0
-                          ),
+                        contentPadding: const EdgeInsets.only(
+                          left: 4.0,
+                          bottom: 4.0,
+                          top: 4.0,
+                        ),
                         hintText: 'First Name',
                         hintStyle: Styles.fieldTextStyle,
                         border: InputBorder.none,
@@ -171,11 +174,11 @@ class _RegisterPageState extends State<RegisterPage> {
                         fontSize: 24,
                       ),
                       decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.only(
-                              left: 4.0,
-                              bottom: 4.0,
-                              top: 4.0
-                          ),
+                        contentPadding: const EdgeInsets.only(
+                          left: 4.0,
+                          bottom: 4.0,
+                          top: 4.0,
+                        ),
                         hintText: 'Last Name',
                         hintStyle: Styles.fieldTextStyle,
                         border: InputBorder.none,
@@ -199,11 +202,11 @@ class _RegisterPageState extends State<RegisterPage> {
                         fontSize: 24,
                       ),
                       decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.only(
-                              left: 4.0,
-                              bottom: 4.0,
-                              top: 4.0
-                          ),
+                        contentPadding: const EdgeInsets.only(
+                          left: 4.0,
+                          bottom: 4.0,
+                          top: 4.0,
+                        ),
                         hintText: 'Username',
                         hintStyle: Styles.fieldTextStyle,
                         border: InputBorder.none,
@@ -227,11 +230,11 @@ class _RegisterPageState extends State<RegisterPage> {
                         fontSize: 24,
                       ),
                       decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.only(
-                              left: 4.0,
-                              bottom: 4.0,
-                              top: 4.0
-                          ),
+                        contentPadding: const EdgeInsets.only(
+                          left: 4.0,
+                          bottom: 4.0,
+                          top: 4.0,
+                        ),
                         hintText: 'Email',
                         hintStyle: Styles.fieldTextStyle,
                         border: InputBorder.none,
@@ -256,21 +259,23 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.only(
-                            left: 4.0,
-                            bottom: 4.0,
-                            top: 4.0
+                          left: 4.0,
+                          bottom: 4.0,
+                          top: 4.0,
                         ),
                         hintText: 'Password',
                         hintStyle: Styles.fieldTextStyle,
                         border: InputBorder.none,
                         suffixIcon: IconButton(
-                          icon: isPasswordVisible
-                              ? Icon(Icons.visibility_off)
-                              : Icon(Icons.visibility),
+                          icon:
+                              isPasswordVisible
+                                  ? Icon(Icons.visibility_off)
+                                  : Icon(Icons.visibility),
                           color: Styles.schemeMain.primary,
-                          onPressed: () =>
-                              setState(() =>
-                              isPasswordVisible = !isPasswordVisible),
+                          onPressed:
+                              () => setState(
+                                () => isPasswordVisible = !isPasswordVisible,
+                              ),
                         ),
                       ),
                       obscureText: isPasswordVisible,
@@ -293,7 +298,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       print("Password is not valid");
                     },
                   ),
-                  
+
                   // Confirm Password textbox
                   Container(
                     color: Colors.grey[300],
@@ -311,21 +316,25 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       decoration: InputDecoration(
                         contentPadding: const EdgeInsets.only(
-                            left: 4.0,
-                            bottom: 4.0,
-                            top: 4.0
+                          left: 4.0,
+                          bottom: 4.0,
+                          top: 4.0,
                         ),
                         hintText: 'Confirm Password',
                         hintStyle: Styles.fieldTextStyle,
                         border: InputBorder.none,
                         suffixIcon: IconButton(
-                          icon: isConfirmPasswordVisible
-                              ? Icon(Icons.visibility_off)
-                              : Icon(Icons.visibility),
+                          icon:
+                              isConfirmPasswordVisible
+                                  ? Icon(Icons.visibility_off)
+                                  : Icon(Icons.visibility),
                           color: Styles.schemeMain.primary,
-                          onPressed: () =>
-                              setState(() =>
-                              isConfirmPasswordVisible = !isConfirmPasswordVisible),
+                          onPressed:
+                              () => setState(
+                                () =>
+                                    isConfirmPasswordVisible =
+                                        !isConfirmPasswordVisible,
+                              ),
                         ),
                       ),
                       obscureText: isConfirmPasswordVisible,
@@ -334,8 +343,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                   //Create Account button
                   MaterialButton(
-                    onPressed: () async{
-                      // Remove and finalize variables
+                    onPressed: () async {
                       final firstname = firstnameController.text.trim();
                       final lastname = lastnameController.text.trim();
                       final username = usernameController.text.trim();
@@ -343,68 +351,135 @@ class _RegisterPageState extends State<RegisterPage> {
                       final password = passwordController.text;
                       final confirmPassword = confirmpasswordController.text;
 
-                      // check empty flied
-                      if (firstname.isEmpty || lastname.isEmpty || username.isEmpty ||
-                          email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
+                      // check input valid
+                      if ([firstname, lastname, username, email, password, confirmPassword].contains('')) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Please fill out all fields'),
-                            backgroundColor: Colors.red,
-                          ),
+                          SnackBar(content: Text('Please fill out all fields'), backgroundColor: Colors.red),
                         );
                         return;
                       }
 
-                      // check email verification
+                      // check email regex
                       final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
                       if (!emailRegex.hasMatch(email)) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Invalid email format'),
-                            backgroundColor: Colors.red,
-                          ),
+                          SnackBar(content: Text('Invalid email format'), backgroundColor: Colors.red),
                         );
                         return;
                       }
 
-                      // check password
+                      // check password match
                       if (password != confirmPassword) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Passwords do not match'),
-                            backgroundColor: Colors.red,
-                          ),
+                          SnackBar(content: Text('Passwords do not match'), backgroundColor: Colors.red),
                         );
                         return;
                       }
 
-                      // Open OTP dialog and wait for user input
-                      try{
-                        var code = await sendEmailCode(emailController.text, 'signup');
-                        print('code: ${code.message}');
-                      }
-                      catch(e)
-                      {
-                        print('Error sending email code: $e');
-                      }
-                      
-                      final otpCode = await openDialogue();
-                      if(otpCode == null || otpCode.isEmpty) return;
-                      var verification = await verifyEmail(emailController.text, otpCode) ;
-                      setState(() => this.otpCode = otpCode);
+                      try {
+                        // email verification is done only once
+                        // because username is verified afterward
+                        if (isVerified && email == verifiedEmail) {
+                          final signupResponse = await postData(
+                            firstName: firstname,
+                            lastName: lastname,
+                            userName: username,
+                            email: email,
+                            password: password,
+                          );
 
-                      // Send new user data
-                      await postData(
-                        firstName: firstnameController.text,
-                        lastName: lastnameController.text,
-                        userName: usernameController.text,
-                        email: emailController.text,
-                        password: passwordController.text,
-                      );
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const LoginPage()),
-                      );
+                          final responseData = jsonDecode(signupResponse.body);
+
+                          // check username duplication
+                          if (signupResponse.statusCode != 201) {
+                            final message = responseData['message'] ?? 'Registration failed';
+                            if (message.contains('User already exists')) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Username already exists'), backgroundColor: Colors.red),
+                              );
+                              return;
+                            }
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(message), backgroundColor: Colors.red),
+                            );
+                            return;
+                          }
+
+                          // if the signup is successful
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Registration successful!'), backgroundColor: Colors.green),
+                          );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const LoginPage()),
+                          );
+                          return;
+                        }
+
+                        // check for duplicate email and send OTP.
+                        final sendOtpRes = await sendEmailCode(email, 'signup');
+                        if (sendOtpRes.message.contains("already registered")) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('This email is already registered'), backgroundColor: Colors.red),
+                          );
+                          return;
+                        }
+
+                        // send otp
+                        final otpCode = await openDialogue();
+                        if (otpCode == null || otpCode.isEmpty) return;
+
+                        // verify otp
+                        final verify = await verifyEmail(email, otpCode);
+                        print("OTP verification result: ${verify.message}");
+
+                        // if verification is successful, isVerified = true
+                        setState(() {
+                          isVerified = true;
+                          verifiedEmail = email;
+                        });
+
+                        // send to server
+                        final signupResponse = await postData(
+                          firstName: firstname,
+                          lastName: lastname,
+                          userName: username,
+                          email: email,
+                          password: password,
+                        );
+
+                        final responseData = jsonDecode(signupResponse.body);
+
+                        // first attempt: Check for duplicate username
+                        // from the second attempt , check for duplicates in code 382.
+                        if (signupResponse.statusCode != 201) {
+                          final message = responseData['message'] ?? 'Registration failed';
+                          if (message.contains('User already exists')) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Username already exists'), backgroundColor: Colors.red),
+                            );
+                            return;
+                          }
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(message), backgroundColor: Colors.red),
+                          );
+                          return;
+                        }
+
+                        // if the signup is successful
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Registration successful!'), backgroundColor: Colors.green),
+                        );
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const LoginPage()),
+                        );
+                      } catch (e) {
+                        print('Registration error: $e');
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Unexpected error occurred'), backgroundColor: Colors.red),
+                        );
+                      }
                     },
                     elevation: 4,
                     color: Styles.schemeMain.secondary,
@@ -419,34 +494,38 @@ class _RegisterPageState extends State<RegisterPage> {
                 ],
               ),
             ),
-            
+
             // Login Hyperlink
             Container(
               width: 300,
               padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
               child: Center(
-                child: RichText(text: TextSpan(
-                children: [
-                  TextSpan( 
-                    text: 'Already Registered? ', 
-                    style: Styles.smallTextStyle,
-                  ),
+                child: RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'Already Registered? ',
+                        style: Styles.smallTextStyle,
+                      ),
 
-                  // Goes to Login page.
-                  TextSpan
-                  ( 
-                    text: 'Login here.',
-                    style: Styles.linkSmallTextStyle,
-                    recognizer: TapGestureRecognizer()
-                    ..onTap = (){
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const LoginPage()),
-                      );
-                    },
+                      // Goes to Login page.
+                      TextSpan(
+                        text: 'Login here.',
+                        style: Styles.linkSmallTextStyle,
+                        recognizer:
+                            TapGestureRecognizer()
+                              ..onTap = () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const LoginPage(),
+                                  ),
+                                );
+                              },
+                      ),
+                    ],
                   ),
-                
-                ])),
+                ),
               ),
             ),
             SizedBox(height: 100,),

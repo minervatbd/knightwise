@@ -43,7 +43,8 @@ Future<Login> createLogin(String username, String password) async {
   } else {
     // If the server did not return a 201 CREATED response,
     // then throw an exception.
-    throw Exception('Failed to create album.');
+    final resBody = jsonDecode(response.body);
+    throw Exception(resBody['message'] ?? 'Login failed');
   }
 }
 
@@ -151,7 +152,7 @@ void postAnswer(Answer answer) async {
 }
 
 // Sends new user data to server
-Future <void> postData({
+Future <http.Response> postData({
   required String firstName,
   required String lastName,
   required String userName,
@@ -172,14 +173,9 @@ Future <void> postData({
       "lastName": lastName,
       }),
     );
-    // 200 -- success
-    if (response.statusCode == 200) {
-      print("Successfully added user.");
-    } 
-    else {
-      print("Failed: ${response.statusCode} - ${response.body}");
-    }
+    return response;
+
   } catch (e){
-    print("Error: $e");
+    throw Exception("Error: $e");
   }
 }
