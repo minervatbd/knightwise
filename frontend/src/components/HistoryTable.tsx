@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { buildPath } from "./Path";
+import correctAnswer from "../assets/correctAnswer.png";
+import incorrectAnswer from "../assets/incorrectAnswer.png";
+import viewProblem from "../assets/viewProblem.png";
 
 const HistoryTable: React.FC = () => {
   const [history, setHistory] = useState<any[]>([]);
@@ -33,9 +36,9 @@ const HistoryTable: React.FC = () => {
       const problemParams = new URLSearchParams({
         question: problem.question,
         category: problem.category,
-        subcategory: problem.subcategory,
+        topic: problem.topic,
         answerCorrect: problem.answerCorrect,
-        answersWrong: problem.answersWrong.join(','),
+        answersWrong: JSON.stringify(problem.answersWrong),
       }).toString();
 
       const width = 600;
@@ -82,13 +85,23 @@ const HistoryTable: React.FC = () => {
                 <tr key={index} className={index % 2 === 0 ? 'bg-[#EEEEEE]' : 'bg-[#BBBBBB]'}>
                   <td className="px-4 py-2 text-center">{new Date(entry.datetime).toLocaleString()}</td>
                   <td className="px-4 py-2 text-center">{entry.topic}</td>
-                  <td className="px-4 py-2 text-center">{entry.isCorrect ? '✅' : '❌'}</td>
+                  <td className="px-4 py-2 text-center">
+                    <img
+                      src={entry.isCorrect ? correctAnswer : incorrectAnswer}
+                      alt={entry.isCorrect ? '✅' : '❌'}
+                      className="w-6 h-6 inline-block"
+                    />
+                  </td>
                   <td className="px-4 py-2 text-center">
                     <button
-                      className="px-3 py-1 text-white bg-blue-500 rounded hover:bg-blue-700"
+                      className="focus:outline-none hover:opacity-80 hover:scale-110"
                       onClick={() => fetchProblem(entry.problem_id)}
                     >
-                      ➡️
+                      <img
+                        src={viewProblem}
+                        alt="➡️"
+                        className="w-6 h-6 inline-block"
+                      />
                     </button>
                   </td>
                 </tr>
@@ -103,7 +116,7 @@ const HistoryTable: React.FC = () => {
         <button
           disabled={currentPage === 1}
           onClick={() => setCurrentPage(currentPage - 1)}
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 disabled:bg-gray-300 disabled:text-gray-700 disabled:border-gray-400 disabled:cursor-not-allowed"
+          className="px-4 py-2 bg-yellow-500 text-black rounded hover:bg-blue-yellow disabled:bg-gray-300 disabled:text-gray-700 disabled:border-gray-400 disabled:cursor-not-allowed"
         >
           Previous
         </button>
@@ -111,7 +124,7 @@ const HistoryTable: React.FC = () => {
         <button
           disabled={currentPage === totalPages}
           onClick={() => setCurrentPage(currentPage + 1)}
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 disabled:bg-gray-300 disabled:text-gray-700 disabled:border-gray-400 disabled:cursor-not-allowed"
+          className="px-4 py-2 bg-yellow-500 text-black rounded hover:bg-yellow-700 disabled:bg-gray-300 disabled:text-gray-700 disabled:border-gray-400 disabled:cursor-not-allowed"
         >
           Next
         </button>
