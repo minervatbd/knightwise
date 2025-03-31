@@ -514,40 +514,55 @@ class _LoginPageState extends State<LoginPage> {
                       style: Styles.buttonTextStyle,
                     ),
                   ),
-              Center(child: Container(
-                  width: scrnWidth,
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: Row(children: [
-                    Text(
-                        'No account?',
-                        style: Styles.smallTextStyle,
-                      ),
-                      TextButton(
-                        onPressed: () => {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const RegisterPage()),
-                          )},
-                        child: Text('Sign up here.', style: Styles.linkSmallTextStyle, textAlign: TextAlign.start,)
-                      ),
-                    ]),
-                  )),
-
-                  Center(child: Container(
+                  Container(
                     width: scrnWidth,
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    child: Row(children: [
-                      Text(
-                        'Forgot Password?',
-                        style: Styles.smallTextStyle,
-                      ),
-                      TextButton(
-                        onPressed: () async => {
-                          await openDialog(),
-                        },
-                        child: Text('Reset Password', style: Styles.linkSmallTextStyle,)
-                      ),
-                    ])),
+                    padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                    child: Center(
+                      child: RichText(text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'No account? ',
+                            style: Styles.smallTextStyle,
+                          ),
+                          // Goes to Signup page.
+                          TextSpan
+                            (
+                            text: 'Signup here!',
+                            style: Styles.linkSmallTextStyle,
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = (){
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const RegisterPage()),
+                                );
+                              },
+                          ),
+                        ])),
+                    ),
+                  ),
+                  
+                  Container(
+                    width: scrnWidth,
+                    padding: EdgeInsets.symmetric(horizontal: 5),
+                    child: Center(
+                      child: RichText(text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'Forgot password? ',
+                            style: Styles.smallTextStyle,
+                          ),
+                          // Goes to Signup page.
+                          TextSpan
+                            (
+                            text: 'Reset password.',
+                            style: Styles.linkSmallTextStyle,
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () async {
+                                await openDialog();
+                              },
+                          ),
+                        ])),
+                    ),
                   ),
                 ],
               ),
