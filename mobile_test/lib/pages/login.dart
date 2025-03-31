@@ -32,6 +32,7 @@ class _LoginPageState extends State<LoginPage> {
   bool isResetPasswordVisible = true;
   bool isConfirmPasswordVisible = true;
   bool isVerified = false;
+  String emailV = '';
 
   @override
   void initState() {
@@ -52,9 +53,6 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
    */
-
-
-
 
   Future openDialog() => showDialog(
 
@@ -146,6 +144,7 @@ class _LoginPageState extends State<LoginPage> {
               message = verification.message;
               if(message == 'Verify') {
                 isVerified = true;
+                emailV = emailController.text;
               }
 
               setState(() {});
@@ -194,7 +193,7 @@ class _LoginPageState extends State<LoginPage> {
             otpController.clear();
             emailController.clear();
             message = '';
-            openPasswordDialog(email);
+            openPasswordDialog(emailV);
           },
           elevation: 4,
           color: Styles.schemeMain.secondary,
@@ -221,6 +220,7 @@ class _LoginPageState extends State<LoginPage> {
 
       title: Text('Reset Password', style: Styles.timeTextStyle, textAlign: TextAlign.center,),
       content: Column(mainAxisAlignment: MainAxisAlignment.start, spacing: 30, children: [
+        //reset password textbox
         Container(
           color: Colors.grey[300],
           padding: EdgeInsets.fromLTRB(10, 25, 10, 0),
@@ -258,6 +258,7 @@ class _LoginPageState extends State<LoginPage> {
             obscureText: isResetPasswordVisible,
           ),
         ),
+        //validates password format
         FlutterPwValidator(
           controller: passwordResetController,
           minLength: 5,
@@ -274,6 +275,7 @@ class _LoginPageState extends State<LoginPage> {
             print("Password is not valid");
           },
         ),
+        //confirm password textbox
         Container(
           color: Colors.grey[300],
           padding: EdgeInsets.fromLTRB(10, 25, 10, 0),
@@ -310,6 +312,7 @@ class _LoginPageState extends State<LoginPage> {
             obscureText: isConfirmPasswordVisible,
           ),
         ),
+        //calls reset password api call and closes dialog
         MaterialButton(
           onPressed: () async {
             try {
@@ -330,13 +333,17 @@ class _LoginPageState extends State<LoginPage> {
                 return;
               }
 
-              ResetPassword passwordReset = await resetPassword(emailController.text,passwordResetController.text);
+              ResetPassword passwordReset = await resetPassword(email,passwordResetController.text);
               message = passwordReset.message;
+
+              print(email);
+              print(passwordResetController.text);
+              print(passwordReset.message);
 
               setState(() {});
 
-              Navigator.of(context).pop(passwordResetController.text);
-              //Navigator.of(context).pop(passwordConfirmController.text);
+              //Navigator.of(context).pop(passwordResetController.text);
+              Navigator.of(context).pop(passwordConfirmController.text);
               passwordResetController.clear();
               passwordConfirmController.clear();
 
@@ -431,7 +438,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-
+                  //whitespacing
                   SizedBox(height: 40),
                   //password textbox
                   Container(
