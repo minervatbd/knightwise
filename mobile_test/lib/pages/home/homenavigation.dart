@@ -7,6 +7,53 @@ import 'package:mobile_test/pages/login.dart';
 const scheme = Styles.schemeMain;
 const double topBarHeight = 70;
 
+// top bar containing a ucf logo and a button opening the dropdown menu
+class TopBarMenu extends StatelessWidget implements PreferredSizeWidget {
+  const TopBarMenu({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+    backgroundColor: Styles.schemeMain.primary,
+    leading: Container(
+        padding:EdgeInsets.all(8),
+        child: Image.asset('assets/ucflogo.png'),
+      ),
+    // sample text, change later
+    title: Text("Home"),
+    actions: <Widget>[
+      Container(
+        padding: EdgeInsets.all(8),
+        child: Ink(
+          decoration: ShapeDecoration(
+            color: scheme.secondary,
+            shape: CircleBorder(),
+          ),
+          child: IconButton(
+            color: scheme.primary,
+            icon: NavigationIcons.menu,
+            tooltip: 'Show menu',
+            onPressed: () {
+              var state = Scaffold.of(context);
+              if (state.isDrawerOpen) {
+                state.closeDrawer();
+              } else {
+                state.openDrawer();
+              }
+            }
+          )
+        )
+      )
+    ]
+        );
+  }
+  
+  @override
+  Size get preferredSize => Size.fromHeight(topBarHeight);
+}
+
 // bottom bar containing four buttons
 class BottomBarMenu extends StatefulWidget {
   const BottomBarMenu({

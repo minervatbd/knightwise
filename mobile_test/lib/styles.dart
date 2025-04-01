@@ -86,6 +86,19 @@ abstract class Styles {
     color: Colors.black,
   );
 
+  static const answerTextStyle = TextStyle(
+    fontSize: 18,
+    fontFamily: 'Mulish',
+    color: Colors.black,
+  );
+
+  static const feedbackTextStyle = TextStyle(
+    fontSize: 18,
+    fontFamily: 'Mulish',
+    color: Colors.black,
+    fontWeight: FontWeight.bold,
+  );
+
   static const linkTextStyle = TextStyle(
     fontSize: 24,
     fontFamily: 'Mulish',
