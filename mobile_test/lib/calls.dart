@@ -179,3 +179,129 @@ Future <http.Response> postData({
     throw Exception("Error: $e");
   }
 }
+
+class Topic{
+  final int correct;
+  final int total;
+  final double percentage;
+  final String name;
+
+  const Topic({
+    required this.correct,
+    required this.total,
+    required this.percentage,
+    required this.name,
+  });
+
+  factory Topic.fromJson(String topic, Map<String, dynamic> json) {
+    return  Topic(
+      correct: json["correct"],
+      total: json["total"],
+      percentage: double.parse(json["percentage"]),
+      name: topic,
+    );
+
+  }
+}
+
+class Progress {
+  //final List<Topic> topics;
+  //there are 17 topics
+  final Topic AlgorithmAnalysis;
+  final Topic AVLTrees;
+  final Topic Backtracking;
+  final Topic BaseConversion;
+  final Topic BinaryTrees;
+  final Topic BitwiseOperators;
+  final Topic DynamicMemory;
+  final Topic HashTables;
+  final Topic Heaps;
+  final Topic LinkedLists;
+  final Topic Queues;
+  final Topic RecurrenceRelations;
+  final Topic Recursion;
+  final Topic Sorting;
+  final Topic Stacks;
+  final Topic Summations;
+  final Topic Tries;
+
+  const Progress ({
+    //required this.topics,
+
+    required this.AlgorithmAnalysis,
+    required this.AVLTrees,
+    required this.Backtracking,
+    required this.BaseConversion,
+    required this.BinaryTrees,
+    required this.BitwiseOperators,
+    required this.DynamicMemory,
+    required this.HashTables,
+    required this.Heaps,
+    required this.LinkedLists,
+    required this.Queues,
+    required this.RecurrenceRelations,
+    required this.Recursion,
+    required this.Sorting,
+    required this.Stacks,
+    required this.Summations,
+    required this.Tries,
+  });
+
+  factory Progress.fromJson(Map<String, dynamic> json) {
+    json = json['progress'];
+    return Progress(
+      //topics[0]: Topic.fromJson('Algorithm Analysis', json['Algorithm Analysis']),
+      AlgorithmAnalysis: !(json['Algorithm Analysis'] == null) ?
+        Topic.fromJson('Algorithm Analysis', json['Algorithm Analysis']) :
+        Topic(correct: 0, total: 0, percentage: 0, name: 'Algorithm Analysis'),
+      AVLTrees: !(json['AVL Trees'] == null) ?
+        Topic.fromJson('AVL Trees', json['AVL Trees']):
+        Topic(correct: 0, total: 0, percentage: 0, name: 'AVL Trees'),
+      Backtracking: !(json['Backtracking'] == null) ?
+        Topic.fromJson('Backtracking', json['Backtracking']):
+        Topic(correct: 0, total: 0, percentage: 0, name: 'Backtracking'),
+      BaseConversion: !(json['Base Conversion'] == null) ?
+        Topic.fromJson('Base Conversion', json['Base Conversion']):
+        Topic(correct: 0, total: 0, percentage: 0, name: 'Base Conversion'),
+      BinaryTrees: !(json['Binary Trees'] == null) ?
+        Topic.fromJson('Binary Trees', json['Binary Trees']):
+        Topic(correct: 0, total: 0, percentage: 0, name: 'Binary Trees'),
+      BitwiseOperators: !(json['Bitwise Operators'] == null) ?
+        Topic.fromJson('Bitwise Operators', json['Bitwise Operators']):
+        Topic(correct: 0, total: 0, percentage: 0, name: 'Bitwise Operators'),
+      DynamicMemory: !(json['Dynamic Memory'] == null) ?
+        Topic.fromJson('Dynamic Memory', json['Dynamic Memory']):
+        Topic(correct: 0, total: 0, percentage: 0, name: 'Dynamic Memory'),
+      HashTables: !(json['Hash Tables'] == null) ?
+        Topic.fromJson('Hash Tables', json['Hash Tables']):
+        Topic(correct: 0, total: 0, percentage: 0, name: 'Hash Tables'),
+      Heaps: !(json['Heaps'] == null) ?
+        Topic.fromJson('Heaps', json['Heaps']):
+        Topic(correct: 0, total: 0, percentage: 0, name: 'Heaps'),
+      LinkedLists: !(json['Linked Lists'] == null) ?
+        Topic.fromJson('Linked Lists', json['Linked Lists']):
+        Topic(correct: 0, total: 0, percentage: 0, name: 'Linked Lists'),
+      Queues: !(json['Queues'] == null) ?
+        Topic.fromJson('Queues', json['Queues']):
+        Topic(correct: 0, total: 0, percentage: 0, name: 'Queues'),
+      RecurrenceRelations: !(json['Recurrence Relations'] == null) ?
+        Topic.fromJson('Recurrence Relations', json['Recurrence Relations']):
+        Topic(correct: 0, total: 0, percentage: 0, name: 'Recurrence Relations'),
+      Recursion: !(json['Recursion'] == null) ?
+        Topic.fromJson('Recursion', json['Recursion']):
+        Topic(correct: 0, total: 0, percentage: 0, name: 'Recursion'),
+      Sorting: !(json['Sorting'] == null) ?
+        Topic.fromJson('Sorting', json['Sorting']):
+        Topic(correct: 0, total: 0, percentage: 0, name: 'Sorting'),
+      Stacks: !(json['Stacks'] == null) ?
+        Topic.fromJson('Stacks', json['Stacks']):
+        Topic(correct: 0, total: 0, percentage: 0, name: 'Stacks'),
+      Summations: !(json['Summations'] == null) ?
+        Topic.fromJson('Summations', json['Summations']):
+        Topic(correct: 0, total: 0, percentage: 0, name: 'Summations'),
+      Tries: !(json['Tries'] == null) ?
+        Topic.fromJson('Tries', json['Tries']):
+        Topic(correct: 0, total: 0, percentage: 0, name: 'Tries'),
+    );
+  }
+}
