@@ -215,6 +215,7 @@ class _ProgressPageState extends State<ProgressPage> {
               containerWidth,
               )).toList(),
             )),
+          SizedBox(height: 100,),
         ],
       ),
     );
