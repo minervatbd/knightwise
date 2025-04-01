@@ -115,7 +115,9 @@ class _QuestionBodyState extends State<QuestionBody> {
         Row(
           children: [
             selectedList[i] ? answerIcon : unselectedIcon,
-            Text(answerList[widget.status.answerOrder[i]]),
+            Flexible(
+              child: Text(answerList[widget.status.answerOrder[i]])
+            ),
           ],
         )
       );

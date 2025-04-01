@@ -153,14 +153,17 @@ class _TopicSelectPageState extends State<TopicSelectPage> {
           const SizedBox(height: 20),
 
           // start button
-          ElevatedButton(
-            onPressed: enableStart ? handleStartButton : null,
-            style: Styles.yellowButtonStyle,
-            child: Text(
-              "Start",
-              style: Styles.buttonTextStyle,
+          Container(
+            height: 50,
+            child: ElevatedButton(
+              onPressed: enableStart ? handleStartButton : null,
+              style: Styles.yellowButtonStyle,
+              child: Text(
+                "Start",
+                style: Styles.buttonTextStyle,
+              )
             )
-          )
+          ),
         ]
       )
     );

@@ -93,7 +93,7 @@ class _MockTestPageState extends State<MockTestPage> {
           
           // Test information text box
           Container(
-            padding: EdgeInsets.fromLTRB(10, 200, 10, 0),
+            padding: EdgeInsets.fromLTRB(10, 150, 10, 0),
             child: Text(
               'This test is divided into a total of four sections with each section consistenting of three questions.',
               textAlign: TextAlign.center,
@@ -105,12 +105,15 @@ class _MockTestPageState extends State<MockTestPage> {
           SizedBox(height: 100),
         
           // Start Button
-          ElevatedButton(
-            onPressed: handleStartButton,
-            style: Styles.yellowButtonStyle,
-            child: Text(
-              "Start",
-              style: Styles.buttonTextStyle,
+          SizedBox(
+            height: 50,
+            child: ElevatedButton(
+              onPressed: handleStartButton,
+              style: Styles.yellowButtonStyle,
+              child: Text(
+                "Start",
+                style: Styles.buttonTextStyle,
+              ),
             ),
           ),
         ],
