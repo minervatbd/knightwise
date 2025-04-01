@@ -88,7 +88,7 @@ class _ProgressPageState extends State<ProgressPage> {
     return sorted.first.key;
   }
 
-  // get today problem 
+  // get today problem
   updateTodayCount() async {
     try {
       todayCount = await getHistory(curUser.token);
