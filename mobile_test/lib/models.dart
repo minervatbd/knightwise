@@ -141,32 +141,18 @@ class Problem {
   final List<dynamic> answersWrong;
 
   factory Problem.fromJson(Map<String, dynamic> json) {
-    return switch (json) {
-      {
-        "_id": String id,
-        "exam_id": String exam_id,
-        "section": String section,
-        "category": String category,
-        "subcategory": String subcategory,
-        "points": int points,
-        "question": String question,
-        "answerCorrect": String answerCorrect,
-        "answersWrong": List<dynamic> answersWrong,
-      } => Problem(
-        id,
-        exam_id,
-        section,
-        category,
-        subcategory,
-        points,
-        question,
-        answerCorrect,
-        answersWrong,
-      ),
-      _ => throw const FormatException('Failed to load problem.'),
-    };
+    return Problem(
+      json["_id"] ?? '',
+      json["exam_id"] ?? '',
+      json["section"] ?? '',
+      json["category"] ?? '',
+      json["subcategory"] ?? '',
+      json["points"] is int ? json["points"] : 0,
+      json["question"] ?? '',
+      json["answerCorrect"] ?? '',
+      json["answersWrong"] is List ? json["answersWrong"] : [],
+    );
   }
-
 }
 
 class Answer {
