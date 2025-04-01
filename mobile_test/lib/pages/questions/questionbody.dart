@@ -7,6 +7,7 @@ import '../../styles.dart';
 const scheme = Styles.schemeMain;
 const unselectedIcon = NavigationIcons.answer;
 const selectedIcon = NavigationIcons.answerSelected;
+const bodyPadding = 15.0;
 
 // this class will compose a list that stores info abt each question's status
 class QuestionBodyStatus {
@@ -92,7 +93,7 @@ class _QuestionBodyState extends State<QuestionBody> {
       answerIcon = NavigationIcons.correct;
       explanation = Row(
         children: [
-          Text("Great job!", style: Styles.generalTextStyle),
+          Text("Great job!", style: Styles.feedbackTextStyle),
         ],
       );
     // change them for incorrect answers
@@ -101,7 +102,7 @@ class _QuestionBodyState extends State<QuestionBody> {
       answerIcon = NavigationIcons.wrong;
       explanation = Row(
         children: [
-          Text("Correct answer: ${answerList[0]}", style: Styles.generalTextStyle),
+          Text("Correct answer: ${answerList[0]}", style: Styles.feedbackTextStyle),
         ],
       );
     }
@@ -145,19 +146,32 @@ class _QuestionBodyState extends State<QuestionBody> {
     return Center(
       child: ListView(
         children: <Widget>[
-          Text(widget.problem.category, style: Styles.buttonTextStyle),
-          TeXView(
-            child: TeXViewColumn(
-            children: [TeXViewDocument(
-              widget.problem.question
-            )]
-            )
+          Container(
+            padding: EdgeInsets.all(bodyPadding),
+            child: Text(
+              "${widget.problem.category} > ${widget.problem.subcategory}",
+              style: Styles.smallBoldTextStyle
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(bodyPadding),
+            child: TeXView(
+              child: TeXViewColumn(
+              children: [TeXViewDocument(
+                widget.problem.question
+              )]
+              )
+            ),
+          ),
+          Container(
+            child: explanation,
+            padding: EdgeInsets.all(bodyPadding),
           ),
           ToggleButtons(
             direction: Axis.vertical,
-            color: scheme.onSecondary,
+            color: scheme.primary,
             fillColor: answerColor,
-            textStyle: Styles.generalTextStyle,
+            textStyle: Styles.answerTextStyle,
             onPressed: (int index) {
               setState(() {
                 if (!widget.status.isSubmitted) {
@@ -171,9 +185,6 @@ class _QuestionBodyState extends State<QuestionBody> {
             },
             isSelected: selectedList,
             children: answerButtonList,
-          ),
-          Container(
-            child: explanation,
           ),
         ]
       ),
