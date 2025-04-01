@@ -243,7 +243,7 @@ Future<int> getHistory(String token) async {
 
       todayCount +=
           historyList.where((h) {
-            DateTime dt = DateTime.parse(h.datetime);
+            DateTime dt = DateTime.parse(h.datetime).toLocal();
             return dt.year == now.year &&
                 dt.month == now.month &&
                 dt.day == now.day;
