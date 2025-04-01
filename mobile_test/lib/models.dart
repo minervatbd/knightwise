@@ -234,6 +234,41 @@ class Answer {
     };
 }
 
+class History{
+  final String datetime;
+  final String topic;
+
+  const History({
+    required this.datetime,
+    required this.topic,
+  });
+
+  factory History.fromJson(Map<String, dynamic> json) {
+    return  History(
+      datetime: json["datetime"],
+      topic: json["topic"],
+    );
+  }
+}
+
+class Mastery{
+  final Map<String, dynamic> topics;
+  //could do the same thing as the progress model is worst comes to worst...
+
+  const Mastery({
+    required this.topics,
+  });
+  
+  /*
+  factory Master.fromJson(Map<String, dynamic> json){
+    allTopics.map(topic) => {
+      
+    };
+  }
+  
+   */
+}
+
 class Topic{
   final int correct;
   final int total;
