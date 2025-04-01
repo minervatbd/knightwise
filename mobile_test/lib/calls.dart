@@ -20,7 +20,7 @@ Future<ResetPassword> resetPassword(String email, String password) async {
     return ResetPassword.fromJson(jsonDecode(response.body));
   } else if (response.statusCode >= 400 && response.statusCode < 500) {
     return ResetPassword.fromJson(jsonDecode(response.body));
-  }else {
+  } else {
     // If the server did not return a 201 CREATED response,
     // then throw an exception.
     throw Exception('Failed to create album.');
@@ -33,7 +33,10 @@ Future<Login> createLogin(String username, String password) async {
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
-    body: jsonEncode(<String, String>{'username': username, 'password': password}),
+    body: jsonEncode(<String, String>{
+      'username': username,
+      'password': password,
+    }),
   );
 
   if (response.statusCode == 200) {
@@ -83,7 +86,7 @@ Future<SendOtp> sendEmailCode(String email, String reason) async {
     return SendOtp.fromJson(jsonDecode(response.body));
   } else if (response.statusCode >= 400 && response.statusCode < 500) {
     return SendOtp.fromJson(jsonDecode(response.body));
-  }else {
+  } else {
     // If the server did not return a 201 CREATED response,
     // then throw an exception.
     throw Exception('Failed to fetch album');
@@ -92,9 +95,7 @@ Future<SendOtp> sendEmailCode(String email, String reason) async {
 
 // returns list of problems of topic
 Future<List<Problem>> fetchProblems(String topic) async {
-  final response = await http.get(
-    Uri.parse("${uri}test/topic/$topic")
-  );
+  final response = await http.get(Uri.parse("${uri}test/topic/$topic"));
 
   if (response.statusCode == 200) {
     // decode the json response
@@ -113,9 +114,7 @@ Future<List<Problem>> fetchProblems(String topic) async {
 
 // returns list of mocktest problems
 Future<List<Problem>> fetchMockTest() async {
-  final response = await http.get(
-    Uri.parse("${uri}test/mocktest")
-  );
+  final response = await http.get(Uri.parse("${uri}test/mocktest"));
 
   if (response.statusCode == 200) {
     // decode the json response
@@ -143,7 +142,7 @@ void postAnswer(Answer answer) async {
     headers: {
       'Content-Type': 'application/json; charset=UTF-8',
       HttpHeaders.authorizationHeader: "Bearer $token",
-    }
+    },
   );
 
   if (response.statusCode != 201) {
@@ -171,32 +170,92 @@ Future<Progress> getProgress(String token) async {
   }
 }
 
-
 // Sends new user data to server
-Future <http.Response> postData({
+Future<http.Response> postData({
   required String firstName,
   required String lastName,
   required String userName,
   required String password,
   required String email,
-})async{
-  try{
+}) async {
+  try {
     var response = await http.post(
       Uri.parse("${uri}auth/signup"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode({
-      "username": userName,
-      "password": password,
-      "email": email,
-      "firstName": firstName,
-      "lastName": lastName,
+        "username": userName,
+        "password": password,
+        "email": email,
+        "firstName": firstName,
+        "lastName": lastName,
       }),
     );
     return response;
-
-  } catch (e){
+  } catch (e) {
     throw Exception("Error: $e");
   }
+}
+
+// get massage
+Future<Map<String, dynamic>> getMessageData(String token) async {
+  final response = await http.get(
+    Uri.parse('${uri}progress/messageData'),
+    headers: {
+      'Authorization': 'Bearer $token',
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+  );
+
+  if (response.statusCode == 200) {
+    return jsonDecode(response.body);
+  } else {
+    final resBody = jsonDecode(response.body);
+    throw Exception(resBody['message'] ?? 'getMessageData failed');
+  }
+}
+
+// get the problem solved today
+// progress/history only saves 10 questions in total on 1 page
+// need to search the page to find out the total number of questions solved today.
+Future<int> getHistory(String token) async {
+  int page = 1;
+  int todayCount = 0;
+  bool data = true;
+
+  DateTime now = DateTime.now();
+
+  while (data) {
+    final response = await http.get(
+      Uri.parse('${uri}progress/history?page=$page'),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      var decoded = jsonDecode(response.body);
+      List<dynamic> historyJson = decoded["history"];
+      List<History> historyList =
+          historyJson.map((e) => History.fromJson(e)).toList();
+
+      todayCount +=
+          historyList.where((h) {
+            DateTime dt = DateTime.parse(h.datetime);
+            return dt.year == now.year &&
+                dt.month == now.month &&
+                dt.day == now.day;
+          }).length;
+
+      int totalPages = decoded["totalPages"];
+      page++;
+      data = page <= totalPages;
+    } else {
+      throw Exception("Failed to load answer history.");
+    }
+  }
+
+  return todayCount;
 }

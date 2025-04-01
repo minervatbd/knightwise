@@ -124,4 +124,10 @@ abstract class Styles {
       shape: buttonShape,
       textStyle: buttonTextStyle
   );
+
+  static const messageTextStyle = TextStyle(
+    fontSize: 18,
+    fontFamily: 'Mulish',
+    color: Colors.black,
+  );
 }
