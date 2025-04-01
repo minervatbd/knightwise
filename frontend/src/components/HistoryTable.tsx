@@ -36,7 +36,7 @@ const HistoryTable: React.FC = () => {
       const problemParams = new URLSearchParams({
         question: problem.question,
         category: problem.category,
-        topic: problem.topic,
+        topic: problem.subcategory,
         answerCorrect: problem.answerCorrect,
         answersWrong: JSON.stringify(problem.answersWrong),
       }).toString();
