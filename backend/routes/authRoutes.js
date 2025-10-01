@@ -4,10 +4,14 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const router = express.Router();
 
-// related to email verification
-const sgMail = require("@sendgrid/mail");
+// Mailjet for sending verification code
+const Mailjet = require("node-mailjet");
+const mailjet = Mailjet.apiConnect(
+    process.env.MJ_APIKEY_PUBLIC,
+    process.env.MJ_APIKEY_PRIVATE
+);
+
 const EmailCode = require("../models/EmailCode");
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const otpGenerator = require("otp-generator");
 
 // create code using otp-generator library
@@ -95,19 +99,20 @@ router.post("/login", async (req, res) => {
 // email template by @anandu-ap from TailwindFlex
 // https://tailwindflex.com/@anandu-ap/otp-code-template
 router.post("/sendotp", async (req, res) => {
-  try {
+  try 
+  {
     const { email, purpose } = req.body;
     const otp = generateCode();
     const expires = new Date(Date.now() + 5 * 60 * 1000);
     const user = await User.findOne({ email });
 
-    // check if the email is already registed to avoid duplicate email
+    // check if the email is already registered to avoid duplicate email
     if (purpose === "signup") {
       if (user) {
         return res.status(400).json({ message: "Email already registered" });
       }
     }
-    // check if the email is already registed to avoid unregistered users from reset password
+    // check if the email is already registered to avoid unregistered users from reset password
     if (purpose === "reset") {
       if (!user) {
         return res.status(404).json({ message: "User not found" });
@@ -116,8 +121,8 @@ router.post("/sendotp", async (req, res) => {
 
     const found = await EmailCode.findOne({ email });
 
-    // if email exitst, update the opt and expires
-    // if email doesn't exitst, create EmailCode in mongo DB
+    // if email exists, update the OTP and expires
+    // if email doesn't exist, create EmailCode in MongoDB
     if (found) {
       await EmailCode.updateOne({ email }, { $set: { otp, expires } });
     } else {
@@ -125,44 +130,69 @@ router.post("/sendotp", async (req, res) => {
     }
 
     // send email containing an OTP to user
-    await sgMail.send({
-      to: email,
-      from: "webdevpeeps@gmail.com",
-      subject: "Your OTP Code",
-      html: `
-        <html lang="en">
-        <head>
-          <meta charset="UTF-8" />
-          <title>Your OTP Code</title>
-        </head>
-        <body style= font-family: Arial, sans-serif; margin: 0; padding: 0;">
-          <div style="max-width: 600px; margin: 40px auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
-            <div style="background-color: #4f46e5; padding: 24px; text-align: center;">
-              <h1 style="font-size: 28px; color: white; margin: 0;">Your OTP Code</h1>
-            </div>
-            <div style="padding: 32px;">
-              <p style="color: #374151; font-size: 16px;">Hello,</p>
-              <p style="color: #374151; font-size: 16px; margin-bottom: 24px;">
-                Your One-Time Password (OTP) is:
-              </p>
-              <div style="background-color: #f3f4f6; padding: 16px; border-radius: 8px; text-align: center; margin-bottom: 24px;">
-                <p style="font-size: 36px; color: #4f46e5; font-weight: bold; margin: 0;">${otp}</p>
-              </div>
-              <p style="color: #374151; font-size: 16px; margin-bottom: 16px;">
-                This OTP is valid for <strong>5 minutes</strong>. Please do not share this code with anyone.
-              </p>
-              <p style="color: #6b7280; font-size: 14px; margin-bottom: 8px;">If you didn't request this code, please ignore this email.</p>
-              <p style="color: #6b7280; font-size: 14px;">Thank you!</p>
-            </div>
-          </div>
-        </body>
-        </html>
-        `,
-    });
-    res.json({ message: "Send email to user" });
-  } catch (error) {
-    console.error("Send OTP Error: ", error);
-    res.status(500).json({ message: "Fail", error: error.message });
+    try
+    {
+      const request = await mailjet
+        .post('send', { version: 'v3.1' })
+        .request(
+        {
+          Messages: 
+          [{
+            From: 
+            {
+              Email: "webdevpeeps@gmail.com",
+              Name: "KnightWise Developers"
+            },
+            To: 
+            [{
+              Email: email,
+              Name: "Studious User"
+            }],
+            Subject: "Your KnightWise verification code!",
+            TextPart: `Your verification code is: ${otp}. This code is valid for 5 minutes. Please do not share this code with anyone. If you didn't request this code, please ignore this email. Thank you for using KnightWise!`,
+            HTMLPart: 
+            `
+              <html lang="en">
+              <head>
+                <meta charset="UTF-8" />
+                <title>Your KnightWise Verification Code</title>
+              </head>
+              <body style="font-family: Arial, sans-serif; margin: 0; padding: 0;">
+                <div style="max-width: 600px; margin: 40px auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                  <div style="background-color: #ba9b37; padding: 24px; text-align: center;">
+                    <h1 style="font-size: 28px; color: white; margin: 0;">Your Verification Code</h1>
+                  </div>
+                  <div style="padding: 32px;">
+                    <p style="color: #374151; font-size: 16px;">Hello,</p>
+                    <p style="color: #374151; font-size: 16px; margin-bottom: 24px;">
+                      Your Verification Code is:
+                    </p>
+                    <div style="background-color: #f3f4f6; padding: 16px; border-radius: 8px; text-align: center; margin-bottom: 24px;">
+                      <p style="font-size: 36px; color: black; font-weight: bold; margin: 0;">${otp}</p>
+                    </div>
+                    <p style="color: #374151; font-size: 16px; margin-bottom: 16px;">
+                      This code is valid for <strong>5 minutes</strong>. Please do not share this code with anyone.
+                    </p>
+                    <p style="color: #6b7280; font-size: 14px; margin-bottom: 8px;">If you didn't request this code, please ignore this email.</p>
+                    <p style="color: #6b7280; font-size: 14px;">Thank you for using KnightWise!</p>
+                  </div>
+                </div>
+              </body>
+              </html>
+            `
+          }]
+        })
+        console.log("Email sent successfully:", request.body);
+        return res.json({ message: "Code sent successfully" });
+    } catch (emailErr)
+    {
+      console.error("Mailjet Error:", emailErr.statusCode, emailErr.message);
+      return res.status(500).json({ message: "Failed to send verification code" });
+    }
+  } catch (apiErr)
+  {
+    console.error("Send OTP Error:", apiErr);
+    return res.status(500).json({ message: "Server error" });
   }
 });
 
@@ -172,7 +202,7 @@ router.post("/verify", async (req, res) => {
     const { email, otp } = req.body;
     const record = await EmailCode.findOne({ email });
 
-    // check the OTP and expiration time related to email in momgo DB
+    // check the OTP and expiration time related to email in MongoDB
     if (!record) return res.status(400).json({ message: "No Record" });
     if (record.otp !== otp)
       return res.status(400).json({ message: "Wrong OTP" });
@@ -180,7 +210,7 @@ router.post("/verify", async (req, res) => {
       return res.status(400).json({ message: "Expired" });
 
     // ensure email verification is marked as complete
-    // if other fields(e.g. password, username) are chenge when sign in
+    // if other fields (e.g. password, username) are changed when sign in
     await EmailCode.updateOne({ email }, { $set: { verified: true } });
     res.json({ message: "Verify" });
   } catch (error) {
