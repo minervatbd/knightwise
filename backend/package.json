@@ -20,6 +20,7 @@
     "express": "^4.21.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.12.1",
+    "node-mailjet": "^6.0.9",
     "otp-generator": "^3.0.0"
   },
   "devDependencies": {
@@ -44,4 +45,3 @@
     ]
   }
 }
-
