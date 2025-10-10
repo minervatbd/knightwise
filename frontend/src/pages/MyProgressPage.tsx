@@ -3,8 +3,7 @@ import Layout from "../components/Layout";
 import Graph from "../components/Graph";
 import HistoryTable from "../components/HistoryTable";
 import ProgressMessage from "../components/ProgressMessage";
-import axios from "axios";
-import { buildPath } from "../components/Path"; // Adjust import if needed
+import api from "../api";
 
 const MyProgressPage: React.FC = () => {
   const [history, setHistory] = useState<{ datetime: string; topic: string }[]>([]);
@@ -15,8 +14,12 @@ const MyProgressPage: React.FC = () => {
     const fetchProgressData = async () => {
       try {
         const token = localStorage.getItem("token");
-        const response = await axios.get(buildPath("api/progress/messageData"), {
-          headers: { Authorization: `Bearer ${token}` },
+        const response = await api.get("api/progress/messageData", 
+        {
+          headers: 
+          { 
+            Authorization: `Bearer ${token}` 
+          },
         });
 
         const { history, mastery, streak } = response.data;

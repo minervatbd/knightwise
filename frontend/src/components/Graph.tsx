@@ -10,8 +10,7 @@ import {
   Legend,
   ChartOptions,
 } from "chart.js";
-import axios from 'axios';
-import { buildPath } from "./Path";
+import api from "../api";
 
 // Register required chart elements
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
@@ -31,8 +30,10 @@ const Graph: React.FC = () => {
     // Fetch user progress data from your API
     const fetchProgressData = async () => {
       try {
-        const response = await axios.get(buildPath("api/progress/graph"), {
-          headers: {
+        const response = await api.get("api/progress/graph", 
+        {
+          headers: 
+          {
             'Authorization': `Bearer ${token}`,  // Add your token here
           }
         });

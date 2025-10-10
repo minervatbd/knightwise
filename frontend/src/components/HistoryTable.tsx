@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { buildPath } from "./Path";
+import api from "../api";
 import correctAnswer from "../assets/correctAnswer.png";
 import incorrectAnswer from "../assets/incorrectAnswer.png";
 import viewProblem from "../assets/viewProblem.png";
@@ -13,7 +12,8 @@ const HistoryTable: React.FC = () => {
 
   const fetchHistory = async (page: number) => {
     try {
-      const response = await axios.get(buildPath("api/progress/history"), {
+      const response = await api.get("api/progress/history", 
+      {
         headers: { 'Authorization': `Bearer ${token}` },
         params: { page, limit: 10 },
       });
@@ -28,7 +28,8 @@ const HistoryTable: React.FC = () => {
 
   const fetchProblem = async (problemId: string) => {
     try {
-      const response = await axios.get(buildPath(`api/problems/${problemId}`), {
+      const response = await api.get(`api/problems/${problemId}`, 
+      {
         headers: { 'Authorization': `Bearer ${token}` },
       });
 
