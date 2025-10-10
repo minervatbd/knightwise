@@ -1,6 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { sendNotification } = require("../services/discordWebhook");
 const User = require("../models/User");
 const router = express.Router();
 
@@ -57,7 +58,15 @@ router.post("/signup", async (req, res) => {
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1h",
     });
+
+    // Signup success, send notification to Discord admin channel
     res.status(201).json({ message: "User Registered", token });
+    sendNotification(`New user signed up: ${user.username}`)
+      .then(success => {
+        if (!success) console.warn(`Discord notification not sent for new user "${user.username}"`);
+      })
+      .catch(error => console.error("Failed to send new user notification:", error))
+
   } catch (error) {
     console.error("Signup error: ", error);
     res.status(500).json({ message: "Server error" });
