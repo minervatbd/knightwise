@@ -1,9 +1,8 @@
 // This code is based on Dr. Reinenker's code : Login.tsx
 
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { buildPath } from "./Path";
+import api from "../api";
 
 const Login: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
   const [username, setUsername] = useState("");
@@ -18,7 +17,8 @@ const Login: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
     setSuccessMessage("");
 
     try {
-      const response = await axios.post(buildPath("api/auth/login"), {
+      const response = await api.post("/api/auth/login", 
+      {
         username,
         password,
       });

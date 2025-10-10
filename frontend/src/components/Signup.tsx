@@ -1,9 +1,8 @@
 // This code is based on Dr. Reinenker's code : Login.tsx
 // The implementation of the password checklist was based on the article: https://www.geeksforgeeks.org/how-to-create-password-checklist-in-reactjs/
 import React, { useState } from "react";
-import axios from "axios";
 import PasswordChecklist from "react-password-checklist";
-import { buildPath } from "./Path";
+import api from "../api";
 
 const Signup: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
   const [firstName, setFirstname] = useState("");
@@ -23,7 +22,8 @@ const Signup: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
 
   const handleSendOtp = async () => {
     try {
-      await axios.post(buildPath("api/auth/sendotp"), {
+      await api.post("api/auth/sendotp", 
+      {
         email,
         purpose: "signup",
       });
@@ -39,7 +39,10 @@ const Signup: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
 
   const handleVerifyOtp = async () => {
     try {
-      await axios.post(buildPath("api/auth/verify"), { email, otp });
+      await api.post("api/auth/verify", 
+      {
+        email, otp 
+      });
       setIsVerified(true);
       setSuccessMessage("Email verified");
       setError("");
@@ -75,7 +78,8 @@ const Signup: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
     }
 
     try {
-      const response = await axios.post(buildPath("api/auth/signup"), {
+      const response = await api.post("api/auth/signup", 
+      {
         username,
         email,
         password,
