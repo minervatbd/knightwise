@@ -22,7 +22,7 @@ const Signup: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
 
   const handleSendOtp = async () => {
     try {
-      await api.post("api/auth/sendotp", 
+      await api.post("/api/auth/sendotp", 
       {
         email,
         purpose: "signup",
@@ -39,7 +39,7 @@ const Signup: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
 
   const handleVerifyOtp = async () => {
     try {
-      await api.post("api/auth/verify", 
+      await api.post("/api/auth/verify", 
       {
         email, otp 
       });
@@ -78,7 +78,7 @@ const Signup: React.FC<{ onToggle: () => void }> = ({ onToggle }) => {
     }
 
     try {
-      const response = await api.post("api/auth/signup", 
+      const response = await api.post("/api/auth/signup", 
       {
         username,
         email,

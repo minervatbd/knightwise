@@ -1,4 +1,4 @@
-// This code is based on Dr. Reinenker's code : LoggedInName.tsx
+// This code is based on Dr. Leinecker's code: LoggedInName.tsx
 
 import { Link, useLocation } from "react-router-dom";
 import {
@@ -7,6 +7,7 @@ import {
   BarChart2,
   Lightbulb,
   GraduationCap,
+  UserRoundCog
 } from "lucide-react"; // for icons
 
 const Sidebar = () => {
@@ -29,7 +30,7 @@ const Sidebar = () => {
     return "Hello";
   };
 
-  // fucntion: logout
+  // function: logout
   const doLogout = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     event.preventDefault();
     localStorage.removeItem("user_data");
@@ -37,7 +38,10 @@ const Sidebar = () => {
   };
 
   const menuItems = [
-    { name: "Dashboard", icon: <BookOpen size={24} />, path: "/dashboard" },
+    { 
+      name: "Dashboard", 
+      icon: <BookOpen size={24} />, 
+      path: "/dashboard" },
     {
       name: "Topic Practice",
       icon: <Lightbulb size={24} />,
@@ -53,6 +57,11 @@ const Sidebar = () => {
       icon: <BarChart2 size={24} />,
       path: "/my-progress",
     },
+    {
+      name: "Account",
+      icon: <UserRoundCog size={24} />,
+      path: "/account"
+    }
   ];
 
   return (

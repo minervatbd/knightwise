@@ -65,7 +65,7 @@ router.post("/signup", async (req, res) => {
       .then(success => {
         if (!success) console.warn(`Discord notification not sent for new user "${user.username}"`);
       })
-      .catch(error => console.error("Failed to send new user notification:", error))
+      .catch(error => console.error("Failed to send new user notification:", error));
 
   } catch (error) {
     console.error("Signup error: ", error);
