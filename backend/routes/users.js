@@ -23,7 +23,6 @@ const { deleteAccount } = require("../controllers/userController");
  * @desc    Delete a user's account and associated data
  * @access  Protected
  */
-//router.delete("/:id", authMiddleware, deleteAccount);
 router.delete("/:id", authMiddleware, deleteAccount);
 
 /** TODO
